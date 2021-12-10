@@ -1,0 +1,101 @@
+{
+    "Warrior" : {
+        "health" : 2,
+        "damage" : 2,
+        "fist_damage" : 2,
+        "speed" : 0.75,
+        "consumption_ratio" : 1,
+        "chopping_ratio" : 0.5,
+        "mining_ratio" : 0.5,
+        "hunger_ratio" : 1,
+        "swimming_speed" : 1
+    },
+    "Brawler" : {
+        "health" : 2,
+        "damage" : 1,
+        "fist_damage" : 4,
+        "speed" : 1,
+        "consumption_ratio" : 1,
+        "chopping_ratio" : 0.5,
+        "mining_ratio" : 0.5,
+        "hunger_ratio" : 1,
+        "swimming_speed" : 1
+    },
+    "Scout" : {
+        "health" : 0.5,
+        "damage" : 0.5,
+        "fist_damage" : 1,
+        "speed" : 2,
+        "consumption_ratio" : 1,
+        "chopping_ratio" : 1,
+        "mining_ratio" : 1,
+        "hunger_ratio" : 2,
+        "swimming_speed" : 1
+    },
+    "Lumberjack" : {
+        "health" : 1,
+        "damage" : 2,
+        "fist_damage" : 2,
+        "speed" : 1,
+        "consumption_ratio" : 1,
+        "chopping_ratio" : 2,
+        "mining_ratio" : 1,
+        "hunger_ratio" : 0.5,
+        "swimming_speed" : 0.5
+    },
+    "Miner" : {
+        "health" : 1,
+        "damage" : 2,
+        "fist_damage" : 2,
+        "speed" : 1,
+        "consumption_ratio" : 1,
+        "chopping_ratio" : 1,
+        "mining_ratio" : 2,
+        "hunger_ratio" : 0.5,
+        "swimming_speed" : 0.5
+    },
+    "Forager" : {
+        "health" : 2,
+        "damage" : 0.5,
+        "fist_damage" : 1,
+        "speed" : 0.5,
+        "consumption_ratio" : 2,
+        "chopping_ratio" : 1,
+        "mining_ratio" : 1,
+        "hunger_ratio" : 1,
+        "swimming_speed" : 1
+    },
+    "Hunter" : {
+        "health" : 1,
+        "damage" : 2,
+        "fist_damage" : 1,
+        "speed" : 1,
+        "consumption_ratio" : 2,
+        "chopping_ratio" : 0.5,
+        "mining_ratio" : 0.5,
+        "hunger_ratio" : 2,
+        "swimming_speed" : 0.5
+    },
+    "Traveler" : {
+        "health" : 1,
+        "damage" : 1,
+        "fist_damage" : 1,
+        "speed" : 1,
+        "consumption_ratio" : 1,
+        "chopping_ratio" : 1,
+        "mining_ratio" : 1,
+        "hunger_ratio" : 1,
+        "swimming_speed" : 1
+    },
+    "Jester" : {
+        "health" : 1,
+        "damage" : 1,
+        "fist_damage" : 1,
+        "speed" : 1,
+        "consumption_ratio" : 1,
+        "chopping_ratio" : 1,
+        "mining_ratio" : 1,
+        "hunger_ratio" : 1,
+        "swimming_speed" : 1
+    }
+}
