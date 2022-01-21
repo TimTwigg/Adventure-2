@@ -33,3 +33,9 @@
 
 # Build and Run files
 *.bat
+
+# Build directory
+build/
+
+# vscode config
+.vscode/

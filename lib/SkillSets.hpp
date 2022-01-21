@@ -1,10 +1,10 @@
-// Updated: 9 December 2021
+// Updated: 20 January 2022
 
 #ifndef SKILLSETS_HPP
 #define SKILLSETS_HPP
 
 #include <map>
-#include "..\\tp_lib\\json.hpp"
+#include "json.hpp"
 using json = nlohmann::json;
 
 enum class SkillSets {

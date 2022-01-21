@@ -1,14 +1,16 @@
-// Updated: 9 December 2021
+// Updated: 20 January 2022
 
 #include <string>
 #include <fstream>
 #include <iostream>
 #include <iomanip>
 #include <map>
+#include <vector>
+#include <algorithm>
 #include "Player.hpp"
 #include "SkillSets.hpp"
 #include "StatDefaults.hpp"
-#include "..\\tp_lib\\json.hpp"
+#include "json.hpp"
 using json = nlohmann::json;
 
 Player::Player(SkillSets skillset, std::string savepath) {
@@ -25,9 +27,9 @@ Player::Player(SkillSets skillset, std::string savepath) {
         ++num;
         savefile = "saves\\" + savepath + "-" + std::to_string(num) + ".game";
     }
-    std::cout << savefile << std::endl;
 
-    json skset = getSet(skillset);
+    unsigned int seed = time(NULL);
+    json skset = Player::getSet(skillset, seed);
 
     data["level"] = 1;
     data["xp"] = 0;
@@ -48,6 +50,7 @@ Player::Player(SkillSets skillset, std::string savepath) {
     data["wealth"] = 0;
     data["inventory"] = json::object();
     data["savepath"] = savefile;
+    data["seed"] = seed;
 }
 
 void Player::save() const {
@@ -75,7 +78,7 @@ void Player::level_up() {
     if (level % DEFAULT::stat_level_interval == 0) level_stats();
 }
 
-json getSet(SkillSets skillset) {
+json Player::getSet(SkillSets skillset, unsigned int seed) {
     std::ifstream i;
     json sets;
     i.open("data\\skillsets.json");
@@ -109,7 +112,26 @@ json getSet(SkillSets skillset) {
             skset = sets["Hunter"];
             break;
         case SkillSets::JESTER:
-            skset = sets["Jester"]; // change this
+            srand(seed);
+            skset = json::object();
+            std::vector<std::string> v = {"health", "damage", "fist_damage", "speed", "consumption_rate", "chopping_rate", "mining_ratio", "hunger_ratio", "swimming_speed"};
+            std::vector<int> selection;
+            for (int i = 0; i < 6; ++i) {
+                int n = rand() % 9;
+                if (std::find(selection.begin(), selection.end(), n) == selection.end()) {
+                    selection.push_back(n);
+                }
+                else --i;
+            }
+            for (int i = 0; i < 9; ++i) {
+                if (std::find(selection.begin(), selection.end(), i) == selection.end()) {
+                    skset[v[i]] = 1;
+                }
+                else {
+                    if (rand() % 2) skset[v[i]] = 2;
+                    else skset[v[i]] = 0.5;
+                }
+            }
             break;
     }
 
@@ -118,7 +140,7 @@ json getSet(SkillSets skillset) {
 
 void Player::level_stats() {
     SkillSets ss = SET::to_skillset(data["skillset"].get<std::string>());
-    json skset = getSet(ss);
+    json skset = Player::getSet(ss, data["seed"].get<unsigned int>());
     std::map<std::string, float> bonuses;
     for (auto& pair : skset.items()) {
         if (pair.value() > 1) bonuses.emplace(pair.key(), DEFAULT::stat_level_bonus);

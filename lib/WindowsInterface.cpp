@@ -1,4 +1,4 @@
-// Updated: 8 December 2021
+// Updated: 21 January 2022
 
 #include <string>
 #include <iostream>
@@ -43,6 +43,9 @@ WindowsInterface::WindowsInterface() : console{GetStdHandle(STD_OUTPUT_HANDLE)} 
     CONSOLE_SCREEN_BUFFER_INFO buffer;
     GetConsoleScreenBufferInfo(console, &buffer);
     defaultColor = buffer.wAttributes;
+}
+
+WindowsInterface::~WindowsInterface() {
 }
 
 void WindowsInterface::output(const std::string& text, Color color, bool endLine) {

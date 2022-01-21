@@ -1,5 +1,4 @@
-// Updated: 8 December 2021
-
+// Updated: 21 January 2022
 #ifndef INTERFACE_HPP
 #define INTERFACE_HPP
 

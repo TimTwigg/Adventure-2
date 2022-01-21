@@ -1,15 +1,8 @@
-// Updated: 8 December 2021
+// Updated: 21 January 2022
 
 #include <iostream>
-#include <vector>
-#include <map>
-#include "lib\\Player.hpp"
-#include "lib\\SkillSets.hpp"
 
 int main() {
-    Player player{SkillSets::WARRIOR, "test"};
-    player.save();
-    std::cout << "done" << std::endl;
 
     return 0;
 }
