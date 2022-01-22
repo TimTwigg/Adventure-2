@@ -1,4 +1,4 @@
-// Updated: 20 January 2022
+// Updated: 22 January 2022
 
 #include <string>
 #include <fstream>
@@ -10,10 +10,15 @@
 #include "Player.hpp"
 #include "SkillSets.hpp"
 #include "StatDefaults.hpp"
+#include "AdventureException.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
 
-Player::Player(SkillSets skillset, std::string savepath) {
+namespace {
+    std::vector<std::string> INVALID_STAT_NAMES{"skillset", "inventory", "savepath"};
+}
+
+Player::Player(SkillSets skillset, std::string savepath) : invalid_stat_names{INVALID_STAT_NAMES} {
     std::string savefile = "saves\\" + savepath + ".game";
     int num{0};
     while (true) {
@@ -88,7 +93,7 @@ json Player::getSet(SkillSets skillset, unsigned int seed) {
     json skset;
     switch (skillset) {
         case SkillSets::TRAVELER:
-            skset = sets["Traveller"];
+            skset = sets["Traveler"];
             break;
         case SkillSets::WARRIOR:
             skset = sets["Warrior"];
@@ -134,7 +139,6 @@ json Player::getSet(SkillSets skillset, unsigned int seed) {
             }
             break;
     }
-
     return skset;
 }
 
@@ -150,4 +154,16 @@ void Player::level_stats() {
     for (auto& pair : bonuses) {
         data[pair.first] = data[pair.first].get<float>() * pair.second;
     }
+}
+
+double Player::stat(const std::string& stat_name) const {
+    if (std::find(invalid_stat_names.begin(), invalid_stat_names.end(), stat_name) != invalid_stat_names.end()) throw AdventureException("Non-Numeric Stat Name: " + stat_name + " :: use specific method to access");
+    else if (data.count(stat_name) == 0) throw AdventureException("Invalid Stat Name: " + stat_name);
+    return data[stat_name];
+}
+
+std::vector<std::string> Player::getStatNames() const noexcept {
+    std::vector<std::string> v;
+    for (const auto& i : data.items()) v.push_back(i.key());
+    return v;
 }

@@ -1,0 +1,22 @@
+{
+    "base_damage": 25.0,
+    "chopping_ratio": 1.0,
+    "consumption_ratio": 1.0,
+    "fist_base_damage": 10.0,
+    "health": 100.0,
+    "hunger": 50.0,
+    "inventory": {},
+    "level": 1,
+    "max_health": 100.0,
+    "max_hunger": 50.0,
+    "max_thirst": 20.0,
+    "mining_ratio": 1.0,
+    "savepath": "saves\\test.game",
+    "seed": 1642845671,
+    "skillset": 0,
+    "speed": 1.0,
+    "swimming_speed": 1.0,
+    "thirst": 20.0,
+    "wealth": 0,
+    "xp": 0
+}
