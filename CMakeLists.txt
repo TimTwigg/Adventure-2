@@ -27,3 +27,20 @@ project(Adventure)
 add_executable(${PROJECT_NAME} main.cpp)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/lib)
 target_link_libraries(${PROJECT_NAME} ${LIB_LIBS})
+
+
+# test framework
+project(Test)
+
+include(FetchContent)
+FetchContent_Declare(googletest URL https://github.com/google/googletest/archive/609281088cfefc76f9d0ce82e1ff6c30cc3591e5.zip)
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
+file(GLOB GTEST_SRC_FILES ${CMAKE_SOURCE_DIR}/tests/*.cpp)
+add_executable(${PROJECT_NAME} ${GTEST_SRC_FILES})
+target_link_libraries(${PROJECT_NAME} gtest_main)
+include(GoogleTest)
+gtest_discover_tests(${PROJECT_NAME})
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/lib)

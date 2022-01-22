@@ -1,11 +1,10 @@
-// Updated: 20 January 2022
+// Updated: 21 January 2022
 
 #ifndef SKILLSETS_HPP
 #define SKILLSETS_HPP
 
 #include <map>
-#include "json.hpp"
-using json = nlohmann::json;
+#include <string>
 
 enum class SkillSets {
     TRAVELER,
