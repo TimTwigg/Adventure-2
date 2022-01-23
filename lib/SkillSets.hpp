@@ -5,6 +5,8 @@
 
 #include <map>
 #include <string>
+#include "json.hpp"
+using json = nlohmann::json;
 
 enum class SkillSets {
     TRAVELER,
@@ -19,6 +21,7 @@ enum class SkillSets {
 };
 
 namespace SET {
+    json getSet(SkillSets skillset);
     std::map<SkillSets, std::string> index();
     std::string to_string(SkillSets skillset);
     SkillSets to_skillset(std::string skillset);

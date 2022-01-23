@@ -7,7 +7,7 @@
 using json = nlohmann::json;
 
 int main() {
-    json set = Player::getSet(SkillSets::TRAVELER);
+    json set = SET::getSet(SkillSets::TRAVELER);
     std::cout << set.size() << std::endl;
     for (auto& [k, v] : set.items()) {
         std::cout << k << " " << v << std::endl;

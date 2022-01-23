@@ -1,7 +1,8 @@
+// updated 22 January 2022
+
 #include <gtest/gtest.h>
 #include <vector>
 #include <string>
-#include <iostream>
 #include "Player.hpp"
 #include "SkillSets.hpp"
 
@@ -15,3 +16,4 @@ TEST(PlayerTests, getStatNames) {
     std::vector<std::string> v = p.getStatNames();
     ASSERT_EQ(v.size(), 20);
 }
+

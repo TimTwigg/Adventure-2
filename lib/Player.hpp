@@ -4,17 +4,14 @@
 #define PLAYER_HPP
 
 #include <vector>
-#include <time.h>
 #include "SkillSets.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
 
 class Player {
     public:
-        static json getSet(SkillSets skillset, unsigned int seed = time(NULL));
-
-    public:
         Player(SkillSets skillset, std::string savepath);
+        explicit Player(std::string savepath);
         Player(const Player& other) = delete;
         void save() const;
         void level_up();
