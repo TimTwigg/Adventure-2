@@ -1,4 +1,4 @@
-// Updated: 21 January 2021
+// Updated: 26 January 2021
 
 #ifndef OBJECT_HPP
 #define OBJECT_HPP
@@ -21,6 +21,13 @@ class Object {
     private:
         std::string name;
         std::string type;
+};
+
+enum class OBJCLASS {
+    RESOURCE,
+    CONTAINER,
+    TOOL,
+    WEAPON
 };
 
 #endif

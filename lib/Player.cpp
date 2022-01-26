@@ -1,4 +1,4 @@
-// Updated: 25 January 2022
+// Updated: 26 January 2022
 
 #include <string>
 #include <fstream>
@@ -16,7 +16,7 @@ using json = nlohmann::json;
 
 namespace {
     // names of data contents whose values are not numeric
-    std::vector<std::string> INVALID_STAT_NAMES{"skillset", "inventory", "savepath"};
+    std::vector<std::string> INVALID_STAT_NAMES{"skillset", "inventory", "savepath", "ratios"};
 }
 
 Player::Player(SkillSets skillset, const std::string& savepath) : invalid_stat_names{INVALID_STAT_NAMES} {
@@ -38,7 +38,7 @@ Player::Player(SkillSets skillset, const std::string& savepath) : invalid_stat_n
 
     data["level"] = 1;
     data["xp"] = 0;
-    data["skillset"] = skillset;
+    data["skillset"] = SET::to_string(skillset);
     data["health"] = DEFAULT::health * skset["health"].get<double>();
     data["max_health"] = DEFAULT::health * skset["health"].get<double>();
     data["base_damage"] = DEFAULT::damage * skset["damage"].get<double>();
@@ -115,4 +115,56 @@ std::vector<std::string> Player::getStatNames() const noexcept {
     std::vector<std::string> v;
     for (const auto& i : data.items()) v.push_back(i.key());
     return v;
+}
+
+std::vector<std::string> Player::getInvalidStatNames() const noexcept {
+    return invalid_stat_names;
+}
+
+std::string Player::getSavepath() const noexcept {
+    return data["savepath"];
+}
+
+SkillSets Player::getSkillset() const noexcept {
+    return SET::to_skillset(data["skillset"]);
+}
+
+bool Player::inInventory(OBJCLASS objClass, std::string obj, unsigned int count) const noexcept {
+    return false;
+}
+
+void Player::addItem(OBJCLASS objClass, std::string obj, unsigned int count) {
+
+}
+
+void Player::removeItem(OBJCLASS objClass, std::string obj, unsigned int count) {
+
+}
+
+void Player::addWealth(unsigned int amount) noexcept {
+
+}
+
+void Player::removeWealth(unsigned int amount) noexcept {
+
+}
+
+void Player::damage(double dmg) noexcept {
+
+}
+
+void Player::heal(double hp) noexcept {
+
+}
+
+void Player::addXP(int xp) noexcept {
+
+}
+
+void Player::reduceHunger(double points) noexcept {
+
+}
+
+void Player::reduceThirst(double points) noexcept {
+
 }
