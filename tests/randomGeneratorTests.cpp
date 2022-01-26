@@ -23,6 +23,9 @@ TEST(RandomGeneratorTests, getRandInt) {
     ASSERT_LE(total, 50);
 
     ASSERT_THROW(gen.getRandInt(5, 4), AdventureException);
+
+    x = gen.getRandInt(-4, 0);
+    ASSERT_PRED1([](auto i){return (i >= -4 && i <= 0);}, x);
 }
 
 TEST(RandomGeneratorTests, getRandIntVector) {
@@ -76,5 +79,5 @@ TEST(RandomGeneratorTests, getRandBool) {
         bool b = gen.getRandBool();
         if (!b) flag = b;
     }
-    ASSERT_FALSE(flag);    
+    ASSERT_FALSE(flag);
 }

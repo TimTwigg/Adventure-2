@@ -1,4 +1,4 @@
-// Updated: 22 January 2022
+// Updated: 25 January 2022
 
 #include <map>
 #include <string>
@@ -45,7 +45,7 @@ json SET::getSet(SkillSets skillset) {
         case SkillSets::JESTER:
             RandomGenerator gen;
             skset = json::object();
-            std::vector<std::string> v = {"health", "damage", "fist_damage", "speed", "consumption_rate", "chopping_rate", "mining_ratio", "hunger_ratio", "swimming_speed"};
+            std::vector<std::string> v = {"health", "damage", "fist_damage", "speed", "consumption_ratio", "chopping_ratio", "mining_ratio", "hunger_ratio", "swimming_speed"};
             std::vector<double> ratios = gen.getRandDoubleVector(5, 20, 9);
             for (int i = 0; i < 9; ++i) {
                 skset[v[i]] = ratios[i];

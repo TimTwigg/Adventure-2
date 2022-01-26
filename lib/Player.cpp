@@ -1,4 +1,4 @@
-// Updated: 22 January 2022
+// Updated: 25 January 2022
 
 #include <string>
 #include <fstream>
@@ -15,10 +15,11 @@
 using json = nlohmann::json;
 
 namespace {
+    // names of data contents whose values are not numeric
     std::vector<std::string> INVALID_STAT_NAMES{"skillset", "inventory", "savepath"};
 }
 
-Player::Player(SkillSets skillset, std::string savepath) : invalid_stat_names{INVALID_STAT_NAMES} {
+Player::Player(SkillSets skillset, const std::string& savepath) : invalid_stat_names{INVALID_STAT_NAMES} {
     std::string savefile = "saves\\" + savepath + ".game";
     int num{0};
     while (true) {
@@ -38,23 +39,31 @@ Player::Player(SkillSets skillset, std::string savepath) : invalid_stat_names{IN
     data["level"] = 1;
     data["xp"] = 0;
     data["skillset"] = skillset;
-    data["health"] = DEFAULT::health * skset["health"].get<float>();
-    data["max_health"] = DEFAULT::health * skset["health"].get<float>();
-    data["base_damage"] = DEFAULT::damage * skset["damage"].get<float>();
-    data["fist_base_damage"] = DEFAULT::fist_damage * skset["fist_damage"].get<float>();
-    data["hunger"] = DEFAULT::hunger * skset["hunger_ratio"].get<float>();
-    data["max_hunger"] = DEFAULT::hunger * skset["hunger_ratio"].get<float>();
-    data["thirst"] = DEFAULT::thirst * skset["hunger_ratio"].get<float>();
-    data["max_thirst"] = DEFAULT::thirst * skset["hunger_ratio"].get<float>();
-    data["speed"] = skset["speed"].get<float>();
-    data["swimming_speed"] = skset["swimming_speed"].get<float>();
-    data["consumption_ratio"] = skset["consumption_ratio"].get<float>();
-    data["chopping_ratio"] = skset["chopping_ratio"].get<float>();
-    data["mining_ratio"] = skset["mining_ratio"].get<float>();
+    data["health"] = DEFAULT::health * skset["health"].get<double>();
+    data["max_health"] = DEFAULT::health * skset["health"].get<double>();
+    data["base_damage"] = DEFAULT::damage * skset["damage"].get<double>();
+    data["fist_base_damage"] = DEFAULT::fist_damage * skset["fist_damage"].get<double>();
+    data["hunger"] = DEFAULT::hunger * skset["hunger_ratio"].get<double>();
+    data["max_hunger"] = DEFAULT::hunger * skset["hunger_ratio"].get<double>();
+    data["thirst"] = DEFAULT::thirst * skset["hunger_ratio"].get<double>();
+    data["max_thirst"] = DEFAULT::thirst * skset["hunger_ratio"].get<double>();
+    data["speed"] = skset["speed"].get<double>();
+    data["swimming_speed"] = skset["swimming_speed"].get<double>();
+    data["consumption_ratio"] = skset["consumption_ratio"].get<double>();
+    data["chopping_ratio"] = skset["chopping_ratio"].get<double>();
+    data["mining_ratio"] = skset["mining_ratio"].get<double>();
     data["wealth"] = 0;
     data["inventory"] = json::object();
     data["savepath"] = savefile;
-    data["ratios"] = std::vector<int>(9,1); // TODO
+    data["ratios"] = skset;
+}
+
+Player::Player(const std::string& savepath) : invalid_stat_names{INVALID_STAT_NAMES} {
+    std::ifstream i;
+    i.open(savepath);
+    if (!i) throw AdventureException("Player::Player() save file does not exist.");
+    i >> data;
+    i.close();
 }
 
 void Player::save() const {
@@ -68,7 +77,7 @@ void Player::level_up() {
     data["level"] = data["level"].get<unsigned int>() + 1;
     data["xp"] = 0;
 
-    float ratio;
+    double ratio;
     unsigned int level = data["level"].get<unsigned int>();
     if (level < DEFAULT::level_1) ratio = DEFAULT::level_ratio_1;
     else if (level < DEFAULT::level_2) ratio = DEFAULT::level_ratio_2;
@@ -85,14 +94,14 @@ void Player::level_up() {
 void Player::level_stats() {
     SkillSets ss = SET::to_skillset(data["skillset"].get<std::string>());
     json skset = SET::getSet(ss);
-    std::map<std::string, float> bonuses;
+    std::map<std::string, double> bonuses;
     for (auto& pair : skset.items()) {
         if (pair.value() > 1) bonuses.emplace(pair.key(), DEFAULT::stat_level_bonus);
         else bonuses.emplace(pair.key(), DEFAULT::stat_level_no_bonus);
     }
 
     for (auto& pair : bonuses) {
-        data[pair.first] = data[pair.first].get<float>() * pair.second;
+        data[pair.first] = data[pair.first].get<double>() * pair.second;
     }
 }
 
