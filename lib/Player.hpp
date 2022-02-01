@@ -1,4 +1,4 @@
-// Updated: 26 January 2022
+// Updated: 1 February 2022
 
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
@@ -37,6 +37,8 @@ class Player {
         
         void reduceHunger(double points) noexcept;
         void reduceThirst(double points) noexcept;
+        void eat(double points) noexcept;
+        void drink(double points) noexcept;
 
     private:
         json data;

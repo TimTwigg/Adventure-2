@@ -1,4 +1,4 @@
-// Updated: 26 January 2022
+// Updated: 1 February 2022
 
 #include <string>
 #include <fstream>
@@ -142,29 +142,40 @@ void Player::removeItem(OBJCLASS objClass, std::string obj, unsigned int count) 
 }
 
 void Player::addWealth(unsigned int amount) noexcept {
-
+    data["wealth"] = data["wealth"] + amount;
 }
 
 void Player::removeWealth(unsigned int amount) noexcept {
-
+    data["wealth"] = data["wealth"] - amount;
 }
 
 void Player::damage(double dmg) noexcept {
-
+    data["health"] = data["health"] - dmg;
 }
 
 void Player::heal(double hp) noexcept {
-
+    data["health"] = data["health"] + hp;
+    if (data["health"] > data["max_health"]) data["health"] = data["max_health"];
 }
 
 void Player::addXP(int xp) noexcept {
-
+    data["xp"] = data["xp"] + xp;
 }
 
 void Player::reduceHunger(double points) noexcept {
-
+    data["hunger"] = data["hunger"] - points;
 }
 
 void Player::reduceThirst(double points) noexcept {
+    data["thirst"] = data["thirst"] - points;
+}
 
+void Player::eat(double points) noexcept {
+    data["hunger"] = data["hunger"] + points;
+    if (data["hunger"] > data["max_hunger"]) data["hunger"] = data["max_hunger"];
+}
+
+void Player::drink(double points) noexcept {
+    data["thirst"] = data["thirst"] + points;
+    if (data["thirst"] > data["max_thirst"]) data["thirst"] = data["max_thirst"];
 }
