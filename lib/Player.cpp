@@ -1,8 +1,7 @@
-// Updated: 1 February 2022
+// Updated: 13 February 2022
 
 #include <string>
 #include <fstream>
-#include <iostream>
 #include <iomanip>
 #include <map>
 #include <vector>
@@ -74,9 +73,13 @@ void Player::save() const {
 }
 
 void Player::level_up() {
-    data["level"] = data["level"].get<unsigned int>() + 1;
-    data["xp"] = 0;
+    if (data["xp"].get<int>() < DEFAULT::xp_per_level) return;
 
+    int excess_xp = data["xp"].get<int>() - DEFAULT::xp_per_level;
+    data["level"] = data["level"].get<unsigned int>() + 1;
+    data["xp"] = excess_xp;
+
+    // get level-based ratio for stat upgrades
     double ratio;
     unsigned int level = data["level"].get<unsigned int>();
     if (level < DEFAULT::level_1) ratio = DEFAULT::level_ratio_1;
@@ -84,10 +87,12 @@ void Player::level_up() {
     else if (level < DEFAULT::level_3) ratio = DEFAULT::level_ratio_3;
     else ratio = DEFAULT::level_ratio_uncapped;
 
+    // upgrade stats
     data["health"] = static_cast<unsigned int>(data["health"].get<unsigned int>() * ratio);
     data["base_damage"] = static_cast<unsigned int>(data["base_damage"].get<unsigned int>() * ratio);
     data["fist_base_damage"] = static_cast<unsigned int>(data["fist_base_damage"].get<unsigned int>() * ratio);
 
+    // level all stats if appropriate
     if (level % DEFAULT::stat_level_interval == 0) level_stats();
 }
 
@@ -122,11 +127,11 @@ std::vector<std::string> Player::getInvalidStatNames() const noexcept {
 }
 
 std::string Player::getSavepath() const noexcept {
-    return data["savepath"];
+    return data["savepath"].get<std::string>();
 }
 
 SkillSets Player::getSkillset() const noexcept {
-    return SET::to_skillset(data["skillset"]);
+    return SET::to_skillset(data["skillset"].get<std::string>());
 }
 
 bool Player::inInventory(OBJCLASS objClass, std::string obj, unsigned int count) const noexcept {
@@ -142,40 +147,46 @@ void Player::removeItem(OBJCLASS objClass, std::string obj, unsigned int count) 
 }
 
 void Player::addWealth(unsigned int amount) noexcept {
-    data["wealth"] = data["wealth"] + amount;
+    data["wealth"] = data["wealth"].get<int>() + amount;
 }
 
-void Player::removeWealth(unsigned int amount) noexcept {
-    data["wealth"] = data["wealth"] - amount;
+void Player::removeWealth(unsigned int amount) {
+    if (data["wealth"].get<int>() < amount) throw AdventureException("Insufficient Wealth: Cannot remove " + 
+        std::to_string(amount) + " from " + std::to_string(data["wealth"].get<int>()));
+    data["wealth"] = data["wealth"].get<int>() - amount;
 }
 
-void Player::damage(double dmg) noexcept {
-    data["health"] = data["health"] - dmg;
+void Player::damage(double dmg) {
+    data["health"] = data["health"].get<double>() - dmg;
+    if (data["health"].get<int>() < 1) throw AdventureException("Oh No! You Died.");
 }
 
 void Player::heal(double hp) noexcept {
-    data["health"] = data["health"] + hp;
-    if (data["health"] > data["max_health"]) data["health"] = data["max_health"];
+    data["health"] = data["health"].get<double>() + hp;
+    if (data["health"].get<double>() > data["max_health"].get<double>()) data["health"] = data["max_health"];
 }
 
 void Player::addXP(int xp) noexcept {
-    data["xp"] = data["xp"] + xp;
+    data["xp"] = data["xp"].get<int>() + xp;
+    level_up();
 }
 
 void Player::reduceHunger(double points) noexcept {
-    data["hunger"] = data["hunger"] - points;
+    data["hunger"] = data["hunger"].get<double>() - points;
+    if (data["hunger"].get<double>() < 0) data["hunger"] = 0;
 }
 
 void Player::reduceThirst(double points) noexcept {
-    data["thirst"] = data["thirst"] - points;
+    data["thirst"] = data["thirst"].get<double>() - points;
+    if (data["thirst"].get<double>() < 0) data["thirst"] = 0;
 }
 
 void Player::eat(double points) noexcept {
-    data["hunger"] = data["hunger"] + points;
-    if (data["hunger"] > data["max_hunger"]) data["hunger"] = data["max_hunger"];
+    data["hunger"] = data["hunger"].get<double>() + points;
+    if (data["hunger"].get<double>() > data["max_hunger"].get<double>()) data["hunger"] = data["max_hunger"];
 }
 
 void Player::drink(double points) noexcept {
-    data["thirst"] = data["thirst"] + points;
-    if (data["thirst"] > data["max_thirst"]) data["thirst"] = data["max_thirst"];
+    data["thirst"] = data["thirst"].get<double>() + points;
+    if (data["thirst"].get<double>() > data["max_thirst"].get<double>()) data["thirst"] = data["max_thirst"];
 }

@@ -1,10 +1,9 @@
-// updated 26 January 2022
+// updated 13 February 2022
 
 #include <gtest/gtest.h>
 #include <vector>
 #include <string>
 #include <algorithm>
-#include <iostream>
 #include "Player.hpp"
 #include "SkillSets.hpp"
 #include "AdventureException.hpp"
@@ -52,8 +51,25 @@ TEST(PlayerTests, getters) {
     ASSERT_EQ(savepath.substr(6,4), "test");
 }
 
+TEST(PlayerTests, wealthSetters) {
+    Player p{SkillSets::BRAWLER, "test"};
+    ASSERT_EQ(p.stat("wealth"), 0);
+
+    p.addWealth(100);
+    ASSERT_EQ(p.stat("wealth"), 100);
+
+    p.removeWealth(15);
+    ASSERT_EQ(p.stat("wealth"), 85);
+
+    p.removeWealth(85);
+    ASSERT_EQ(p.stat("wealth"), 0);
+
+    ASSERT_THROW(p.removeWealth(1), AdventureException);
+}
+
 TEST(PlayerTests, saveLoadFiles) {
     Player p{SkillSets::WARRIOR, "test"};
+    p.addWealth(10);
     p.save();
     Player q{p.getSavepath()};
     std::vector<std::string> pn = p.getStatNames();
@@ -68,4 +84,63 @@ TEST(PlayerTests, saveLoadFiles) {
 
     ASSERT_EQ(p.getSkillset(), q.getSkillset());
     ASSERT_EQ(p.getSavepath(), q.getSavepath());
+}
+
+TEST(PlayerTests, healthManagers) {
+    Player p{SkillSets::SCOUT, "test"};
+    int total_hp = p.stat("health");
+    
+    p.damage(10);
+    ASSERT_EQ(p.stat("health"), total_hp - 10);
+
+    p.heal(5);
+    ASSERT_EQ(p.stat("health"), total_hp - 5);
+
+    p.heal(10);
+    ASSERT_EQ(p.stat("health"), total_hp);
+
+    p.damage(total_hp - 1);
+    ASSERT_EQ(p.stat("health"), 1);
+
+    ASSERT_THROW(p.damage(1), AdventureException);
+}
+
+TEST(PlayerTests, addXP) {
+    Player p{SkillSets::SCOUT, "test"};
+    p.addXP(10);
+    ASSERT_EQ(p.stat("xp"), 10);
+}
+
+TEST(PlayerTests, hungerManagers) {
+    Player p{SkillSets::SCOUT, "test"};
+    double hunger = p.stat("hunger");
+
+    p.eat(15);
+    ASSERT_EQ(p.stat("hunger"), hunger);
+
+    p.reduceHunger(10);
+    ASSERT_EQ(p.stat("hunger"), hunger - 10);
+
+    p.eat(5);
+    ASSERT_EQ(p.stat("hunger"), hunger - 5);
+
+    p.reduceHunger(hunger + 5);
+    ASSERT_EQ(p.stat("hunger"), 0);
+}
+
+TEST(PlayerTests, thirstManagers) {
+    Player p{SkillSets::BRAWLER, "test"};
+    double thirst = p.stat("thirst");
+
+    p.drink(15);
+    ASSERT_EQ(p.stat("thirst"), thirst);
+
+    p.reduceThirst(10);
+    ASSERT_EQ(p.stat("thirst"), thirst - 10);
+
+    p.drink(5);
+    ASSERT_EQ(p.stat("thirst"), thirst - 5);
+
+    p.reduceThirst(thirst + 5);
+    ASSERT_EQ(p.stat("thirst"), 0);
 }

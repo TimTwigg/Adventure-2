@@ -1,4 +1,4 @@
-// Updated: 9 December 2021
+// Updated: 13 February 2022
 
 #ifndef STATDEFAULTS_HPP
 #define STATDEFAULTS_HPP
@@ -19,6 +19,7 @@ namespace DEFAULT {
     unsigned int stat_level_interval = 5;
     float stat_level_bonus = 1.25;
     float stat_level_no_bonus = 1.1;
+    unsigned int xp_per_level = 100;
 }
 
 #endif
