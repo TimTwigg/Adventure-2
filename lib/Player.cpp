@@ -1,4 +1,4 @@
-// Updated: 13 February 2022
+// Updated: 14 February 2022
 
 #include <string>
 #include <fstream>
@@ -37,7 +37,7 @@ Player::Player(SkillSets skillset, const std::string& savepath) : invalid_stat_n
 
     data["level"] = 1;
     data["xp"] = 0;
-    data["skillset"] = SET::to_string(skillset);
+    data["skillset"] = skillset;
     data["health"] = DEFAULT::health * skset["health"].get<double>();
     data["max_health"] = DEFAULT::health * skset["health"].get<double>();
     data["base_damage"] = DEFAULT::damage * skset["damage"].get<double>();
@@ -97,8 +97,7 @@ void Player::level_up() {
 }
 
 void Player::level_stats() {
-    SkillSets ss = SET::to_skillset(data["skillset"].get<std::string>());
-    json skset = SET::getSet(ss);
+    json skset = SET::getSet(data["skillset"].get<SkillSets>());
     std::map<std::string, double> bonuses;
     for (auto& pair : skset.items()) {
         if (pair.value() > 1) bonuses.emplace(pair.key(), DEFAULT::stat_level_bonus);
@@ -131,7 +130,7 @@ std::string Player::getSavepath() const noexcept {
 }
 
 SkillSets Player::getSkillset() const noexcept {
-    return SET::to_skillset(data["skillset"].get<std::string>());
+    return data["skillset"].get<SkillSets>();
 }
 
 bool Player::inInventory(OBJCLASS objClass, std::string obj, unsigned int count) const noexcept {

@@ -1,4 +1,4 @@
-// Updated: 22 January 2022
+// Updated: 14 February 2022
 
 #ifndef SKILLSETS_HPP
 #define SKILLSETS_HPP
@@ -19,6 +19,18 @@ enum class SkillSets {
     HUNTER,
     JESTER,
 };
+
+NLOHMANN_JSON_SERIALIZE_ENUM(SkillSets, {
+    {SkillSets::TRAVELER, "TRAVELER"},
+    {SkillSets::WARRIOR, "WARRIOR"},
+    {SkillSets::BRAWLER, "BRAWLER"},
+    {SkillSets::SCOUT, "SCOUT"},
+    {SkillSets::LUMBERJACK, "LUMBERJACK"},
+    {SkillSets::MINER, "MINER"},
+    {SkillSets::FORAGER, "FORAGER"},
+    {SkillSets::HUNTER, "HUNTER"},
+    {SkillSets::JESTER, "JESTER"},
+})
 
 namespace SET {
     json getSet(SkillSets skillset);
