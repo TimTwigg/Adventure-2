@@ -1,15 +1,32 @@
-// updated 14 February 2022
+// updated 15 February 2022
 
 #include <string>
-#include <algorithm>
+#include <map>
 #include "Tool.hpp"
+#include "AdventureException.hpp"
+#include "FileReader.hpp"
+#include "json.hpp"
+using json = nlohmann::json;
 
 Tool::Tool(std::string name) {
-    std::transform(name.begin(), name.end(), name.begin(), [&](char c) -> char {return std::tolower(c);});
+    Object::format(name);
+    if (name.size() < 1) throw AdventureException("Tool: tool name required");
+    json data = FileReader::getFromFile("tools.json", name);
+    this->value = data["value"].get<int>();
+    recipe = data["recipe"].get<std::map<std::string, unsigned int>>();
+    uses = data["hitpoints"].get<int>();
     this->name = name;
     this->type = OBJCLASS::TOOL;
 }
 
-Tool::operator std::string() const {
-    return "TOOL, " + name;
+Tool::operator std::string() const noexcept {
+    return "TOOL, " + name + ", " + std::to_string(uses);
+}
+
+std::map<std::string, unsigned int> Tool::getRecipe() const noexcept {
+    return recipe;
+}
+
+int Tool::getUses() const noexcept {
+    return uses;
 }

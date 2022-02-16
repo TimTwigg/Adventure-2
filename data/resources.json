@@ -1,0 +1,293 @@
+{
+    "raw-chicken": {
+        "category": "RAW-FOOD",
+        "value": 3,
+        "weight": 5
+    },
+    "cooked-chicken": {
+        "category": "FOOD",
+        "value": 6,
+        "weight": 5
+    },
+    "feather": {
+        "category": "OBJECT",
+        "value": 2,
+        "weight": 1
+    },
+    "raw-egg": {
+        "category": "RAW-FOOD",
+        "value": 1,
+        "weight": 6
+    },
+    "cooked-egg": {
+        "category": "FOOD",
+        "value": 2,
+        "weight": 12
+    },
+    "raw-beef": {
+        "category": "RAW-FOOD",
+        "value": 4,
+        "weight": 5
+    },
+    "cooked-beef": {
+        "category": "FOOD",
+        "value": 8,
+        "weight": 5
+    },
+    "wet-leather": {
+        "category": "OBJECT",
+        "value": 2,
+        "weight": 3
+    },
+    "leather": {
+        "category": "OBJECT",
+        "value": 4,
+        "weight": 4
+    },
+    "raw-pork": {
+        "category": "RAW-FOOD",
+        "value": 2,
+        "weight": 4
+    },
+    "cooked-pork": {
+        "category": "FOOD",
+        "value": 8,
+        "weight": 4
+    },
+    "pig-bladder": {
+        "category": "OBJECT",
+        "value": 3,
+        "weight": 3
+    },
+    "raw-horse": {
+        "category": "RAW-FOOD",
+        "value": 4,
+        "weight": 4
+    },
+    "cooked-horse": {
+        "category": "FOOD",
+        "value": 8,
+        "weight": 4
+    },
+    "raw-fish": {
+        "category": "RAW-FOOD",
+        "value": 3,
+        "weight": 5
+    },
+    "cooked-fish": {
+        "category": "FOOD",
+        "value": 6,
+        "weight": 5
+    },
+    "fish-bone": {
+        "category": "OBJECT",
+        "value": 2,
+        "weight": 10
+    },
+    "raw-bird": {
+        "category": "RAW-FOOD",
+        "value": 2,
+        "weight": 5
+    },
+    "cooked-bird": {
+        "category": "FOOD",
+        "value": 4,
+        "weight": 5
+    },
+    "raw-shark": {
+        "category": "RAW-FOOD",
+        "value": 2,
+        "weight": 4
+    },
+    "cooked-shark": {
+        "category": "FOOD",
+        "value": 4,
+        "weight": 4
+    },
+    "shark-tooth": {
+        "category": "OBJECT",
+        "value": 20,
+        "weight": 15
+    },
+    "raw-snake": {
+        "category": "RAW-FOOD",
+        "value": 3,
+        "weight": 10
+    },
+    "cooked-snake": {
+        "category": "FOOD",
+        "value": 6,
+        "weight": 10
+    },
+    "snake-tooth": {
+        "category": "OBJECT",
+        "value": 10,
+        "weight": 15
+    },
+    "raw-mutton": {
+        "category": "RAW-FOOD",
+        "value": 4,
+        "weight": 4
+    },
+    "cooked-mutton": {
+        "category": "FOOD",
+        "value": 8,
+        "weight": 4
+    },
+    "wool": {
+        "category": "OBJECT",
+        "value": 3,
+        "weight": 2
+    },
+    "raw-venison": {
+        "category": "RAW-FOOD",
+        "value": 4,
+        "weight": 4
+    },
+    "cooked-venison": {
+        "category": "FOOD",
+        "value": 8,
+        "weight": 4
+    },
+    "horn": {
+        "category": "OBJECT",
+        "value": 5,
+        "weight": 3
+    },
+    "raw-goat": {
+        "category": "RAW-FOOD",
+        "value": 4,
+        "weight": 5
+    },
+    "cooked-goat": {
+        "category": "FOOD",
+        "value": 8,
+        "weight": 5
+    },
+    "saddle": {
+        "category": "OBJECT",
+        "value": 10,
+        "weight": 1,
+        "recipe": {
+            "leather": 2,
+            "metal": 1
+        }
+    },
+    "raw-lion": {
+        "category": "RAW-FOOD",
+        "value": 3,
+        "weight": 4
+    },
+    "cooked-lion": {
+        "category": "FOOD",
+        "value": 6,
+        "weight": 4
+    },
+    "raw-jaguar": {
+        "category": "RAW-FOOD",
+        "value": 3,
+        "weight": 4
+    },
+    "cooked-jaguar": {
+        "category": "FOOD",
+        "value": 6,
+        "weight": 4
+    },
+    "lion-tooth": {
+        "category": "OBJECT",
+        "value": 15,
+        "weight": 15
+    },
+    "lion-fur": {
+        "category": "OBJECT",
+        "value": 20,
+        "weight": 2
+    },
+    "jaguar-tooth": {
+        "category": "OBJECT",
+        "value": 15,
+        "weight": 15
+    },
+    "jaguar-skin": {
+        "category": "OBJECT",
+        "value": 20,
+        "weight": 2
+    },
+    "arrow": {
+        "category": "AMMO",
+        "value": 3,
+        "weight": 25,
+        "recipe": {
+            "wood": 1,
+            "metal": 1,
+            "feather": 2
+        }
+    },
+    "dart": {
+        "category": "AMMO",
+        "value": 2,
+        "weight": 25,
+        "recipe": {
+            "wood": 1,
+            "feather": 1
+        }
+    },
+    "metal-ore": {
+        "category": "OBJECT",
+        "value": 8,
+        "weight": 3
+    },
+    "metal": {
+        "category": "OBJECT",
+        "value": 10,
+        "weight": 3
+    },
+    "gold-ore": {
+        "category": "OBJECT",
+        "value": 15,
+        "weight": 3
+    },
+    "gold": {
+        "category": "OBJECT",
+        "value": 25,
+        "weight": 3
+    },
+    "glass": {
+        "category": "OBJECT",
+        "value": 4,
+        "weight": 4
+    },
+    "sand": {
+        "category": "MATERIAL",
+        "value": 1,
+        "weight": 4
+    },
+    "wood": {
+        "category": "MATERIAL",
+        "value": 2,
+        "weight": 4
+    },
+    "stone": {
+        "category": "MATERIAL",
+        "value": 2,
+        "weight": 3
+    },
+    "sinew": {
+        "category": "OBJECT",
+        "value": 4,
+        "weight": 10
+    },
+    "cord": {
+        "category": "OBJECT",
+        "value": 6,
+        "weight": 10
+    },
+    "blanket": {
+        "category": "OBJECT",
+        "value": 10,
+        "weight": 2,
+        "recipe": {
+            "wool": 3
+        }
+    }
+}

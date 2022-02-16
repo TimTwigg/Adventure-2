@@ -1,15 +1,48 @@
-// updated 14 February 2022
+// updated 15 February 2022
 
 #include <string>
 #include <algorithm>
 #include "Resource.hpp"
+#include "AdventureException.hpp"
+#include "FileReader.hpp"
+#include "json.hpp"
+using json = nlohmann::json;
 
 Resource::Resource(std::string name, unsigned int count) : count{count} {
-    std::transform(name.begin(), name.end(), name.begin(), [&](char c) -> char {return std::tolower(c);});
+    Object::format(name);
+    if (name.size() < 1) throw AdventureException("Resource: resource name required");
+    json data = FileReader::getFromFile("resources.json", name);
+    category = data["category"].get<Category>();
+    weight = data["weight"].get<int>();
+    this->value = data["value"].get<int>();
     this->name = name;
     this->type = OBJCLASS::RESOURCE;
 }
 
-Resource::operator std::string() const {
+Resource::operator std::string() const noexcept {
     return "RESOURCE, " + name + ", " + std::to_string(count);
+}
+
+Category Resource::getCategory() const noexcept {
+    return category;
+}
+
+int Resource::getWeight() const noexcept {
+    return weight;
+}
+
+int Resource::getCarryWeight() const noexcept {
+    return weight * count;
+}
+
+int Resource::getCount() const noexcept {
+    return count;
+}
+
+void Resource::add(unsigned int num) noexcept {
+    count += num;
+}
+
+int Resource::getTotalValue() const noexcept {
+    return value * count;
 }
