@@ -1,4 +1,4 @@
-// updated 13 February 2022
+// updated 16 February 2022
 
 #include <gtest/gtest.h>
 #include <vector>
@@ -10,9 +10,9 @@
 
 namespace {
     std::vector<std::string> names{"level", "xp", "skillset", "health", "max_health",
-        "base_damage", "fist_base_damage", "hunger", "max_hunger", "thirst", "max_thirst",
+        "base_damage", "fist_base_damage", "hunger", "max_hunger", "thirst", "max_thirst", "carry_weight",
         "speed", "swimming_speed", "consumption_ratio", "chopping_ratio", "mining_ratio",
-        "wealth", "inventory", "savepath", "ratios"};
+       "carry_ratio", "wealth", "inventory", "savepath", "ratios"};
 }
 
 TEST(PlayerTests, Constructor) {
@@ -22,7 +22,7 @@ TEST(PlayerTests, Constructor) {
 TEST(PlayerTests, getStatNames) {
     Player p{SkillSets::TRAVELER, "test"};
     std::vector<std::string> v = p.getStatNames();
-    ASSERT_EQ(v.size(), 20);
+    ASSERT_EQ(v.size(), 22);
     
     std::sort(v.begin(), v.end());
     std::sort(names.begin(), names.end());

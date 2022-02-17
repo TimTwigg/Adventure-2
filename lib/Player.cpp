@@ -1,4 +1,4 @@
-// Updated: 14 February 2022
+// Updated: 16 February 2022
 
 #include <string>
 #include <fstream>
@@ -46,11 +46,13 @@ Player::Player(SkillSets skillset, const std::string& savepath) : invalid_stat_n
     data["max_hunger"] = DEFAULT::hunger * skset["hunger_ratio"].get<double>();
     data["thirst"] = DEFAULT::thirst * skset["hunger_ratio"].get<double>();
     data["max_thirst"] = DEFAULT::thirst * skset["hunger_ratio"].get<double>();
+    data["carry_weight"] = DEFAULT::carry_weight * skset["carry_ratio"].get<double>();
     data["speed"] = skset["speed"].get<double>();
     data["swimming_speed"] = skset["swimming_speed"].get<double>();
     data["consumption_ratio"] = skset["consumption_ratio"].get<double>();
     data["chopping_ratio"] = skset["chopping_ratio"].get<double>();
     data["mining_ratio"] = skset["mining_ratio"].get<double>();
+    data["carry_ratio"] = skset["carry_ratio"].get<double>();
     data["wealth"] = 0;
     data["inventory"] = json::object();
     data["savepath"] = savefile;

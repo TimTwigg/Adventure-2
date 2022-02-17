@@ -1,4 +1,4 @@
-// Updated: 13 February 2022
+// Updated: 16 February 2022
 
 #ifndef STATDEFAULTS_HPP
 #define STATDEFAULTS_HPP
@@ -9,6 +9,7 @@ namespace DEFAULT {
     unsigned int fist_damage = 10;
     unsigned int hunger = 50;
     unsigned int thirst = 20;
+    unsigned int carry_weight = 100;
     unsigned int level_1 = 5;
     unsigned int level_2 = 10;
     unsigned int level_3 = 20;

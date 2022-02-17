@@ -1,4 +1,4 @@
-// updated 25 January 2022
+// updated 16 February 2022
 
 #include <gtest/gtest.h>
 #include "SkillSets.hpp"
@@ -8,7 +8,7 @@ using json = nlohmann::json;
 TEST(SkillSetsTests, getSet) {
     auto f = [](const json& s){
         std::vector<std::string> keys{"health", "damage", "fist_damage", "speed", "consumption_ratio",
-            "chopping_ratio", "mining_ratio", "hunger_ratio", "swimming_speed"};
+            "chopping_ratio", "mining_ratio", "hunger_ratio", "swimming_speed", "carry_ratio"};
         bool flag = true;
         for (const auto& i : s.items()) {
             std::string k = i.key();
@@ -18,39 +18,39 @@ TEST(SkillSetsTests, getSet) {
     };
 
     json set = SET::getSet(SkillSets::TRAVELER);
-    ASSERT_EQ(set.size(), 9);
+    ASSERT_EQ(set.size(), 10);
     ASSERT_TRUE(f(set));
 
     set = SET::getSet(SkillSets::WARRIOR);
-    ASSERT_EQ(set.size(), 9);
+    ASSERT_EQ(set.size(), 10);
     ASSERT_TRUE(f(set));
 
     set = SET::getSet(SkillSets::BRAWLER);
-    ASSERT_EQ(set.size(), 9);
+    ASSERT_EQ(set.size(), 10);
     ASSERT_TRUE(f(set));
 
     set = SET::getSet(SkillSets::SCOUT);
-    ASSERT_EQ(set.size(), 9);
+    ASSERT_EQ(set.size(), 10);
     ASSERT_TRUE(f(set));
 
     set = SET::getSet(SkillSets::LUMBERJACK);
-    ASSERT_EQ(set.size(), 9);
+    ASSERT_EQ(set.size(), 10);
     ASSERT_TRUE(f(set));
 
     set = SET::getSet(SkillSets::MINER);
-    ASSERT_EQ(set.size(), 9);
+    ASSERT_EQ(set.size(), 10);
     ASSERT_TRUE(f(set));
 
     set = SET::getSet(SkillSets::FORAGER);
-    ASSERT_EQ(set.size(), 9);
+    ASSERT_EQ(set.size(), 10);
     ASSERT_TRUE(f(set));
 
     set = SET::getSet(SkillSets::HUNTER);
-    ASSERT_EQ(set.size(), 9);
+    ASSERT_EQ(set.size(), 10);
     ASSERT_TRUE(f(set));
 
     set = SET::getSet(SkillSets::JESTER);
-    ASSERT_EQ(set.size(), 9);
+    ASSERT_EQ(set.size(), 10);
     ASSERT_TRUE(f(set));
 }
 

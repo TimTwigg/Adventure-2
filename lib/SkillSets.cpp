@@ -1,8 +1,9 @@
-// Updated: 15 February 2022
+// Updated: 16 February 2022
 
 #include <map>
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "RandomGenerator.hpp"
 #include "SkillSets.hpp"
 #include "FileReader.hpp"
@@ -14,9 +15,13 @@ json SET::getSet(SkillSets skillset) {
     if (skillset == SkillSets::JESTER) {
         RandomGenerator gen;
         skset = json::object();
-        std::vector<std::string> v = {"health", "damage", "fist_damage", "speed", "consumption_ratio", "chopping_ratio", "mining_ratio", "hunger_ratio", "swimming_speed"};
-        std::vector<double> ratios = gen.getRandDoubleVector(5, 20, 9);
-        for (int i = 0; i < 9; ++i) {
+        json j = FileReader::getFromFile("skillsets.json", "Traveler");
+        std::vector<std::string> v;
+        for (auto& [key, _] : j.items()) {
+            v.push_back(key);
+        }
+        std::vector<double> ratios = gen.getRandDoubleVector(5, 20, v.size());
+        for (int i = 0; i < v.size(); ++i) {
             skset[v[i]] = ratios[i];
         }
     }

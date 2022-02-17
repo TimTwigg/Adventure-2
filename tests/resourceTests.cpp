@@ -1,4 +1,4 @@
-// updated 15 February
+// updated 16 February
 
 #include <gtest/gtest.h>
 #include <string>
@@ -19,8 +19,8 @@ TEST(resourceTests, getters) {
     ASSERT_EQ(r.getType(), OBJCLASS::RESOURCE);
     ASSERT_EQ(r.getCategory(), Category::OBJECT);
     ASSERT_EQ(r.getCount(), 5);
-    ASSERT_EQ(r.getWeight(), 1);
-    ASSERT_EQ(r.getCarryWeight(), 5);
+    ASSERT_EQ(r.getWeight(), 0);
+    ASSERT_EQ(r.getCarryWeight(), 0);
     ASSERT_EQ(r.getValue(), 2);
     ASSERT_EQ(r.getTotalValue(), 10);
 }

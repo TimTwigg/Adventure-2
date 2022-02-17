@@ -8,7 +8,8 @@
         "chopping_ratio" : 0.5,
         "mining_ratio" : 0.5,
         "hunger_ratio" : 1,
-        "swimming_speed" : 1
+        "swimming_speed" : 1,
+        "carry_ratio" : 1
     },
     "Brawler" : {
         "health" : 2,
@@ -19,7 +20,8 @@
         "chopping_ratio" : 0.5,
         "mining_ratio" : 0.5,
         "hunger_ratio" : 1,
-        "swimming_speed" : 1
+        "swimming_speed" : 1,
+        "carry_ratio" : 1
     },
     "Scout" : {
         "health" : 0.5,
@@ -30,7 +32,8 @@
         "chopping_ratio" : 1,
         "mining_ratio" : 1,
         "hunger_ratio" : 2,
-        "swimming_speed" : 1
+        "swimming_speed" : 1,
+        "carry_ratio" : 0.5
     },
     "Lumberjack" : {
         "health" : 1,
@@ -41,7 +44,8 @@
         "chopping_ratio" : 2,
         "mining_ratio" : 1,
         "hunger_ratio" : 0.5,
-        "swimming_speed" : 0.5
+        "swimming_speed" : 0.5,
+        "carry_ratio" : 2
     },
     "Miner" : {
         "health" : 1,
@@ -52,7 +56,8 @@
         "chopping_ratio" : 1,
         "mining_ratio" : 2,
         "hunger_ratio" : 0.5,
-        "swimming_speed" : 0.5
+        "swimming_speed" : 0.5,
+        "carry_ratio" : 2
     },
     "Forager" : {
         "health" : 2,
@@ -63,7 +68,8 @@
         "chopping_ratio" : 1,
         "mining_ratio" : 1,
         "hunger_ratio" : 1,
-        "swimming_speed" : 1
+        "swimming_speed" : 1,
+        "carry_ratio" : 1
     },
     "Hunter" : {
         "health" : 1,
@@ -74,7 +80,8 @@
         "chopping_ratio" : 0.5,
         "mining_ratio" : 0.5,
         "hunger_ratio" : 2,
-        "swimming_speed" : 0.5
+        "swimming_speed" : 0.5,
+        "carry_ratio" : 1
     },
     "Traveler" : {
         "health" : 1,
@@ -85,7 +92,8 @@
         "chopping_ratio" : 1,
         "mining_ratio" : 1,
         "hunger_ratio" : 1,
-        "swimming_speed" : 1
+        "swimming_speed" : 1,
+        "carry_ratio" : 1
     },
     "Jester" : {
         "health" : 1,
@@ -96,6 +104,7 @@
         "chopping_ratio" : 1,
         "mining_ratio" : 1,
         "hunger_ratio" : 1,
-        "swimming_speed" : 1
+        "swimming_speed" : 1,
+        "carry_ratio" : 1
     }
 }

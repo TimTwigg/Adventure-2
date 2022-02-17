@@ -3,54 +3,63 @@
         "hitpoints" : 10,
         "value" : 12,
         "target" : ["animals.sheep"],
-        "recipe" : {"metal" : 1}
+        "recipe" : {"metal" : 1},
+        "weight" : 6
     },
     "flute" : {
         "hitpoints" : -1,
         "value" : 4,
         "target" : ["animals.snake", "actions.perform-flute"],
-        "recipe" : {"wood" : 1}
+        "recipe" : {"wood" : 1},
+        "weight" : 1
     },
     "stone-pick" : {
         "hitpoints" : 20,
         "value" : 10,
         "target" : ["misc.stone", "misc.metal"],
-        "recipe" : {"wood" : 1, "stone" : 2}
+        "recipe" : {"wood" : 1, "stone" : 2},
+        "weight" : 20
     },
     "metal-pick" : {
         "hitpoints" : 40,
         "value" : 25,
         "target" : ["misc.stone", "misc.metal", "misc.gold"],
-        "recipe" : {"wood" : 1, "metal" : 2}
+        "recipe" : {"wood" : 1, "metal" : 2},
+        "weight" : 20
     },
     "stone-axe" : {
         "hitpoints" : 10,
         "value" : 8,
         "target" : ["misc.wood"],
-        "recipe" : {"wood" : 1, "stone" : 1}
+        "recipe" : {"wood" : 1, "stone" : 1},
+        "weight" : 20
     },
     "metal-axe" : {
         "hitpoints" : 20,
         "value" : 15,
         "target" : ["misc.wood"],
-        "recipe" : {"wood" : 1, "metal" : 1}
+        "recipe" : {"wood" : 1, "metal" : 1},
+        "weight" : 20
     },
     "wood-axe" : {
         "hitpoints" : 5,
         "value" : 5,
         "target" : ["misc.wood"],
-        "recipe" : {"wood" : 2}
+        "recipe" : {"wood" : 2},
+        "weight" : 15
     },
     "binoculars" : {
         "hitpoints" : -1,
         "value" : 17,
         "target" : ["actions.look-binocs"],
-        "recipe" : {"glass" : 1, "metal" : 1}
+        "recipe" : {"glass" : 1, "metal" : 1},
+        "weight" : 4
     },
     "hammer" : {
         "hitpoints" : 25,
         "value" : 4,
         "target" : ["builds"],
-        "recipe" : {"stone" : 1}
+        "recipe" : {"stone" : 1},
+        "weight" : 6
     }
 }

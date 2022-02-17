@@ -12,17 +12,17 @@
     "feather": {
         "category": "OBJECT",
         "value": 2,
-        "weight": 1
+        "weight": 0
     },
     "raw-egg": {
         "category": "RAW-FOOD",
         "value": 1,
-        "weight": 6
+        "weight": 1
     },
     "cooked-egg": {
         "category": "FOOD",
         "value": 2,
-        "weight": 12
+        "weight": 1
     },
     "raw-beef": {
         "category": "RAW-FOOD",
@@ -37,22 +37,22 @@
     "wet-leather": {
         "category": "OBJECT",
         "value": 2,
-        "weight": 3
+        "weight": 7
     },
     "leather": {
         "category": "OBJECT",
         "value": 4,
-        "weight": 4
+        "weight": 5
     },
     "raw-pork": {
         "category": "RAW-FOOD",
         "value": 2,
-        "weight": 4
+        "weight": 5
     },
     "cooked-pork": {
         "category": "FOOD",
         "value": 8,
-        "weight": 4
+        "weight": 5
     },
     "pig-bladder": {
         "category": "OBJECT",
@@ -62,37 +62,37 @@
     "raw-horse": {
         "category": "RAW-FOOD",
         "value": 4,
-        "weight": 4
+        "weight": 6
     },
     "cooked-horse": {
         "category": "FOOD",
         "value": 8,
-        "weight": 4
+        "weight": 6
     },
     "raw-fish": {
         "category": "RAW-FOOD",
         "value": 3,
-        "weight": 5
+        "weight": 3
     },
     "cooked-fish": {
         "category": "FOOD",
         "value": 6,
-        "weight": 5
+        "weight": 3
     },
     "fish-bone": {
         "category": "OBJECT",
         "value": 2,
-        "weight": 10
+        "weight": 1
     },
     "raw-bird": {
         "category": "RAW-FOOD",
         "value": 2,
-        "weight": 5
+        "weight": 2
     },
     "cooked-bird": {
         "category": "FOOD",
         "value": 4,
-        "weight": 5
+        "weight": 2
     },
     "raw-shark": {
         "category": "RAW-FOOD",
@@ -107,32 +107,32 @@
     "shark-tooth": {
         "category": "OBJECT",
         "value": 20,
-        "weight": 15
+        "weight": 1
     },
     "raw-snake": {
         "category": "RAW-FOOD",
         "value": 3,
-        "weight": 10
+        "weight": 3
     },
     "cooked-snake": {
         "category": "FOOD",
         "value": 6,
-        "weight": 10
+        "weight": 3
     },
     "snake-tooth": {
         "category": "OBJECT",
         "value": 10,
-        "weight": 15
+        "weight": 1
     },
     "raw-mutton": {
         "category": "RAW-FOOD",
         "value": 4,
-        "weight": 4
+        "weight": 5
     },
     "cooked-mutton": {
         "category": "FOOD",
         "value": 8,
-        "weight": 4
+        "weight": 5
     },
     "wool": {
         "category": "OBJECT",
@@ -142,17 +142,17 @@
     "raw-venison": {
         "category": "RAW-FOOD",
         "value": 4,
-        "weight": 4
+        "weight": 5
     },
     "cooked-venison": {
         "category": "FOOD",
         "value": 8,
-        "weight": 4
+        "weight": 5
     },
     "horn": {
         "category": "OBJECT",
         "value": 5,
-        "weight": 3
+        "weight": 2
     },
     "raw-goat": {
         "category": "RAW-FOOD",
@@ -167,7 +167,7 @@
     "saddle": {
         "category": "OBJECT",
         "value": 10,
-        "weight": 1,
+        "weight": 18,
         "recipe": {
             "leather": 2,
             "metal": 1
@@ -176,47 +176,47 @@
     "raw-lion": {
         "category": "RAW-FOOD",
         "value": 3,
-        "weight": 4
+        "weight": 6
     },
     "cooked-lion": {
         "category": "FOOD",
         "value": 6,
-        "weight": 4
+        "weight": 6
     },
     "raw-jaguar": {
         "category": "RAW-FOOD",
         "value": 3,
-        "weight": 4
+        "weight": 6
     },
     "cooked-jaguar": {
         "category": "FOOD",
         "value": 6,
-        "weight": 4
+        "weight": 6
     },
     "lion-tooth": {
         "category": "OBJECT",
         "value": 15,
-        "weight": 15
+        "weight": 2
     },
     "lion-fur": {
         "category": "OBJECT",
         "value": 20,
-        "weight": 2
+        "weight": 9
     },
     "jaguar-tooth": {
         "category": "OBJECT",
         "value": 15,
-        "weight": 15
+        "weight": 2
     },
     "jaguar-skin": {
         "category": "OBJECT",
         "value": 20,
-        "weight": 2
+        "weight": 8
     },
     "arrow": {
         "category": "AMMO",
         "value": 3,
-        "weight": 25,
+        "weight": 1,
         "recipe": {
             "wood": 1,
             "metal": 1,
@@ -226,7 +226,7 @@
     "dart": {
         "category": "AMMO",
         "value": 2,
-        "weight": 25,
+        "weight": 1,
         "recipe": {
             "wood": 1,
             "feather": 1
@@ -235,57 +235,57 @@
     "metal-ore": {
         "category": "OBJECT",
         "value": 8,
-        "weight": 3
+        "weight": 10
     },
     "metal": {
         "category": "OBJECT",
         "value": 10,
-        "weight": 3
+        "weight": 8
     },
     "gold-ore": {
         "category": "OBJECT",
         "value": 15,
-        "weight": 3
+        "weight": 11
     },
     "gold": {
         "category": "OBJECT",
         "value": 25,
-        "weight": 3
+        "weight": 9
     },
     "glass": {
         "category": "OBJECT",
         "value": 4,
-        "weight": 4
+        "weight": 7
     },
     "sand": {
         "category": "MATERIAL",
         "value": 1,
-        "weight": 4
+        "weight": 7
     },
     "wood": {
         "category": "MATERIAL",
         "value": 2,
-        "weight": 4
+        "weight": 6
     },
     "stone": {
         "category": "MATERIAL",
         "value": 2,
-        "weight": 3
+        "weight": 10
     },
     "sinew": {
         "category": "OBJECT",
         "value": 4,
-        "weight": 10
+        "weight": 2
     },
     "cord": {
         "category": "OBJECT",
         "value": 6,
-        "weight": 10
+        "weight": 3
     },
     "blanket": {
         "category": "OBJECT",
         "value": 10,
-        "weight": 2,
+        "weight": 3,
         "recipe": {
             "wool": 3
         }
