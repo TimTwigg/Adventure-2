@@ -1,4 +1,4 @@
-// Updated: 15 February 2022
+// Updated: 29 March 2022
 
 #ifndef OBJECT_HPP
 #define OBJECT_HPP
@@ -28,6 +28,7 @@ class Object {
         static void format(std::string& s) noexcept;
 
     public:
+        virtual ~Object() = default;
         virtual operator std::string() const = 0; // convert object to string
         std::string getName() const noexcept;
         unsigned int getValue() const noexcept;

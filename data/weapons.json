@@ -1,0 +1,68 @@
+{
+    "wood-spear" : {
+        "type" : "melee",
+        "m-damage" : 0.75,
+        "r-damage" : 0,
+        "hitpoints" : 10,
+        "value" : 3,
+        "recipe" : {"wood" : 2}
+    },
+    "stone-spear" : {
+        "type" : "melee",
+        "m-damage" : 1,
+        "r-damage" : 0,
+        "hitpoints" : 15,
+        "value" : 6,
+        "recipe" : {"wood" : 1, "stone" : 1}
+    },
+    "metal-spear" : {
+        "type" : "melee",
+        "m-damage" : 1.5,
+        "r-damage" : 0,
+        "hitpoints" : 20,
+        "value" : 13,
+        "recipe" : {"wood" : 1, "metal" : 1}
+    },
+    "wood-sword" : {
+        "type" : "melee",
+        "m-damage" : 0.75,
+        "r-damage" : 0,
+        "hitpoints" : 15,
+        "value" : 7,
+        "recipe" : {"wood" : 3}
+    },
+    "stone-sword" : {
+        "type" : "melee",
+        "m-damage" : 1,
+        "r-damage" : 0,
+        "hitpoints" : 20,
+        "value" : 9,
+        "recipe" : {"wood" : 1, "stone" : 2}
+    },
+    "metal-sword" : {
+        "type" : "melee",
+        "m-damage" : 2,
+        "r-damage" : 0,
+        "hitpoints" : 35,
+        "value" : 25,
+        "recipe" : {"wood" : 1, "metal" : 2}
+    },
+    "bow" : {
+        "type" : "ranged",
+        "ammo" : "arrow",
+        "m-damage" : 0,
+        "r-damage" : 2,
+        "hitpoints" : 20,
+        "value" : 10,
+        "recipe" : {"wood" : 1, "string" : 1}
+    },
+    "dart-gun" : {
+        "type" : "ranged",
+        "ammo" : "dart",
+        "m-damage" : 0,
+        "r-damage" : 1,
+        "hitpoints" : 50,
+        "value" : 7,
+        "recipe" : {"wood" : 1}
+    }
+}

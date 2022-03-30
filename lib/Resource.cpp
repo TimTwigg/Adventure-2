@@ -1,4 +1,4 @@
-// updated 15 February 2022
+// updated 29 March 2022
 
 #include <string>
 #include <algorithm>
@@ -45,4 +45,9 @@ void Resource::add(unsigned int num) noexcept {
 
 int Resource::getTotalValue() const noexcept {
     return value * count;
+}
+
+void Resource::remove(unsigned int num) {
+    if (num > count) throw AdventureException("Resource::remove not enough to reduce by " + std::to_string(num));
+    count -= num;
 }

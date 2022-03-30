@@ -1,4 +1,4 @@
-// updated 15 February 2022
+// updated 29 March 2022
 
 #include <string>
 #include <map>
@@ -29,4 +29,9 @@ std::map<std::string, unsigned int> Tool::getRecipe() const noexcept {
 
 int Tool::getUses() const noexcept {
     return uses;
+}
+
+void Tool::use() {
+    if (uses < 1) throw AdventureException("Tool::use tool is already broken");
+    --uses;
 }

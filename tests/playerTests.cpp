@@ -1,4 +1,4 @@
-// updated 16 February 2022
+// updated 29 March 2022
 
 #include <gtest/gtest.h>
 #include <vector>
@@ -7,12 +7,13 @@
 #include "Player.hpp"
 #include "SkillSets.hpp"
 #include "AdventureException.hpp"
+#include "Object.hpp"
 
 namespace {
     std::vector<std::string> names{"level", "xp", "skillset", "health", "max_health",
         "base_damage", "fist_base_damage", "hunger", "max_hunger", "thirst", "max_thirst", "carry_weight",
         "speed", "swimming_speed", "consumption_ratio", "chopping_ratio", "mining_ratio",
-       "carry_ratio", "wealth", "inventory", "savepath", "ratios"};
+       "carry_ratio", "wealth", "savepath", "ratios"};
 }
 
 TEST(PlayerTests, Constructor) {
@@ -22,7 +23,7 @@ TEST(PlayerTests, Constructor) {
 TEST(PlayerTests, getStatNames) {
     Player p{SkillSets::TRAVELER, "test"};
     std::vector<std::string> v = p.getStatNames();
-    ASSERT_EQ(v.size(), 22);
+    ASSERT_EQ(v.size(), 21);
     
     std::sort(v.begin(), v.end());
     std::sort(names.begin(), names.end());
@@ -143,4 +144,25 @@ TEST(PlayerTests, thirstManagers) {
 
     p.reduceThirst(thirst + 5);
     ASSERT_EQ(p.stat("thirst"), 0);
+}
+
+TEST(PlayerTests, inventoryManagers) {
+    Player p{SkillSets::MINER, "test"};
+    ASSERT_FALSE(p.inInventory("feather"));
+    ASSERT_TRUE(p.inInventory("cooked-chicken", 0));
+    ASSERT_FALSE(p.inInventory("stone-pick"));
+
+    p.addItem(OBJCLASS::RESOURCE, "feather");
+    ASSERT_TRUE(p.inInventory("feather"));
+    ASSERT_FALSE(p.inInventory("feather", 2));
+
+    p.addItem(OBJCLASS::RESOURCE, "feather");
+    ASSERT_TRUE(p.inInventory("feather"));
+    ASSERT_TRUE(p.inInventory("feather", 2));
+    ASSERT_EQ(p.itemCount("feather"), 2);
+
+    p.removeItem(OBJCLASS::RESOURCE, "feather");
+    ASSERT_EQ(p.itemCount("feather"), 1);
+
+    ASSERT_EQ(p.itemCount("computer"), 0);
 }

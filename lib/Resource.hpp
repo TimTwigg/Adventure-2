@@ -1,4 +1,4 @@
-// updated 15 February 2022
+// updated 29 March 2022
 
 #ifndef RESOURCE_HPP
 #define RESOURCE_HPP
@@ -33,6 +33,7 @@ class Resource : public Object {
         int getCount() const noexcept;
         void add(unsigned int num = 1) noexcept;
         int getTotalValue() const noexcept;
+        void remove(unsigned int num);
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(Resource, type, name, count);
 
     private:

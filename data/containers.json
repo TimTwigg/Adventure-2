@@ -1,0 +1,17 @@
+{
+    "bucket" : {
+        "amount" : 3,
+        "value" : 12,
+        "recipe" : {"metal" : 1}
+    },
+    "bottle" : {
+        "amount" : 2,
+        "value" : 6,
+        "recipe" : {"glass" : 1}
+    },
+    "vial" : {
+        "amount" : 2,
+        "value" : 6,
+        "recipe" : {"glass" : 1}
+    }
+}

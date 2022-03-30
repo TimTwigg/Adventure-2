@@ -1,4 +1,4 @@
-// Updated: 16 February 2022
+// Updated: 29 March 2022
 
 #include <string>
 #include <fstream>
@@ -10,12 +10,17 @@
 #include "SkillSets.hpp"
 #include "StatDefaults.hpp"
 #include "AdventureException.hpp"
+#include "Resource.hpp"
+#include "Tool.hpp"
+#include "Weapon.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
 
+#include "iostream"
+
 namespace {
     // names of data contents whose values are not numeric
-    std::vector<std::string> INVALID_STAT_NAMES{"skillset", "inventory", "savepath", "ratios"};
+    std::vector<std::string> INVALID_STAT_NAMES{"skillset", "savepath", "ratios"};
 }
 
 Player::Player(SkillSets skillset, const std::string& savepath) : invalid_stat_names{INVALID_STAT_NAMES} {
@@ -54,7 +59,6 @@ Player::Player(SkillSets skillset, const std::string& savepath) : invalid_stat_n
     data["mining_ratio"] = skset["mining_ratio"].get<double>();
     data["carry_ratio"] = skset["carry_ratio"].get<double>();
     data["wealth"] = 0;
-    data["inventory"] = json::object();
     data["savepath"] = savefile;
     data["ratios"] = skset;
 }
@@ -135,16 +139,79 @@ SkillSets Player::getSkillset() const noexcept {
     return data["skillset"].get<SkillSets>();
 }
 
-bool Player::inInventory(OBJCLASS objClass, std::string obj, unsigned int count) const noexcept {
+bool Player::inInventory(std::string obj, unsigned int count) const noexcept {
+    if (count == 0) return true;
+    for (auto it = inventory.begin(); it != inventory.end(); ++it) {
+        Object* o = it->get();
+        if (o->getName() == obj) {
+            if (o->getType() == OBJCLASS::RESOURCE) {
+                Resource* r = static_cast<Resource*>(o);
+                return r->getCount() >= count;
+            }
+            return true;
+        }
+    }
     return false;
 }
 
 void Player::addItem(OBJCLASS objClass, std::string obj, unsigned int count) {
+    if (objClass == OBJCLASS::RESOURCE) {
+        for (auto it = inventory.begin(); it != inventory.end(); ++it) {
+            Object* o = it->get();
+            if (o->getName() == obj) {
+                Resource* r = static_cast<Resource*>(o);
+                r->add(count);
+                return;
+            }
+        }
+    }
 
+    switch (objClass) {
+        case OBJCLASS::RESOURCE:
+            inventory.push_back(std::unique_ptr<Object>(new Resource(obj, count)));
+            break;
+        case OBJCLASS::CONTAINER:
+            //for (int i = 0; i < count; ++i) inventory.push_back(std::unique_ptr<Object>(new Container(obj, count)));
+            break;
+        case OBJCLASS::TOOL:
+            for (int i = 0; i < count; ++i) inventory.push_back(std::unique_ptr<Object>(new Tool(obj)));
+            break;
+        case OBJCLASS::WEAPON:
+            for (int i = 0; i < count; ++i) inventory.push_back(std::unique_ptr<Object>(new Weapon(obj)));
+            break;
+    }
 }
 
 void Player::removeItem(OBJCLASS objClass, std::string obj, unsigned int count) {
+    for (auto it = inventory.begin(); it != inventory.end(); ++it) {
+        Object* o = it->get();
+        if (o->getName() == obj) {
+            if (o->getType() == OBJCLASS::RESOURCE) {
+                Resource* r = static_cast<Resource*>(o);
+                if (r->getCount() > count) r->remove(count);
+                else if (r->getCount() == count) inventory.erase(it);
+                else throw AdventureException("Player::removeItem not enough to remove: " + obj + " " + std::to_string(count));
+            }
+            else inventory.erase(it);
+            return;
+        }
+    }
+    throw AdventureException("Player::removeItem could not find item: " + obj);
+}
 
+int Player::itemCount(std::string obj) const noexcept {
+    int count = 0;
+    for (auto it = inventory.begin(); it != inventory.end(); ++it) {
+        Object* o = it->get();
+        if (o->getName() == obj) {
+            if (o->getType() == OBJCLASS::RESOURCE) {
+                Resource* r = static_cast<Resource*>(o);
+                count += r->getCount();
+            }
+            else ++count;
+        }
+    }
+    return count;
 }
 
 void Player::addWealth(unsigned int amount) noexcept {

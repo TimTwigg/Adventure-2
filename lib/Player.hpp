@@ -1,9 +1,10 @@
-// Updated: 13 February 2022
+// Updated: 29 March 2022
 
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
 #include <vector>
+#include <memory>
 #include "SkillSets.hpp"
 #include "Object.hpp"
 #include "json.hpp"
@@ -21,9 +22,13 @@ class Player {
         std::string getSavepath() const noexcept;
         SkillSets getSkillset() const noexcept;
         
-        bool inInventory(OBJCLASS objClass, std::string obj, unsigned int count = 1) const noexcept;
+        // returns true if the object is in the player's inventory, with enough multiplicity
+        // if it is a resource. If it is not a resource, returns true if the object is in the
+        // inventory
+        bool inInventory(std::string obj, unsigned int count = 1) const noexcept;
         void addItem(OBJCLASS objClass, std::string obj, unsigned int count = 1);
         void removeItem(OBJCLASS objClass, std::string obj, unsigned int count = 1);
+        int itemCount(std::string obj) const noexcept;
         
         void addWealth(unsigned int amount) noexcept;
         void removeWealth(unsigned int amount);
@@ -40,6 +45,7 @@ class Player {
 
     private:
         json data;
+        std::vector<std::unique_ptr<Object>> inventory;
         std::vector<std::string> invalid_stat_names;
 
         void level_up();
