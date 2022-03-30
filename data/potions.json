@@ -1,0 +1,14 @@
+{
+    "medicine" : {
+        "hunger" : 0,
+        "thirst" : 0,
+        "value" : 15,
+        "hp" : 500
+    },
+    "protein-shake" : {
+        "hunger" : 10,
+        "thirst" : 3,
+        "value" : 15,
+        "hp" : 50
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "milk": {
+        "hunger" : 3,
+        "thirst" : 3,
+        "value" : 3,
+        "hp" : 25
+    },
+    "water": {
+        "hunger" : 0,
+        "thirst": 4,
+        "value" : 0,
+        "hp" : 25
+    }
+}
