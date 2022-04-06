@@ -1,4 +1,4 @@
-// updated 29 March 2022
+// updated 6 April 2022
 
 #include <map>
 #include <string>
@@ -14,6 +14,7 @@ Weapon::Weapon(std::string name) {
     json data = FileReader::getFromFile("weapons.json", name);
     this->value = data["value"].get<int>();
     this->name = name;
+    this->weight = data["weight"].get<int>();
     this->type = OBJCLASS::WEAPON;
     recipe = data["recipe"].get<std::map<std::string, unsigned int>>();
     uses = data["hitpoints"].get<int>();

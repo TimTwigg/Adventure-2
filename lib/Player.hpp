@@ -1,4 +1,4 @@
-// Updated: 29 March 2022
+// Updated: 4 April 2022
 
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
@@ -16,6 +16,7 @@ class Player {
         explicit Player(const std::string& savepath);
         Player(const Player& other) = delete;
         void save() const;
+        
         double stat(const std::string& stat_name) const;
         std::vector<std::string> getStatNames() const noexcept;
         std::vector<std::string> getInvalidStatNames() const noexcept;
@@ -42,6 +43,8 @@ class Player {
         void reduceThirst(double points) noexcept;
         void eat(double points) noexcept;
         void drink(double points) noexcept;
+
+        double weight() const noexcept;
 
     private:
         json data;

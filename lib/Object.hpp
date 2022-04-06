@@ -1,4 +1,4 @@
-// Updated: 29 March 2022
+// Updated: 6 April 2022
 
 #ifndef OBJECT_HPP
 #define OBJECT_HPP
@@ -10,16 +10,20 @@ using json = nlohmann::json;
 
 enum class OBJCLASS {
     RESOURCE,
+    CRESOURCE,
     CONTAINER,
     TOOL,
-    WEAPON
+    WEAPON,
+    LIQUID
 };
 
 NLOHMANN_JSON_SERIALIZE_ENUM(OBJCLASS, {
     {OBJCLASS::RESOURCE, "RESOURCE"},
+    {OBJCLASS::CRESOURCE, "CRESOURCE"},
     {OBJCLASS::CONTAINER, "CONTAINER"},
     {OBJCLASS::TOOL, "TOOL"},
     {OBJCLASS::WEAPON, "WEAPON"},
+    {OBJCLASS::LIQUID, "LIQUID"}
 })
 
 class Object {
@@ -31,12 +35,14 @@ class Object {
         virtual ~Object() = default;
         virtual operator std::string() const = 0; // convert object to string
         std::string getName() const noexcept;
-        unsigned int getValue() const noexcept;
+        virtual unsigned int getValue() const noexcept;
+        virtual int getWeight() const noexcept;
         OBJCLASS getType() const noexcept;
     
     protected:
         std::string name;
         unsigned int value;
+        int weight;
         OBJCLASS type;
 };
 
@@ -55,6 +61,10 @@ inline std::string Object::getName() const noexcept {
 
 inline unsigned int Object::getValue() const noexcept {
     return value;
+}
+
+inline int Object::getWeight() const noexcept {
+    return weight;
 }
 
 inline OBJCLASS Object::getType() const noexcept {

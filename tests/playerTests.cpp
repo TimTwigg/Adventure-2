@@ -1,4 +1,4 @@
-// updated 29 March 2022
+// updated 6 April 2022
 
 #include <gtest/gtest.h>
 #include <vector>
@@ -8,6 +8,8 @@
 #include "SkillSets.hpp"
 #include "AdventureException.hpp"
 #include "Object.hpp"
+
+#include <iostream>
 
 namespace {
     std::vector<std::string> names{"level", "xp", "skillset", "health", "max_health",
@@ -164,5 +166,32 @@ TEST(PlayerTests, inventoryManagers) {
     p.removeItem(OBJCLASS::RESOURCE, "feather");
     ASSERT_EQ(p.itemCount("feather"), 1);
 
+    p.addItem(OBJCLASS::TOOL, "stone-pick");
+    p.addItem(OBJCLASS::TOOL, "stone-pick", 3);
+    ASSERT_EQ(p.itemCount("stone-pick"), 4);
+
     ASSERT_EQ(p.itemCount("computer"), 0);
+}
+
+TEST(PlayerTests, weight) {
+    Player p{SkillSets::TRAVELER, "test"};
+    ASSERT_EQ(p.weight(), 0);
+
+    try {
+        p.addItem(OBJCLASS::RESOURCE, "stone"); // 10
+        p.addItem(OBJCLASS::TOOL, "metal-axe"); // 20
+        p.addItem(OBJCLASS::WEAPON, "bow"); // 8
+        p.addItem(OBJCLASS::CRESOURCE, "arrow", 20); // 20
+        p.addItem(OBJCLASS::CONTAINER, "bucket"); // 6
+    }
+    catch (AdventureException e) {
+        std::cout << e.getReason() << std::endl;
+    }
+
+    try {
+        ASSERT_EQ(p.weight(), 64);
+    }
+    catch (...) {
+        std::cout << "ERROR" << std::endl;
+    }
 }

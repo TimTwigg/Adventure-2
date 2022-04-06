@@ -1,4 +1,4 @@
-// updated 29 March 2022
+// updated 6 April 2022
 
 #include <string>
 #include <map>
@@ -16,6 +16,7 @@ Tool::Tool(std::string name) {
     recipe = data["recipe"].get<std::map<std::string, unsigned int>>();
     uses = data["hitpoints"].get<int>();
     this->name = name;
+    this->weight = data["weight"].get<int>();
     this->type = OBJCLASS::TOOL;
 }
 

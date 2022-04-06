@@ -1,4 +1,4 @@
-// updated 30 March 2022
+// updated 6 April 2022
 
 #ifndef CONTAINER_HPP
 #define CONTAINER_HPP
@@ -7,13 +7,18 @@
 #include <map>
 #include "Object.hpp"
 #include "Liquid.hpp"
-#include "json.hpp"
 
 class Container : public Object {
+    public:
+        static Container fromString(std::string code);
+
     public:
         explicit Container(std::string name);
         Container(std::string name, Liquid content);
         operator std::string() const noexcept override;
+        int getWeight() const noexcept override;
+        unsigned int getValue() const noexcept override;
+
         std::map<std::string, unsigned int> getRecipe() const noexcept;
         Liquid getContent() const noexcept;
         void reduce();

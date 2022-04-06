@@ -1,11 +1,9 @@
-// updated 16 February
+// updated 6 April 2022
 
 #include <gtest/gtest.h>
 #include <string>
 #include "Resource.hpp"
 #include "AdventureException.hpp"
-#include "json.hpp"
-using json = nlohmann::json;
 
 TEST(resourceTests, constructor) {
     Resource r = Resource("gold");
@@ -20,9 +18,12 @@ TEST(resourceTests, getters) {
     ASSERT_EQ(r.getCategory(), Category::OBJECT);
     ASSERT_EQ(r.getCount(), 5);
     ASSERT_EQ(r.getWeight(), 0);
-    ASSERT_EQ(r.getCarryWeight(), 0);
     ASSERT_EQ(r.getValue(), 2);
     ASSERT_EQ(r.getTotalValue(), 10);
+    ASSERT_EQ(r.getNutValue(), 0);
+
+    Resource s = Resource("cooked-chicken");
+    ASSERT_EQ(s.getNutValue(), 25);
 }
 
 TEST(resourceTests, operatorString) {
@@ -33,11 +34,6 @@ TEST(resourceTests, operatorString) {
     Resource r2 = Resource("METAL");
     std::string s2 = r2;
     ASSERT_EQ(s2, "RESOURCE, metal, 1");
-}
-
-TEST(resourceTests, jsonSerializer) {
-    Resource r = Resource("gold", 2);
-    json j = r;
 }
 
 TEST(resourceTests, add) {

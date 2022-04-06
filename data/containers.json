@@ -2,16 +2,19 @@
     "bucket" : {
         "amount" : 3,
         "value" : 12,
-        "recipe" : {"metal" : 1}
+        "recipe" : {"metal" : 1},
+        "weight" : 6
     },
     "bottle" : {
         "amount" : 2,
         "value" : 6,
-        "recipe" : {"glass" : 1}
+        "recipe" : {"glass" : 1},
+        "weight" : 4
     },
     "vial" : {
-        "amount" : 2,
+        "amount" : 1,
         "value" : 6,
-        "recipe" : {"glass" : 1}
+        "recipe" : {"glass" : 1},
+        "weight" : 1
     }
 }

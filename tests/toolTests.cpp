@@ -1,12 +1,10 @@
-// updated 15 February 2022
+// updated 6 April 2022
 
 #include <gtest/gtest.h>
 #include <string>
 #include <map>
 #include "Tool.hpp"
 #include "AdventureException.hpp"
-#include "json.hpp"
-using json = nlohmann::json;
 
 TEST(toolTests, constructor) {
     Tool t = Tool("wood-axe");
@@ -33,13 +31,4 @@ TEST(toolTests, operatorString) {
     Tool t = Tool("metal-axe");
     std::string s = t;
     ASSERT_EQ(s, "TOOL, metal-axe, 20");
-}
-
-TEST(toolTests, jsonSerializer) {
-    Tool t = Tool("wood-axe");
-    json j = t;
-    ASSERT_TRUE(j.contains("type"));
-    ASSERT_TRUE(j.contains("name"));
-    ASSERT_TRUE(j.contains("uses"));
-    ASSERT_EQ(j.size(), 3);
 }

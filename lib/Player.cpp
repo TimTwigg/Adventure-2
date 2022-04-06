@@ -1,4 +1,4 @@
-// Updated: 29 March 2022
+// Updated: 6 April 2022
 
 #include <string>
 #include <fstream>
@@ -10,13 +10,13 @@
 #include "SkillSets.hpp"
 #include "StatDefaults.hpp"
 #include "AdventureException.hpp"
+#include "Container.hpp"
 #include "Resource.hpp"
+#include "CResource.hpp"
 #include "Tool.hpp"
 #include "Weapon.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
-
-#include "iostream"
 
 namespace {
     // names of data contents whose values are not numeric
@@ -74,6 +74,17 @@ Player::Player(const std::string& savepath) : invalid_stat_names{INVALID_STAT_NA
 void Player::save() const {
     std::ofstream o;
     o.open(data["savepath"].get<std::string>());
+
+    /*json to_go = json::array();
+    to_go.push_back(data);
+    to_go.push_back(json::array());
+    for (int i = 0; i < inventory.size(); ++i) {
+        Object* o = inventory[i].get();
+        to_go[1].push_back(o->operator std::string());
+    }
+
+    o << std::setw(4) << to_go << std::endl;*/
+
     o << std::setw(4) << data << std::endl;
     o.close();
 }
@@ -170,14 +181,20 @@ void Player::addItem(OBJCLASS objClass, std::string obj, unsigned int count) {
         case OBJCLASS::RESOURCE:
             inventory.push_back(std::unique_ptr<Object>(new Resource(obj, count)));
             break;
+        case OBJCLASS::CRESOURCE:
+            inventory.push_back(std::unique_ptr<Object>(new CResource(obj, count)));
+            break;
         case OBJCLASS::CONTAINER:
-            //for (int i = 0; i < count; ++i) inventory.push_back(std::unique_ptr<Object>(new Container(obj, count)));
+            for (int i = 0; i < count; ++i) inventory.push_back(std::unique_ptr<Object>(new Container(obj)));
             break;
         case OBJCLASS::TOOL:
             for (int i = 0; i < count; ++i) inventory.push_back(std::unique_ptr<Object>(new Tool(obj)));
             break;
         case OBJCLASS::WEAPON:
             for (int i = 0; i < count; ++i) inventory.push_back(std::unique_ptr<Object>(new Weapon(obj)));
+            break;
+        default:
+            throw AdventureException("Player::addItem invalid OBJCLASS");
             break;
     }
 }
@@ -204,7 +221,7 @@ int Player::itemCount(std::string obj) const noexcept {
     for (auto it = inventory.begin(); it != inventory.end(); ++it) {
         Object* o = it->get();
         if (o->getName() == obj) {
-            if (o->getType() == OBJCLASS::RESOURCE) {
+            if (o->getType() == OBJCLASS::RESOURCE || o->getType() == OBJCLASS::CRESOURCE) {
                 Resource* r = static_cast<Resource*>(o);
                 count += r->getCount();
             }
@@ -257,4 +274,14 @@ void Player::eat(double points) noexcept {
 void Player::drink(double points) noexcept {
     data["thirst"] = data["thirst"].get<double>() + points;
     if (data["thirst"].get<double>() > data["max_thirst"].get<double>()) data["thirst"] = data["max_thirst"];
+}
+
+double Player::weight() const noexcept {
+    double carryable = 0.0;
+    int n = inventory.size();
+    for (int i = 0; i < n; ++i) {
+        Object* o = inventory[i].get();
+        carryable += o->getWeight();
+    }
+    return carryable;
 }

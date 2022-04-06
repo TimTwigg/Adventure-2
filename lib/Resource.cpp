@@ -1,4 +1,4 @@
-// updated 29 March 2022
+// updated 6 April 2022
 
 #include <string>
 #include <algorithm>
@@ -13,9 +13,10 @@ Resource::Resource(std::string name, unsigned int count) : count{count} {
     if (name.size() < 1) throw AdventureException("Resource: resource name required");
     json data = FileReader::getFromFile("resources.json", name);
     category = data["category"].get<Category>();
-    weight = data["weight"].get<int>();
+    nut_value = data["general1"].get<int>();
     this->value = data["value"].get<int>();
     this->name = name;
+    this->weight = data["weight"].get<int>();
     this->type = OBJCLASS::RESOURCE;
 }
 
@@ -28,10 +29,6 @@ Category Resource::getCategory() const noexcept {
 }
 
 int Resource::getWeight() const noexcept {
-    return weight;
-}
-
-int Resource::getCarryWeight() const noexcept {
     return weight * count;
 }
 
@@ -51,3 +48,9 @@ void Resource::remove(unsigned int num) {
     if (num > count) throw AdventureException("Resource::remove not enough to reduce by " + std::to_string(num));
     count -= num;
 }
+
+int Resource::getNutValue() const noexcept {
+    return nut_value;
+}
+
+Resource::Resource() {}

@@ -1,0 +1,38 @@
+{
+    "saddle": {
+        "category": "OBJECT",
+        "value": 10,
+        "weight": 18,
+        "recipe": {
+            "leather": 2,
+            "metal": 1
+        }
+    },
+    "arrow": {
+        "category": "AMMO",
+        "value": 3,
+        "weight": 1,
+        "recipe": {
+            "wood": 1,
+            "metal": 1,
+            "feather": 2
+        }
+    },
+    "dart": {
+        "category": "AMMO",
+        "value": 2,
+        "weight": 1,
+        "recipe": {
+            "wood": 1,
+            "feather": 1
+        }
+    },
+    "blanket": {
+        "category": "OBJECT",
+        "value": 10,
+        "weight": 3,
+        "recipe": {
+            "wool": 3
+        }
+    }
+}

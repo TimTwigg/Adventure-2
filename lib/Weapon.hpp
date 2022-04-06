@@ -1,4 +1,4 @@
-// updated 29 March 2022
+// updated 6 April 2022
 
 #ifndef WEAPON_HPP
 #define WEAPON_HPP
@@ -6,7 +6,6 @@
 #include <string>
 #include <map>
 #include "Object.hpp"
-#include "json.hpp"
 
 class Weapon : public Object {
     public:
@@ -16,7 +15,6 @@ class Weapon : public Object {
         int getUses() const noexcept;
         double getDamage() const noexcept;
         void use();
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(Weapon, type, name, uses);
     
     private:
         std::map<std::string, unsigned int> recipe;

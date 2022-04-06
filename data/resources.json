@@ -2,292 +2,307 @@
     "raw-chicken": {
         "category": "RAW-FOOD",
         "value": 3,
-        "weight": 5
+        "weight": 5,
+        "general1": 10
     },
     "cooked-chicken": {
         "category": "FOOD",
         "value": 6,
-        "weight": 5
+        "weight": 5,
+        "general1": 25
     },
     "feather": {
         "category": "OBJECT",
         "value": 2,
-        "weight": 0
+        "weight": 0,
+        "general1": 0
     },
     "raw-egg": {
         "category": "RAW-FOOD",
         "value": 1,
-        "weight": 1
+        "weight": 1,
+        "general1": 3
     },
     "cooked-egg": {
         "category": "FOOD",
         "value": 2,
-        "weight": 1
+        "weight": 1,
+        "general1": 9
     },
     "raw-beef": {
         "category": "RAW-FOOD",
         "value": 4,
-        "weight": 5
+        "weight": 5,
+        "general1": 15
     },
     "cooked-beef": {
         "category": "FOOD",
         "value": 8,
-        "weight": 5
+        "weight": 5,
+        "general1": 25
     },
     "wet-leather": {
         "category": "OBJECT",
         "value": 2,
-        "weight": 7
+        "weight": 7,
+        "general1": 0
     },
     "leather": {
         "category": "OBJECT",
         "value": 4,
-        "weight": 5
+        "weight": 5,
+        "general1": 0
     },
     "raw-pork": {
         "category": "RAW-FOOD",
         "value": 2,
-        "weight": 5
+        "weight": 5,
+        "general1": 10
     },
     "cooked-pork": {
         "category": "FOOD",
         "value": 8,
-        "weight": 5
+        "weight": 5,
+        "general1": 25
     },
     "pig-bladder": {
         "category": "OBJECT",
         "value": 3,
-        "weight": 3
+        "weight": 3,
+        "general1": 0
     },
     "raw-horse": {
         "category": "RAW-FOOD",
         "value": 4,
-        "weight": 6
+        "weight": 6,
+        "general1": 10
     },
     "cooked-horse": {
         "category": "FOOD",
         "value": 8,
-        "weight": 6
+        "weight": 6,
+        "general1": 25
     },
     "raw-fish": {
         "category": "RAW-FOOD",
         "value": 3,
-        "weight": 3
+        "weight": 3,
+        "general1": 8
     },
     "cooked-fish": {
         "category": "FOOD",
         "value": 6,
-        "weight": 3
+        "weight": 3,
+        "general1": 15
     },
     "fish-bone": {
         "category": "OBJECT",
         "value": 2,
-        "weight": 1
+        "weight": 1,
+        "general1": 0
     },
     "raw-bird": {
         "category": "RAW-FOOD",
         "value": 2,
-        "weight": 2
+        "weight": 2,
+        "general1": 4
     },
     "cooked-bird": {
         "category": "FOOD",
         "value": 4,
-        "weight": 2
+        "weight": 2,
+        "general1": 8
     },
     "raw-shark": {
         "category": "RAW-FOOD",
         "value": 2,
-        "weight": 4
+        "weight": 4,
+        "general1": 8
     },
     "cooked-shark": {
         "category": "FOOD",
         "value": 4,
-        "weight": 4
+        "weight": 4,
+        "general1": 15
     },
     "shark-tooth": {
         "category": "OBJECT",
         "value": 20,
-        "weight": 1
+        "weight": 1,
+        "general1": 0
     },
     "raw-snake": {
         "category": "RAW-FOOD",
         "value": 3,
-        "weight": 3
+        "weight": 3,
+        "general1": 8
     },
     "cooked-snake": {
         "category": "FOOD",
         "value": 6,
-        "weight": 3
+        "weight": 3,
+        "general1": 20
     },
     "snake-tooth": {
         "category": "OBJECT",
         "value": 10,
-        "weight": 1
+        "weight": 1,
+        "general1": 0
     },
     "raw-mutton": {
         "category": "RAW-FOOD",
         "value": 4,
-        "weight": 5
+        "weight": 5,
+        "general1": 10
     },
     "cooked-mutton": {
         "category": "FOOD",
         "value": 8,
-        "weight": 5
+        "weight": 5,
+        "general1": 25
     },
     "wool": {
         "category": "OBJECT",
         "value": 3,
-        "weight": 2
+        "weight": 2,
+        "general1": 0
     },
     "raw-venison": {
         "category": "RAW-FOOD",
         "value": 4,
-        "weight": 5
+        "weight": 5,
+        "general1": 10
     },
     "cooked-venison": {
         "category": "FOOD",
         "value": 8,
-        "weight": 5
+        "weight": 5,
+        "general1": 25
     },
     "horn": {
         "category": "OBJECT",
         "value": 5,
-        "weight": 2
+        "weight": 2,
+        "general1": 0
     },
     "raw-goat": {
         "category": "RAW-FOOD",
         "value": 4,
-        "weight": 5
+        "weight": 5,
+        "general1": 10
     },
     "cooked-goat": {
         "category": "FOOD",
         "value": 8,
-        "weight": 5
-    },
-    "saddle": {
-        "category": "OBJECT",
-        "value": 10,
-        "weight": 18,
-        "recipe": {
-            "leather": 2,
-            "metal": 1
-        }
+        "weight": 5,
+        "general1": 25
     },
     "raw-lion": {
         "category": "RAW-FOOD",
         "value": 3,
-        "weight": 6
+        "weight": 6,
+        "general1": 5
     },
     "cooked-lion": {
         "category": "FOOD",
         "value": 6,
-        "weight": 6
+        "weight": 6,
+        "general1": 10
     },
     "raw-jaguar": {
         "category": "RAW-FOOD",
         "value": 3,
-        "weight": 6
+        "weight": 6,
+        "general1": 5
     },
     "cooked-jaguar": {
         "category": "FOOD",
         "value": 6,
-        "weight": 6
+        "weight": 6,
+        "general1": 10
     },
     "lion-tooth": {
         "category": "OBJECT",
         "value": 15,
-        "weight": 2
+        "weight": 2,
+        "general1": 0
     },
     "lion-fur": {
         "category": "OBJECT",
         "value": 20,
-        "weight": 9
+        "weight": 9,
+        "general1": 0
     },
     "jaguar-tooth": {
         "category": "OBJECT",
         "value": 15,
-        "weight": 2
+        "weight": 2,
+        "general1": 0
     },
     "jaguar-skin": {
         "category": "OBJECT",
         "value": 20,
-        "weight": 8
-    },
-    "arrow": {
-        "category": "AMMO",
-        "value": 3,
-        "weight": 1,
-        "recipe": {
-            "wood": 1,
-            "metal": 1,
-            "feather": 2
-        }
-    },
-    "dart": {
-        "category": "AMMO",
-        "value": 2,
-        "weight": 1,
-        "recipe": {
-            "wood": 1,
-            "feather": 1
-        }
+        "weight": 8,
+        "general1": 0
     },
     "metal-ore": {
         "category": "OBJECT",
         "value": 8,
-        "weight": 10
+        "weight": 10,
+        "general1": 0
     },
     "metal": {
         "category": "OBJECT",
         "value": 10,
-        "weight": 8
+        "weight": 8,
+        "general1": 0
     },
     "gold-ore": {
         "category": "OBJECT",
         "value": 15,
-        "weight": 11
+        "weight": 11,
+        "general1": 0
     },
     "gold": {
         "category": "OBJECT",
         "value": 25,
-        "weight": 9
+        "weight": 9,
+        "general1": 0
     },
     "glass": {
         "category": "OBJECT",
         "value": 4,
-        "weight": 7
+        "weight": 6,
+        "general1": 0
     },
     "sand": {
         "category": "MATERIAL",
         "value": 1,
-        "weight": 7
+        "weight": 7,
+        "general1": 0
     },
     "wood": {
         "category": "MATERIAL",
         "value": 2,
-        "weight": 6
+        "weight": 6,
+        "general1": 0
     },
     "stone": {
         "category": "MATERIAL",
         "value": 2,
-        "weight": 10
+        "weight": 10,
+        "general1": 0
     },
     "sinew": {
         "category": "OBJECT",
         "value": 4,
-        "weight": 2
+        "weight": 2,
+        "general1": 0
     },
     "cord": {
         "category": "OBJECT",
         "value": 6,
-        "weight": 3
-    },
-    "blanket": {
-        "category": "OBJECT",
-        "value": 10,
         "weight": 3,
-        "recipe": {
-            "wool": 3
-        }
+        "general1": 0
     }
 }

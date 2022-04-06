@@ -1,4 +1,4 @@
-// updated 29 March 2022
+// updated 6 April 2022
 
 #ifndef TOOL_HPP
 #define TOOL_HPP
@@ -6,7 +6,6 @@
 #include <string>
 #include <map>
 #include "Object.hpp"
-#include "json.hpp"
 
 class Tool : public Object {
     public:
@@ -15,7 +14,6 @@ class Tool : public Object {
         std::map<std::string, unsigned int> getRecipe() const noexcept;
         int getUses() const noexcept;
         void use();
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(Tool, type, name, uses);
     
     private:
         std::map<std::string, unsigned int> recipe;
