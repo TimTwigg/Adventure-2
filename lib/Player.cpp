@@ -1,4 +1,4 @@
-// Updated: 6 April 2022
+// Updated: 7 April 2022
 
 #include <string>
 #include <fstream>
@@ -67,15 +67,25 @@ Player::Player(const std::string& savepath) : invalid_stat_names{INVALID_STAT_NA
     std::ifstream i;
     i.open(savepath);
     if (!i) throw AdventureException("Player::Player() save file does not exist.");
-    i >> data;
+    json filedata;
+    i >> filedata;
     i.close();
+    data = filedata[0];
+    std::for_each(filedata[1].begin(), filedata[1].end(), [&](std::string s){
+        if (s.substr(0, 8) == "RESOURCE") inventory.push_back(std::unique_ptr<Object>(Resource::from_string(s)));
+        else if (s.substr(0, 9) == "CRESOURCE") inventory.push_back(std::unique_ptr<Object>(CResource::from_string(s)));
+        else if (s.substr(0, 9) == "CONTAINER") inventory.push_back(std::unique_ptr<Object>(Container::from_string(s)));
+        else if (s.substr(0, 4) == "TOOL") inventory.push_back(std::unique_ptr<Object>(Tool::from_string(s)));
+        else if (s.substr(0, 6) == "WEAPON") inventory.push_back(std::unique_ptr<Object>(Weapon::from_string(s)));
+        else throw AdventureException("Player::Player(const std::string& savepath) (" + savepath + ") Unrecognized inventory string: " + s);
+    });
 }
 
 void Player::save() const {
     std::ofstream o;
     o.open(data["savepath"].get<std::string>());
 
-    /*json to_go = json::array();
+    json to_go = json::array();
     to_go.push_back(data);
     to_go.push_back(json::array());
     for (int i = 0; i < inventory.size(); ++i) {
@@ -83,9 +93,7 @@ void Player::save() const {
         to_go[1].push_back(o->operator std::string());
     }
 
-    o << std::setw(4) << to_go << std::endl;*/
-
-    o << std::setw(4) << data << std::endl;
+    o << std::setw(4) << to_go << std::endl;
     o.close();
 }
 

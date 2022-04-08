@@ -1,4 +1,4 @@
-// updated 6 April 2022
+// updated 7 April 2022
 
 #ifndef RESOURCE_HPP
 #define RESOURCE_HPP
@@ -25,6 +25,9 @@ NLOHMANN_JSON_SERIALIZE_ENUM(Category, {
 })
 
 class Resource : public Object {
+    public:
+        static Resource* from_string(const std::string& code);
+
     public:
         explicit Resource(std::string name, unsigned int count = 1);
         operator std::string() const noexcept override;

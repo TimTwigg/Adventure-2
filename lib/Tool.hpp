@@ -1,4 +1,4 @@
-// updated 6 April 2022
+// updated 7 April 2022
 
 #ifndef TOOL_HPP
 #define TOOL_HPP
@@ -8,6 +8,9 @@
 #include "Object.hpp"
 
 class Tool : public Object {
+    public:
+        static Tool* from_string(const std::string& code);
+        
     public:
         explicit Tool(std::string name);
         operator std::string() const noexcept override;

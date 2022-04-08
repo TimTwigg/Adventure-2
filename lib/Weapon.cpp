@@ -1,7 +1,9 @@
-// updated 6 April 2022
+// updated 7 April 2022
 
 #include <map>
 #include <string>
+#include <sstream>
+#include <vector>
 #include "Weapon.hpp"
 #include "FileReader.hpp"
 #include "AdventureException.hpp"
@@ -41,4 +43,18 @@ double Weapon::getDamage() const noexcept {
 void Weapon::use() {
     if (uses < 1) throw AdventureException("Weapon::use weapon is already broken");
     --uses;
+}
+
+Weapon* Weapon::from_string(const std::string& code) {
+    std::stringstream ss{code};
+    std::vector<std::string> v;
+    while (ss.good()) {
+        std::string s;
+        std::getline(ss, s, ',');
+        v.push_back(s);
+    }
+
+    Weapon* w = new Weapon(v[1]);
+    w->uses = std::stoi(v[2]);
+    return w;
 }

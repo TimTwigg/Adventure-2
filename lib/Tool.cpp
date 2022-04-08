@@ -1,7 +1,9 @@
-// updated 6 April 2022
+// updated 7 April 2022
 
 #include <string>
 #include <map>
+#include <sstream>
+#include <vector>
 #include "Tool.hpp"
 #include "AdventureException.hpp"
 #include "FileReader.hpp"
@@ -35,4 +37,18 @@ int Tool::getUses() const noexcept {
 void Tool::use() {
     if (uses < 1) throw AdventureException("Tool::use tool is already broken");
     --uses;
+}
+
+Tool* Tool::from_string(const std::string& code) {
+    std::stringstream ss{code};
+    std::vector<std::string> v;
+    while (ss.good()) {
+        std::string s;
+        std::getline(ss, s, ',');
+        v.push_back(s);
+    }
+
+    Tool* t = new Tool(v[1]);
+    t->uses = std::stoi(v[2]);
+    return t;
 }

@@ -1,4 +1,4 @@
-// Updated: 6 April 2022
+// Updated: 7 April 2022
 
 #ifndef OBJECT_HPP
 #define OBJECT_HPP
@@ -33,7 +33,7 @@ class Object {
 
     public:
         virtual ~Object() = default;
-        virtual operator std::string() const = 0; // convert object to string
+        virtual operator std::string() const = 0;
         std::string getName() const noexcept;
         virtual unsigned int getValue() const noexcept;
         virtual int getWeight() const noexcept;

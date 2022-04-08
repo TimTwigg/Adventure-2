@@ -1,7 +1,9 @@
-// updated 6 April 2022
+// updated 7 April 2022
 
 #include <string>
 #include <algorithm>
+#include <sstream>
+#include <vector>
 #include "Resource.hpp"
 #include "AdventureException.hpp"
 #include "FileReader.hpp"
@@ -54,3 +56,15 @@ int Resource::getNutValue() const noexcept {
 }
 
 Resource::Resource() {}
+
+Resource* Resource::from_string(const std::string& code) {
+    std::stringstream ss{code};
+    std::vector<std::string> v;
+    while (ss.good()) {
+        std::string s;
+        std::getline(ss, s, ',');
+        v.push_back(s);
+    }
+
+    return new Resource(v[1], std::stoi(v[2]));
+}

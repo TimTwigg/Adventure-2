@@ -1,4 +1,4 @@
-// updated 6 April 2022
+// updated 7 April 2022
 
 #include <string>
 #include <sstream>
@@ -58,7 +58,7 @@ void Container::empty() noexcept {
     content = Liquid();
 }
 
-Container Container::fromString(std::string code) {
+Container* Container::from_string(const std::string& code) {
     std::stringstream ss{code};
     std::vector<std::string> v;
     while (ss.good()) {
@@ -70,8 +70,8 @@ Container Container::fromString(std::string code) {
     std::string name = v[1];
     Liquid content{v[3]};
     int amount = std::stoi(v[4]);
-    Container c{name, content};
-    c.amount = amount;
+    Container* c = new Container(name, content);
+    c->amount = amount;
 
     return c;
 }
