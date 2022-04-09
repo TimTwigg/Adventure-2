@@ -1,4 +1,4 @@
-// updated 6 April 2022
+// updated 8 April 2022
 
 #include <gtest/gtest.h>
 #include <string>
@@ -41,4 +41,10 @@ TEST(resourceTests, add) {
     ASSERT_EQ(r.getCount(), 1);
     r.add(3);
     ASSERT_EQ(r.getCount(), 4);
+}
+
+TEST(resourceTests, fromString) {
+    Resource* r = Resource::from_string("RESOURCE, wood, 4");
+    ASSERT_EQ(r->getCount(), 4);
+    delete r;
 }

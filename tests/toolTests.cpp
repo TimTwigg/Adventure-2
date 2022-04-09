@@ -1,4 +1,4 @@
-// updated 6 April 2022
+// updated 8 April 2022
 
 #include <gtest/gtest.h>
 #include <string>
@@ -31,4 +31,10 @@ TEST(toolTests, operatorString) {
     Tool t = Tool("metal-axe");
     std::string s = t;
     ASSERT_EQ(s, "TOOL, metal-axe, 20");
+}
+
+TEST(toolTests, fromString) {
+    Tool* t = Tool::from_string("Tool, stone-axe, 1");
+    ASSERT_EQ(t->getUses(), 1);
+    delete t;
 }

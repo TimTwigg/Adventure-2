@@ -1,5 +1,5 @@
 TODO
-Test saving and loading of player files - save inventory.
+Write and test Map
 
 IDEA
 Refresh ht and hp completely at towns? For a price?

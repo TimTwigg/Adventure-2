@@ -1,0 +1,26 @@
+{
+    "bandit" : {
+        "health" : 250,
+        "damage" : 150,
+        "drop" : "weapons.stone-sword",
+        "drop.count" : 1,
+        "drop2" : "weapons.bow",
+        "drop2.count" : 1,
+        "drop3" : "resources.arrow",
+        "drop3.count" : 5,
+        "xp" : 40,
+        "loot" : 25
+    },
+    "orc" : {
+        "health" : 750,
+        "damage" : 250,
+        "drop" : "weapons.metal-spear",
+        "drop.count" : 1,
+        "drop2" : "resources.orc-flesh",
+        "drop2.count" : 2,
+        "drop3" : "weapons.metal-sword",
+        "drop3.count" : 1,
+        "xp" : 75,
+        "loot" : 100
+    }
+}

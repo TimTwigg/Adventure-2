@@ -1,0 +1,90 @@
+{
+    "Forest" : {
+        "trees" : true,
+        "stone" : false,
+        "metal" : false,
+        "gold" : false,
+        "animals" : ["birds", "chickens", "snakes", "deer"],
+        "river" : 0.75,
+        "people" : 0.75,
+        "civ-types" : ["hut", "village", "town"],
+        "enemies" : []
+    },
+    "Mountain" : {
+        "trees" : false,
+        "stone" : true,
+        "metal" : true,
+        "gold" : true,
+        "animals" : ["birds", "goats", "snakes"],
+        "river" : 0.25,
+        "people" : 0.25,
+        "civ-types" : ["hut", "village"],
+        "enemies" : ["orc"]
+    },
+    "Plain" : {
+        "trees" : false,
+        "stone" : false,
+        "metal" : false,
+        "gold" : false,
+        "animals" : ["cows", "sheep", "chickens", "birds", "goats", "pigs", "horses", "lions"],
+        "river" : 0.75,
+        "people" : 0.75,
+        "civ-types" : ["village", "town", "city"],
+        "enemies" : ["bandit"]
+    },
+    "Desert" : {
+        "trees" : false,
+        "stone" : false,
+        "metal" : false,
+        "gold" : false,
+        "animals" : ["snakes"],
+        "river" : 0.1,
+        "people" : 0.1,
+        "civ-types" : ["village", "temple"],
+        "enemies" : []
+    },
+    "Jungle" : {
+        "trees" : false,
+        "stone" : false,
+        "metal" : false,
+        "gold" : false,
+        "animals" : ["birds", "chickens", "snakes", "pigs", "jaguars"],
+        "river" : 0.75,
+        "people" : 0,
+        "civ-types" : ["town", "temple"],
+        "enemies" : ["orcs"]
+    },
+    "Island" : {
+        "trees" : true,
+        "stone" : true,
+        "metal" : true,
+        "gold" : false,
+        "animals" : ["chickens", "birds"],
+        "river" : 0.75,
+        "people" : 0,
+        "civ-types" : ["shipwreck"],
+        "enemies" : []
+    },
+    "Ocean" : {
+        "trees" : false,
+        "stone" : false,
+        "metal" : false,
+        "gold" : false,
+        "animals" : ["sharks", "fish", "birds"],
+        "river" : 0,
+        "people" : 0,
+        "civ-types" : ["shipwreck"],
+        "enemies" : []
+    },
+    "River" : {
+        "trees" : false,
+        "stone" : false,
+        "metal" : false,
+        "gold" : false,
+        "animals" : ["fish"],
+        "river" : 0,
+        "people" : 0,
+        "civ-types" : [],
+        "enemies" : []
+    }
+}

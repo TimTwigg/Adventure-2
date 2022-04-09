@@ -1,4 +1,4 @@
-// Updated: 7 April 2022
+// Updated: 8 April 2022
 
 #include <string>
 #include <fstream>
@@ -6,6 +6,7 @@
 #include <map>
 #include <vector>
 #include <algorithm>
+#include <filesystem>
 #include "Player.hpp"
 #include "SkillSets.hpp"
 #include "StatDefaults.hpp"
@@ -17,6 +18,7 @@
 #include "Weapon.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
+namespace fs = std::filesystem;
 
 namespace {
     // names of data contents whose values are not numeric
@@ -24,18 +26,13 @@ namespace {
 }
 
 Player::Player(SkillSets skillset, const std::string& savepath) : invalid_stat_names{INVALID_STAT_NAMES} {
-    std::string savefile = "saves\\" + savepath + ".game";
+    std::string savefile = "saves\\" + savepath;
     int num{0};
     while (true) {
-        std::ifstream i;
-        i.open(savefile);
-        if (!i) {
-            i.close();
-            break;
-        }
-        i.close();
+        fs::path p{savefile};
+        if (!fs::exists(p)) break;
         ++num;
-        savefile = "saves\\" + savepath + "-" + std::to_string(num) + ".game";
+        savefile = "saves\\" + savepath + "-" + std::to_string(num);
     }
 
     json skset = SET::getSet(skillset);
@@ -64,13 +61,15 @@ Player::Player(SkillSets skillset, const std::string& savepath) : invalid_stat_n
 }
 
 Player::Player(const std::string& savepath) : invalid_stat_names{INVALID_STAT_NAMES} {
+    fs::path p{savepath};
+    if (!fs::exists(p)) throw AdventureException("Player::Player() save does not exist.");
     std::ifstream i;
-    i.open(savepath);
-    if (!i) throw AdventureException("Player::Player() save file does not exist.");
+    i.open(savepath + "\\player.game");
     json filedata;
     i >> filedata;
     i.close();
     data = filedata[0];
+
     std::for_each(filedata[1].begin(), filedata[1].end(), [&](std::string s){
         if (s.substr(0, 8) == "RESOURCE") inventory.push_back(std::unique_ptr<Object>(Resource::from_string(s)));
         else if (s.substr(0, 9) == "CRESOURCE") inventory.push_back(std::unique_ptr<Object>(CResource::from_string(s)));
@@ -82,8 +81,12 @@ Player::Player(const std::string& savepath) : invalid_stat_names{INVALID_STAT_NA
 }
 
 void Player::save() const {
+    std::string path_string{data["savepath"].get<std::string>()};
+    fs::path p{path_string};
+    if (!fs::exists(p)) fs::create_directory(p);
+    path_string += "\\player.game";
     std::ofstream o;
-    o.open(data["savepath"].get<std::string>());
+    o.open(path_string);
 
     json to_go = json::array();
     to_go.push_back(data);

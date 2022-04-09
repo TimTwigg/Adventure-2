@@ -1,4 +1,4 @@
-// updated 6 April 2022
+// updated 8 April 2022
 
 #include <gtest/gtest.h>
 #include <vector>
@@ -87,6 +87,15 @@ TEST(PlayerTests, saveLoadFiles) {
 
     ASSERT_EQ(p.getSkillset(), q.getSkillset());
     ASSERT_EQ(p.getSavepath(), q.getSavepath());
+
+    Player a{SkillSets::TRAVELER, "test"};
+    a.addItem(OBJCLASS::RESOURCE, "stone", 5);
+    a.addItem(OBJCLASS::CRESOURCE, "arrow", 15);
+    a.save();
+
+    Player b{a.getSavepath()};
+    ASSERT_EQ(b.itemCount("stone"), 5);
+    ASSERT_EQ(b.itemCount("arrow"), 15);
 }
 
 TEST(PlayerTests, healthManagers) {

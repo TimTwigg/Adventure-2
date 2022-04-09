@@ -1,4 +1,4 @@
-// updated 6 April 2022
+// updated 8 April 2022
 
 #include <gtest/gtest.h>
 #include <string>
@@ -40,4 +40,10 @@ TEST(weaponTests, use) {
         w.use();
     }
     ASSERT_THROW(w.use(), AdventureException);
+}
+
+TEST(waeponTests, fromString) {
+    Weapon* w = Weapon::from_string("WEAPON, stone-sword, 1");
+    ASSERT_EQ(w->getUses(), 1);
+    delete w;
 }

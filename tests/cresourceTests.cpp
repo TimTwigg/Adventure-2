@@ -1,4 +1,4 @@
-// updated 6 April 2022
+// updated 8 April 2022
 
 #include <gtest/gtest.h>
 #include <map>
@@ -18,4 +18,10 @@ TEST(cresourceTests, getRecipe) {
     ASSERT_TRUE(recipe.find("wood") != recipe.end());
     ASSERT_TRUE(recipe.find("metal") != recipe.end());
     ASSERT_TRUE(recipe.find("feather") != recipe.end());
+}
+
+TEST(cresourceTests, fromString) {
+    CResource* r = CResource::from_string("CRESOURCE, arrow, 9");
+    ASSERT_EQ(r->getCount(), 9);
+    delete r;
 }
