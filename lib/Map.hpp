@@ -1,4 +1,4 @@
-// updated 8 April 2022
+// updated 9 April 2022
 
 #ifndef MAP_HPP
 #define MAP_HPP
@@ -20,7 +20,8 @@ struct Location {
     std::string biome;
     std::vector<std::string> here;
 
-    Location(const RandomGenerator& gen);
+    Location(RandomGenerator& gen);
+    Location(const std::string& biome, const std::vector<std::string>& here);
 };
 
 class Map {
