@@ -1,4 +1,4 @@
-// updated 9 April 2022
+// updated 26 April 2022
 
 #ifndef MAP_HPP
 #define MAP_HPP
@@ -10,10 +10,10 @@
 #include "RandomGenerator.hpp"
 
 enum class Dir {
-    UP,
-    RIGHT,
-    DOWN,
-    LEFT
+    NORTH,
+    EAST,
+    SOUTH,
+    WEST
 };
 
 struct Location {
@@ -30,9 +30,9 @@ class Map {
 
     public:
         Map();
-        Location get();
-        Location get(int x, int y);
-        Location get(Dir d);
+        Location get() const noexcept;
+        Location get(int x, int y) const;
+        Location get(Dir d) noexcept;
         void save() const;
 
     private:

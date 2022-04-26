@@ -1,4 +1,4 @@
-// updated 9 April 2022
+// updated 26 April 2022
 
 #include <map>
 #include <vector>
@@ -10,6 +10,10 @@
 #include "FileReader.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
+
+namespace {
+    RandomGenerator g;
+}
 
 Location::Location(RandomGenerator& gen) {
     json data = FileReader::readFile("biomes.json");
@@ -50,4 +54,37 @@ Location::Location(RandomGenerator& gen) {
 }
 
 Location::Location(const std::string& biome, const std::vector<std::string>& here) : biome{biome}, here{here} {
+}
+
+Map::Map() {
+    // TODO
+}
+
+Location Map::get() const noexcept {
+    // TODO
+    return Location(g);
+}
+
+Location Map::get(int x, int y) const {
+    // TODO
+    return Location(g);
+}
+
+Location Map::get(Dir d) noexcept {
+    // TODO
+    return Location(g);
+}
+
+void Map::save() const {
+    // TODO
+}
+
+Location Map::generate() {
+    // TODO
+    return Location(g);
+}
+
+Map Map::load(const std::string& path) {
+    // TODO
+    return Map();
 }
