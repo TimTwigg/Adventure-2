@@ -1,5 +1,5 @@
 TODO
-Write and test Map
+
 
 IDEA
 Refresh ht and hp completely at towns? For a price?

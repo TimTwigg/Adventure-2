@@ -1,24 +1,20 @@
-// updated 29 March 2022
+// updated 30 April 2022
 
 #include <gtest/gtest.h>
 #include <filesystem>
 #include <string>
-#include <fstream>
+#include <cstdlib>
+namespace fs = std::filesystem;
 
 void clear_files() {
-	std::string savefile = "saves\\test.game";
+	std::string savefile = "saves\\test";
     int num{0};
     while (true) {
-        std::ifstream i;
-        i.open(savefile);
-        if (!i) {
-            i.close();
-            break;
-        }
-        i.close();
-		std::filesystem::remove(savefile);
+        if (!fs::exists(fs::path(savefile))) break;
+        std::string s = "rmdir " + savefile + " /S /Q";
+		int i = system(s.c_str());
         ++num;
-        savefile = "saves\\test-" + std::to_string(num) + ".game";
+        savefile = "saves\\test-" + std::to_string(num);
     }
 }
 

@@ -1,19 +1,21 @@
-// updated 26 April 2022
+// updated 30 April 2022
 
 #include <map>
 #include <vector>
 #include <string>
 #include <utility>
 #include <algorithm>
+#include <fstream>
+#include <filesystem>
 #include "Map.hpp"
 #include "RandomGenerator.hpp"
 #include "FileReader.hpp"
+#include "AdventureException.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
+namespace fs = std::filesystem;
 
-namespace {
-    RandomGenerator g;
-}
+Location::Location() {}
 
 Location::Location(RandomGenerator& gen) {
     json data = FileReader::readFile("biomes.json");
@@ -56,35 +58,89 @@ Location::Location(RandomGenerator& gen) {
 Location::Location(const std::string& biome, const std::vector<std::string>& here) : biome{biome}, here{here} {
 }
 
-Map::Map() {
-    // TODO
+Map::Map(const std::string& savepath) : savepath{savepath}, gen{RandomGenerator()}, xy{std::make_pair(0, 0)} {
+    db[xy] = Location(gen);
+}
+
+Map::Map() : gen{RandomGenerator()} {
+}
+
+Map::Map(const Map& other) : gen{RandomGenerator()}, savepath{other.savepath}, xy{other.xy}, db{other.db} {
 }
 
 Location Map::get() const noexcept {
-    // TODO
-    return Location(g);
+    return db.at(xy);
 }
 
 Location Map::get(int x, int y) const {
-    // TODO
-    return Location(g);
+    if (db.find(std::make_pair(x, y)) == db.end()) throw AdventureException("Map::get(x, y) location (x, y) not in map");
+    return db.at(std::make_pair(x, y));
 }
 
-Location Map::get(Dir d) noexcept {
-    // TODO
-    return Location(g);
+Location Map::get(Dir d) {
+    std::pair<int, int> coords;
+    switch (d) {
+        case Dir::NORTH:
+            coords = std::make_pair(xy.first, xy.second + 1);
+            break;
+        case Dir::EAST:
+            coords = std::make_pair(xy.first + 1, xy.second);
+            break;
+        case Dir::SOUTH:
+            coords = std::make_pair(xy.first, xy.second - 1);
+            break;
+        case Dir::WEST:
+            coords = std::make_pair(xy.first - 1, xy.second);
+            break;
+    }
+    if (db.find(coords) == db.end()) db[coords] = Location(gen);
+    return db.at(coords);
+}
+
+std::string Map::getPath() const noexcept {
+    return savepath;
 }
 
 void Map::save() const {
-    // TODO
-}
+    std::ofstream o;
+    o.open("saves\\" + savepath + "\\map.game");
 
-Location Map::generate() {
-    // TODO
-    return Location(g);
+    json out;
+    out["x"] = xy.first;
+    out["y"] = xy.second;
+    out["db"] = json::array();
+
+    std::for_each(db.begin(), db.end(), [&](const std::pair<std::pair<int,int>, Location>& pair){
+        json item;
+        item["x"] = pair.first.first;
+        item["y"] = pair.first.second;
+        item["biome"] = pair.second.biome;
+        item["here"] = pair.second.here;
+        out["db"].push_back(item);
+    });
+
+    o << std::setw(4) << out << std::endl;
+    o.close();
 }
 
 Map Map::load(const std::string& path) {
-    // TODO
-    return Map();
+    fs::path p{"saves\\" + path};
+    if (!fs::exists(p)) throw AdventureException("Map::load() save does not exist.");
+
+    std::ifstream i;
+    i.open("saves\\" + path + "\\map.game");
+    json filedata;
+    i >> filedata;
+    i.close();
+
+    Map m;
+    m.savepath = path;
+    m.xy = std::make_pair(filedata["x"].get<int>(), filedata["y"].get<int>());
+    std::for_each(filedata["db"].begin(), filedata["db"].end(), [&](const json& item){
+        std::pair<int, int> key = std::make_pair(item["x"].get<int>(), item["y"].get<int>());
+        Location l = Location(item["biome"].get<std::string>(), item["here"].get<std::vector<std::string>>());
+        m.db[key] = l;
+    });
+
+    return m;
 }
