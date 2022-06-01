@@ -1,5 +1,11 @@
 TODO
-
+Write Formulae
+Finish Animal
+Write Enemy
+Add attacking to Player
 
 IDEA
 Refresh ht and hp completely at towns? For a price?
+For buildings - have preset options that require set amounts of resources? Similar to Hearthfire?
+Be able to place a chest and store resources in a certain location, later to return.
+Visual representation of map? Include user-placed things and show whether settlements have been visited/raided/etc.

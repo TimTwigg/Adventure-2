@@ -1,171 +1,160 @@
 {
-    "chickens" : {
-        "health" : 50,
-        "damage" : 0,
-        "carry" : true,
-        "xp" : 5,
-        "value" : 6,
-        "drop" : "resources.raw-chicken",
-        "drop.count" : 1,
-        "drop2" : "resources.feather",
-        "drop2.count" : 2,
-        "special" : "actions.lay-egg",
-        "special.count" : 1
+    "chicken": {
+        "health": 50,
+        "damage": 0,
+        "xp": 5,
+        "value": 6,
+        "drops": {
+            "resources.raw-chicken": 1,
+            "resources.feather": 2
+        },
+        "interactions": {
+            "actions.lay-egg": 1
+        }
     },
-    "cows" : {
-        "health" : 100,
-        "damage" : 15,
-        "carry" : false,
-        "xp" : 10,
-        "value" : 10,
-        "drop" : "resources.raw-beef",
-        "drop.count" : 3,
-        "drop2" : "resources.wet-leather",
-        "drop2.count" : 2,
-        "special" : "actions.milk",
-        "special.count" : 1
+    "cow": {
+        "health": 100,
+        "damage": 15,
+        "xp": 10,
+        "value": 10,
+        "drops": {
+            "resources.raw-beef": 3,
+            "resources.wet-leather": 2
+        },
+        "interactions": {
+            "actions.milk": 1
+        }
     },
-    "pigs" : {
-        "health" : 100,
-        "damage" : 0,
-        "carry" : false,
-        "xp" : 10,
-        "value" : 9,
-        "drop" : "resources.raw-pork",
-        "drop.count" : 2,
-        "drop2" : "resources.pig-bladder",
-        "drop2.count" : 1,
-        "special" : null,
-        "special.count" : 0
+    "pig": {
+        "health": 100,
+        "damage": 0,
+        "xp": 10,
+        "value": 9,
+        "drops": {
+            "resources.raw-pork": 2,
+            "resources.pig-bladder": 1
+        },
+        "interactions": {}
     },
-    "horses" : {
-        "health" : 150,
-        "damage" : 25,
-        "carry" : false,
-        "xp" : 15,
-        "value" : 14,
-        "drop" : "resources.raw-horse",
-        "drop.count" : 3,
-        "drop2" : "resources.wet-leather",
-        "drop2.count" : 3,
-        "special" : "actions.ride-horse",
-        "special.count" : 1
+    "horse": {
+        "health": 150,
+        "damage": 25,
+        "xp": 15,
+        "value": 14,
+        "drops": {
+            "resources.raw-horse": 3,
+            "resources.wet-leather": 3
+        },
+        "interactions": {
+            "actions.ride-horse": 1
+        }
     },
-    "fish" : {
-        "health" : 50,
-        "damage" : 0,
-        "carry" : false,
-        "xp" : 5,
-        "value" : 5,
-        "drop" : "resources.raw-fish",
-        "drop.count" : 1,
-        "drop2" : "resources.fish-bone",
-        "drop2.count" : 1,
-        "special" : null,
-        "special.count" : 0
+    "fish": {
+        "health": 50,
+        "damage": 0,
+        "xp": 5,
+        "value": 5,
+        "drops": {
+            "resources.raw-fish": 1,
+            "resources.fish-bone": 1
+        },
+        "interactions": {}
     },
-    "birds" : {
-        "health" : 25,
-        "damage" : 0,
-        "carry" : true,
-        "xp" : 5,
-        "value" : 5,
-        "drop" : "resources.raw-bird",
-        "drop.count" : 1,
-        "drop2" : "resources.feather",
-        "drop2.count" : 2,
-        "special" : null,
-        "special.count" : 0
+    "bird": {
+        "health": 25,
+        "damage": 0,
+        "xp": 5,
+        "value": 5,
+        "drops": {
+            "resources.raw-bird": 1,
+            "resources.feather": 2
+        },
+        "interactions": {}
     },
-    "sharks" : {
-        "health" : 200,
-        "damage" : 125,
-        "carry" : false,
-        "xp" : 30,
-        "value" : 35,
-        "drop" : "resources.raw-shark",
-        "drop.count" : 2,
-        "drop2" : "resources.shark-tooth",
-        "drop2.count" : 5,
-        "special" : null,
-        "special.count" : 0
+    "shark": {
+        "health": 200,
+        "damage": 125,
+        "xp": 30,
+        "value": 35,
+        "drops": {
+            "resources.raw-shark": 2,
+            "resources.shark-tooth": 5
+        },
+        "interactions": {}
     },
-    "snakes" : {
-        "health" : 75,
-        "damage" : 100,
-        "carry" : true,
-        "xp" : 20,
-        "value" : 20,
-        "drop" : "resources.raw-snake",
-        "drop.count" : 1,
-        "drop2" : "resources.snake-tooth",
-        "drop2.count" : 2,
-        "special" : "actions.charm-snake",
-        "special.count" : 1
+    "snake": {
+        "health": 75,
+        "damage": 100,
+        "xp": 20,
+        "value": 20,
+        "drops": {
+            "resources.raw-snake": 1,
+            "resources.snake-tooth": 2
+        },
+        "interactions": {
+            "actions.charm-snake": 1
+        }
     },
-    "sheep" : {
-        "health" : 100,
-        "damage" : 0,
-        "carry" : false,
-        "xp" : 10,
-        "value" : 10,
-        "drop" : "resources.raw-mutton",
-        "drop.count" : 2,
-        "drop2" : "resources.wool",
-        "drop2.count" : 1,
-        "special" : "actions.shear-sheep",
-        "special.count" : 1
+    "sheep": {
+        "health": 100,
+        "damage": 0,
+        "xp": 10,
+        "value": 10,
+        "drops": {
+            "resources.raw-mutton": 2,
+            "resources.wool": 1
+        },
+        "interactions": {
+            "actions.shear-sheep": 1
+        }
     },
-    "deer" : {
-        "health" : 125,
-        "damage" : 25,
-        "carry" : false,
-        "xp" : 15,
-        "value" : 9,
-        "drop" : "resources.raw-venison",
-        "drop.count" : 2,
-        "drop2" : "resources.horn",
-        "drop2.count" : 2,
-        "special" : "resources.sinew",
-        "special.count" : 2
+    "deer": {
+        "health": 125,
+        "damage": 25,
+        "xp": 15,
+        "value": 9,
+        "drops": {
+            "resources.raw-venison": 2,
+            "resources.horn": 2,
+            "resources.sinew": 2
+        },
+        "interactions": {}
     },
-    "goats" : {
-        "health" : 100,
-        "damage" : 25,
-        "carry" : false,
-        "xp" : 15,
-        "value" : 10,
-        "drop" : "resources.raw-goat",
-        "drop.count" : 2,
-        "drop2" : "resources.horn",
-        "drop2.count" : 1,
-        "special" : "actions.milk",
-        "special.count" : 1
+    "goat": {
+        "health": 100,
+        "damage": 25,
+        "xp": 15,
+        "value": 10,
+        "drops": {
+            "resources.raw-goat": 2,
+            "resources.horn": 1
+        },
+        "interactions": {
+            "actions.milk": 1
+        }
     },
-    "lions" : {
-        "health" : 200,
-        "damage" : 125,
-        "carry" : false,
-        "xp" : 30,
-        "value" : 35,
-        "drop" : "resources.raw-lion",
-        "drop.count" : 2,
-        "drop2" : "resources.lion-fur",
-        "drop2.count" : 1,
-        "special" : "resources.lion-tooth",
-        "special.count" : 3
+    "lion": {
+        "health": 200,
+        "damage": 125,
+        "xp": 30,
+        "value": 35,
+        "drops": {
+            "resources.raw-lion": 2,
+            "resources.lion-fur": 1,
+            "resources.lion-tooth": 3
+        },
+        "interactions": {}
     },
-    "jaguars" : {
-        "health" : 200,
-        "damage" : 125,
-        "carry" : false,
-        "xp" : 30,
-        "value" : 35,
-        "drop" : "resources.raw-jaguar",
-        "drop.count" : 2,
-        "drop2" : "resources.jaguar-skin",
-        "drop2.count" : 1,
-        "special" : "resources.jaguar-tooth",
-        "special.count" : 3
+    "jaguar": {
+        "health": 200,
+        "damage": 125,
+        "xp": 30,
+        "value": 35,
+        "drops": {
+            "resources.raw-jaguar": 2,
+            "resources.jaguar-skin": 1,
+            "resources.jaguar-tooth": 3
+        },
+        "interactions": {}
     }
 }
