@@ -1,4 +1,4 @@
-// updated 31 May 2022
+// updated 3 June 2022
 
 #ifndef ENTITY_HPP
 #define ENTITY_HPP
@@ -8,11 +8,23 @@
 #include <vector>
 #include <memory>
 #include "Object.hpp"
+#include "RandomGenerator.hpp"
 
 enum class ENT {
     ANIMAL,
     ENEMY
 };
+
+namespace {
+    std::string ENTtoString(ENT e) {
+        switch (e) {
+            case ENT::ANIMAL:
+                return "ANIMAL";
+            case ENT::ENEMY:
+                return "ENEMY";
+        }
+    }
+}
 
 class Entity {
     public:
@@ -22,13 +34,15 @@ class Entity {
     public:
         virtual ~Entity() = default;
         std::string getName() const noexcept;
+        // convert to string to allow for loading from string
+        virtual operator std::string() const noexcept;
         ENT getType() const noexcept;
         float getHP() const noexcept;
         unsigned int getXP() const noexcept;
         unsigned int getValue() const noexcept;
-        virtual unsigned int attack() const noexcept = 0;
+        virtual unsigned int attack() noexcept = 0;
         virtual bool attack(double dmg) noexcept = 0;
-        virtual const std::vector<std::shared_ptr<Object>>& getDrops() const noexcept = 0;
+        virtual const std::vector<std::shared_ptr<Object>>& getDrops() noexcept = 0;
     
     protected:
         std::string name;
@@ -39,7 +53,12 @@ class Entity {
         unsigned int xp;
         unsigned int value;
         std::vector<std::shared_ptr<Object>> drops;
+        RandomGenerator gen;
 };
+
+inline Entity::operator std::string() const noexcept {
+    return ENTtoString(type) + ", " + name + ", " + std::to_string(hp);
+}
 
 inline void Entity::strip(std::string& s) noexcept {
     s.erase(remove_if(s.begin(), s.end(), isspace), s.end());

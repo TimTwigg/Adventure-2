@@ -1,4 +1,4 @@
-// updated 31 May 2022
+// updated 3 June 2022
 
 #include <string>
 #include <vector>
@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <utility>
 #include <map>
+#include <sstream>
 #include "Animal.hpp"
 #include "Entity.hpp"
 #include "Object.hpp"
@@ -32,8 +33,8 @@ Animal::Animal(std::string name) {
     }
 }
 
-unsigned int Animal::attack() const noexcept {
-    return Formula::animalDamage(damage);
+unsigned int Animal::attack() noexcept {
+    return Formula::animalDamage(damage, gen);
 }
 
 bool Animal::attack(double dmg) noexcept {
@@ -45,6 +46,33 @@ bool Animal::attack(double dmg) noexcept {
     return false;
 }
 
-const std::vector<std::shared_ptr<Object>>& Animal::getDrops() const noexcept {
-    return drops; // TODO - don't always drop all drops - choose randomly
+const std::vector<std::shared_ptr<Object>>& Animal::getDrops() noexcept {
+    std::vector<std::shared_ptr<Object>> v;
+    for (const auto& obj : drops) {
+        OBJCLASS type = obj->getType();
+        if (gen.getRandBool()) {
+            if (type == OBJCLASS::RESOURCE) {
+                Resource* r = static_cast<Resource*>(obj.get());
+                int num = gen.getRandInt(1, r->getCount());
+                v.push_back(std::shared_ptr<Object>(new Resource(r->getName(), num)));
+            }
+            else {
+                v.push_back(std::shared_ptr<Object>(obj));
+            }
+        }
+    }
+    return v;
+}
+
+Animal* Animal::fromString(const std::string& code) {
+    std::stringstream ss{code};
+    std::vector<std::string> v;
+    while (ss.good()) {
+        std::string s;
+        std::getline(ss, s, ',');
+        v.push_back(s);
+    }
+    Animal* a = new Animal(v[1]);
+    a->hp = std::stof(v[2]);
+    return a;
 }
