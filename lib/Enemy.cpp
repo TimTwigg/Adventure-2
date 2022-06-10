@@ -1,4 +1,4 @@
-// updated 3 June 2022
+// updated 9 June 2022
 
 #include <string>
 #include <vector>
@@ -16,17 +16,17 @@ Enemy::Enemy(std::string name) {
 }
 
 unsigned int Enemy::attack() noexcept {
-
+    return 0;
 }
 
 bool Enemy::attack(double dmg) noexcept {
-
+    return false;
 }
 
-const std::vector<std::shared_ptr<Object>>& Enemy::getDrops() noexcept {
-
+std::vector<std::shared_ptr<Object>> Enemy::getDrops() noexcept {
+    return std::vector<std::shared_ptr<Object>>();
 }
 
 Enemy* Enemy::fromString(const std::string& code) {
-
+    return new Enemy("");
 }

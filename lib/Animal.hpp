@@ -1,4 +1,4 @@
-// updated 3 June 2022
+// updated 9 June 2022
 
 #ifndef ANIMAL_HPP
 #define ANIMAL_HPP
@@ -19,7 +19,7 @@ class Animal : public Entity {
         unsigned int attack() noexcept override;
         // deal damage to the animal, returns true if the animal is dead
         bool attack(double dmg) noexcept override;
-        const std::vector<std::shared_ptr<Object>>& getDrops() noexcept override;
+        std::vector<std::shared_ptr<Object>> getDrops() noexcept override;
 };
 
 #endif

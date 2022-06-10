@@ -1,4 +1,4 @@
-// updated 3 June 2022
+// updated 9 June 2022
 
 #include <string>
 #include <vector>
@@ -46,7 +46,7 @@ bool Animal::attack(double dmg) noexcept {
     return false;
 }
 
-const std::vector<std::shared_ptr<Object>>& Animal::getDrops() noexcept {
+std::vector<std::shared_ptr<Object>> Animal::getDrops() noexcept {
     std::vector<std::shared_ptr<Object>> v;
     for (const auto& obj : drops) {
         OBJCLASS type = obj->getType();

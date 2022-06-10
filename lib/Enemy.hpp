@@ -1,4 +1,4 @@
-// updated 3 June 2022
+// updated 9 June 2022
 
 #ifndef ENEMY_HPP
 #define ENEMY_HPP
@@ -16,7 +16,7 @@ class Enemy : public Entity {
         explicit Enemy(std::string name);
         unsigned int attack() noexcept override;
         bool attack(double dmg) noexcept override;
-        const std::vector<std::shared_ptr<Object>>& getDrops() noexcept override;
+        std::vector<std::shared_ptr<Object>> getDrops() noexcept override;
 };
 
 #endif

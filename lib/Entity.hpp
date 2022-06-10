@@ -1,4 +1,4 @@
-// updated 3 June 2022
+// updated 9 June 2022
 
 #ifndef ENTITY_HPP
 #define ENTITY_HPP
@@ -42,7 +42,7 @@ class Entity {
         unsigned int getValue() const noexcept;
         virtual unsigned int attack() noexcept = 0;
         virtual bool attack(double dmg) noexcept = 0;
-        virtual const std::vector<std::shared_ptr<Object>>& getDrops() noexcept = 0;
+        virtual std::vector<std::shared_ptr<Object>> getDrops() noexcept = 0;
     
     protected:
         std::string name;
