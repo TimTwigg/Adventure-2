@@ -1,4 +1,4 @@
-// updated 9 June 2022
+// updated 11 June 2022
 
 #ifndef ANIMAL_HPP
 #define ANIMAL_HPP

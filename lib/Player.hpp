@@ -1,4 +1,4 @@
-// Updated: 4 April 2022
+// Updated: 11 June 2022
 
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
@@ -36,6 +36,7 @@ class Player {
 
         void damage(double dmg);
         void heal(double hp) noexcept;
+        double attackDmg() const;
 
         void addXP(int xp) noexcept;
         

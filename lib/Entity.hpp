@@ -1,4 +1,4 @@
-// updated 9 June 2022
+// updated 11 June 2022
 
 #ifndef ENTITY_HPP
 #define ENTITY_HPP

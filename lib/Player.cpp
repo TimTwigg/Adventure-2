@@ -1,4 +1,4 @@
-// Updated: 8 April 2022
+// Updated: 11 June 2022
 
 #include <string>
 #include <fstream>
@@ -260,6 +260,10 @@ void Player::damage(double dmg) {
 void Player::heal(double hp) noexcept {
     data["health"] = data["health"].get<double>() + hp;
     if (data["health"].get<double>() > data["max_health"].get<double>()) data["health"] = data["max_health"];
+}
+
+double Player::attackDmg() const {
+    return stat("base_damage");
 }
 
 void Player::addXP(int xp) noexcept {

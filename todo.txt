@@ -1,7 +1,6 @@
 TODO
-Include diff ratio in formulae and player
-Write Enemy
-Add attacking to Player
+Include diff ratio in player
+Write GameEngine
 
 IDEA
 Refresh ht and hp completely at towns? For a price?
