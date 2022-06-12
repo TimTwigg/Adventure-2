@@ -1,4 +1,4 @@
-// updated 8 April 2022
+// updated 11 June 2022
 
 #include <gtest/gtest.h>
 #include <vector>
@@ -74,7 +74,7 @@ TEST(PlayerTests, saveLoadFiles) {
     Player p{SkillSets::WARRIOR, "test"};
     p.addWealth(10);
     p.save();
-    Player q{p.getSavepath()};
+    Player q = Player::load(p.getSavepath());
     std::vector<std::string> pn = p.getStatNames();
     std::vector<std::string> qn = q.getStatNames();
     ASSERT_EQ(pn, qn);
@@ -93,7 +93,7 @@ TEST(PlayerTests, saveLoadFiles) {
     a.addItem(OBJCLASS::CRESOURCE, "arrow", 15);
     a.save();
 
-    Player b{a.getSavepath()};
+    Player b = Player::load(a.getSavepath());
     ASSERT_EQ(b.itemCount("stone"), 5);
     ASSERT_EQ(b.itemCount("arrow"), 15);
 }

@@ -1,4 +1,4 @@
-// updated 30 April 2022
+// updated 11 June 2022
 
 #include <map>
 #include <vector>
@@ -102,8 +102,11 @@ std::string Map::getPath() const noexcept {
 }
 
 void Map::save() const {
+    fs::path p{savepath};
+    if (!fs::exists(p)) fs::create_directory(p);
+
     std::ofstream o;
-    o.open("saves\\" + savepath + "\\map.game");
+    o.open(savepath + "\\map.game");
 
     json out;
     out["x"] = xy.first;

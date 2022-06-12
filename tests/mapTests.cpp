@@ -1,4 +1,4 @@
-// updated 30 April 2022
+// updated 11 June 2022
 
 #include <gtest/gtest.h>
 #include <vector>
@@ -21,11 +21,11 @@ TEST(locationTests, constructor) {
 }
 
 TEST(mapTests, constructor) {
-    Map m{"test"};
+    Map m{"saves\\test"};
 }
 
 TEST(mapTests, copyConstructor) {
-    Map m{"test"};
+    Map m{"saves\\test"};
     Location l = m.get(Dir::NORTH);
 
     Map m2{m};
@@ -42,7 +42,7 @@ TEST(mapTests, copyConstructor) {
 }
 
 TEST(mapTests, get) {
-    Map m{"test"};
+    Map m{"saves\\test"};
     Location l = m.get();
     ASSERT_NE(l.biome, "");
 
@@ -58,10 +58,10 @@ TEST(mapTests, get) {
 }
 
 TEST(mapTests, saveload) {
-    Map m{"test"};
+    Map m{"saves\\test"};
     Location l = m.get(Dir::NORTH);
     m.save();
-    std::string path = m.getPath();
+    std::string path = m.getPath().substr(6);
 
     Map m2 = Map::load(path);
     Location l2 = m2.get(Dir::NORTH);

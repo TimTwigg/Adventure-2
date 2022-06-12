@@ -60,7 +60,10 @@ Player::Player(SkillSets skillset, const std::string& savepath) : invalid_stat_n
     data["ratios"] = skset;
 }
 
-Player::Player(const std::string& savepath) : invalid_stat_names{INVALID_STAT_NAMES} {
+Player Player::load(const std::string& savepath) {
+    Player player;
+    player.invalid_stat_names = INVALID_STAT_NAMES;
+
     fs::path p{savepath};
     if (!fs::exists(p)) throw AdventureException("Player::Player() save does not exist.");
     std::ifstream i;
@@ -68,17 +71,21 @@ Player::Player(const std::string& savepath) : invalid_stat_names{INVALID_STAT_NA
     json filedata;
     i >> filedata;
     i.close();
-    data = filedata[0];
+    player.data = filedata[0];
 
     std::for_each(filedata[1].begin(), filedata[1].end(), [&](std::string s){
-        if (s.substr(0, 8) == "RESOURCE") inventory.push_back(std::unique_ptr<Object>(Resource::from_string(s)));
-        else if (s.substr(0, 9) == "CRESOURCE") inventory.push_back(std::unique_ptr<Object>(CResource::from_string(s)));
-        else if (s.substr(0, 9) == "CONTAINER") inventory.push_back(std::unique_ptr<Object>(Container::from_string(s)));
-        else if (s.substr(0, 4) == "TOOL") inventory.push_back(std::unique_ptr<Object>(Tool::from_string(s)));
-        else if (s.substr(0, 6) == "WEAPON") inventory.push_back(std::unique_ptr<Object>(Weapon::from_string(s)));
+        if (s.substr(0, 8) == "RESOURCE") player.inventory.push_back(std::shared_ptr<Object>(Resource::from_string(s)));
+        else if (s.substr(0, 9) == "CRESOURCE") player.inventory.push_back(std::shared_ptr<Object>(CResource::from_string(s)));
+        else if (s.substr(0, 9) == "CONTAINER") player.inventory.push_back(std::shared_ptr<Object>(Container::from_string(s)));
+        else if (s.substr(0, 4) == "TOOL") player.inventory.push_back(std::shared_ptr<Object>(Tool::from_string(s)));
+        else if (s.substr(0, 6) == "WEAPON") player.inventory.push_back(std::shared_ptr<Object>(Weapon::from_string(s)));
         else throw AdventureException("Player::Player(const std::string& savepath) (" + savepath + ") Unrecognized inventory string: " + s);
     });
+
+    return player;
 }
+
+Player::Player() {}
 
 void Player::save() const {
     std::string path_string{data["savepath"].get<std::string>()};
@@ -190,19 +197,19 @@ void Player::addItem(OBJCLASS objClass, std::string obj, unsigned int count) {
 
     switch (objClass) {
         case OBJCLASS::RESOURCE:
-            inventory.push_back(std::unique_ptr<Object>(new Resource(obj, count)));
+            inventory.push_back(std::shared_ptr<Object>(new Resource(obj, count)));
             break;
         case OBJCLASS::CRESOURCE:
-            inventory.push_back(std::unique_ptr<Object>(new CResource(obj, count)));
+            inventory.push_back(std::shared_ptr<Object>(new CResource(obj, count)));
             break;
         case OBJCLASS::CONTAINER:
-            for (int i = 0; i < count; ++i) inventory.push_back(std::unique_ptr<Object>(new Container(obj)));
+            for (int i = 0; i < count; ++i) inventory.push_back(std::shared_ptr<Object>(new Container(obj)));
             break;
         case OBJCLASS::TOOL:
-            for (int i = 0; i < count; ++i) inventory.push_back(std::unique_ptr<Object>(new Tool(obj)));
+            for (int i = 0; i < count; ++i) inventory.push_back(std::shared_ptr<Object>(new Tool(obj)));
             break;
         case OBJCLASS::WEAPON:
-            for (int i = 0; i < count; ++i) inventory.push_back(std::unique_ptr<Object>(new Weapon(obj)));
+            for (int i = 0; i < count; ++i) inventory.push_back(std::shared_ptr<Object>(new Weapon(obj)));
             break;
         default:
             throw AdventureException("Player::addItem invalid OBJCLASS");

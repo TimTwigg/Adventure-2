@@ -12,9 +12,12 @@ using json = nlohmann::json;
 
 class Player {
     public:
+        static Player load(const std::string& savepath);
+
+    public:
         Player(SkillSets skillset, const std::string& savepath);
-        explicit Player(const std::string& savepath);
-        Player(const Player& other) = delete;
+        Player(const Player& other) = default;
+        ~Player() = default;
         void save() const;
         
         double stat(const std::string& stat_name) const;
@@ -49,11 +52,12 @@ class Player {
 
     private:
         json data;
-        std::vector<std::unique_ptr<Object>> inventory;
+        std::vector<std::shared_ptr<Object>> inventory;
         std::vector<std::string> invalid_stat_names;
 
         void level_up();
         void level_stats();
+        Player();
 };
 
 #endif
