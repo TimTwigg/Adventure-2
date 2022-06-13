@@ -1,4 +1,4 @@
-// updated 11 June 2022
+// updated 12 June 2022
 
 #include <gtest/gtest.h>
 #include <vector>
@@ -9,13 +9,11 @@
 #include "AdventureException.hpp"
 #include "Object.hpp"
 
-#include <iostream>
-
 namespace {
     std::vector<std::string> names{"level", "xp", "skillset", "health", "max_health",
         "base_damage", "fist_base_damage", "hunger", "max_hunger", "thirst", "max_thirst", "carry_weight",
         "speed", "swimming_speed", "consumption_ratio", "chopping_ratio", "mining_ratio",
-       "carry_ratio", "wealth", "savepath", "ratios"};
+       "carry_ratio", "wealth", "ratios"};
 }
 
 TEST(PlayerTests, Constructor) {
@@ -25,7 +23,7 @@ TEST(PlayerTests, Constructor) {
 TEST(PlayerTests, getStatNames) {
     Player p{SkillSets::TRAVELER, "test"};
     std::vector<std::string> v = p.getStatNames();
-    ASSERT_EQ(v.size(), 21);
+    ASSERT_EQ(v.size(), names.size());
     
     std::sort(v.begin(), v.end());
     std::sort(names.begin(), names.end());
@@ -74,28 +72,30 @@ TEST(PlayerTests, saveLoadFiles) {
     Player p{SkillSets::WARRIOR, "test"};
     p.addWealth(10);
     p.save();
-    Player q = Player::load(p.getSavepath());
+    Player* q = Player::load(p.getSavepath());
     std::vector<std::string> pn = p.getStatNames();
-    std::vector<std::string> qn = q.getStatNames();
+    std::vector<std::string> qn = q->getStatNames();
     ASSERT_EQ(pn, qn);
 
     std::vector<std::string> inv_names = p.getInvalidStatNames();
     for (auto s : pn) {
         if (std::find(inv_names.begin(), inv_names.end(), s) != inv_names.end()) continue;
-        ASSERT_EQ(p.stat(s), q.stat(s));
+        ASSERT_EQ(p.stat(s), q->stat(s));
     }
 
-    ASSERT_EQ(p.getSkillset(), q.getSkillset());
-    ASSERT_EQ(p.getSavepath(), q.getSavepath());
+    ASSERT_EQ(p.getSkillset(), q->getSkillset());
+    ASSERT_EQ(p.getSavepath(), q->getSavepath());
+    delete q;
 
     Player a{SkillSets::TRAVELER, "test"};
     a.addItem(OBJCLASS::RESOURCE, "stone", 5);
     a.addItem(OBJCLASS::CRESOURCE, "arrow", 15);
     a.save();
 
-    Player b = Player::load(a.getSavepath());
-    ASSERT_EQ(b.itemCount("stone"), 5);
-    ASSERT_EQ(b.itemCount("arrow"), 15);
+    Player* b = Player::load(a.getSavepath());
+    ASSERT_EQ(b->itemCount("stone"), 5);
+    ASSERT_EQ(b->itemCount("arrow"), 15);
+    delete b;
 }
 
 TEST(PlayerTests, healthManagers) {
@@ -186,21 +186,11 @@ TEST(PlayerTests, weight) {
     Player p{SkillSets::TRAVELER, "test"};
     ASSERT_EQ(p.weight(), 0);
 
-    try {
-        p.addItem(OBJCLASS::RESOURCE, "stone"); // 10
-        p.addItem(OBJCLASS::TOOL, "metal-axe"); // 20
-        p.addItem(OBJCLASS::WEAPON, "bow"); // 8
-        p.addItem(OBJCLASS::CRESOURCE, "arrow", 20); // 20
-        p.addItem(OBJCLASS::CONTAINER, "bucket"); // 6
-    }
-    catch (AdventureException e) {
-        std::cout << e.getReason() << std::endl;
-    }
+    p.addItem(OBJCLASS::RESOURCE, "stone"); // 10
+    p.addItem(OBJCLASS::TOOL, "metal-axe"); // 20
+    p.addItem(OBJCLASS::WEAPON, "bow"); // 8
+    p.addItem(OBJCLASS::CRESOURCE, "arrow", 20); // 20
+    p.addItem(OBJCLASS::CONTAINER, "bucket"); // 6
 
-    try {
-        ASSERT_EQ(p.weight(), 64);
-    }
-    catch (...) {
-        std::cout << "ERROR" << std::endl;
-    }
+    ASSERT_EQ(p.weight(), 64);
 }

@@ -1,4 +1,4 @@
-// Updated: 21 January 2022
+// Updated: 12 June 2022
 
 #include <string>
 #include <iostream>
@@ -15,7 +15,6 @@ WindowsInterface::WindowsInterface() : console{GetStdHandle(STD_OUTPUT_HANDLE)} 
         {Screen::CURSOR_RIGHT, L"\x1B[C"},
         {Screen::CURSOR_LEFT, L"\x1B[D"},
         {Screen::CURSOR_HOME, L"\x1B[H"},
-        {Screen::CLEAR_SCREEN, L"\x1B[2J"},
         {Screen::CLEAR_LINE, L"\x1B[2K"}
     };
 
@@ -61,8 +60,8 @@ void WindowsInterface::output(const std::string& text, Color color, bool endLine
     SetConsoleTextAttribute(console, defaultColor);
 }
 
-std::string WindowsInterface::askSelect(const std::string& prompt, const std::vector<std::string>& options) {
-    write(ansiIndex[Screen::CLEAR_SCREEN]);
+std::string WindowsInterface::askSelect(const std::string& prompt, const std::vector<std::string>& options, bool clear) {
+    if (clear) clearScreen();
     output(prompt, colorIndex[Part::PROMPT]);
     int current = 0;
     int size = options.size();
@@ -113,13 +112,24 @@ std::string WindowsInterface::askInput(const std::string& prompt) {
     return answer;
 }
 
+void WindowsInterface::clearScreen() {
+    char fill = ' ';
+    COORD tl = {0,0};
+    CONSOLE_SCREEN_BUFFER_INFO s;   
+    GetConsoleScreenBufferInfo(console, &s);
+    DWORD written, cells = s.dwSize.X * s.dwSize.Y;
+    FillConsoleOutputCharacter(console, fill, cells, tl, &written);
+    FillConsoleOutputAttribute(console, s.wAttributes, cells, tl, &written);
+    SetConsoleCursorPosition(console, tl);
+}
+
 void WindowsInterface::write(PCWSTR sequence) {
     DWORD mode;
     GetConsoleMode(console, &mode);
     const DWORD originalMode = mode;
-    mode |= 0x0004; // Enables Virtual Terminal Processing
+    mode |= 0x4; // Enables Virtual Terminal Processing
     SetConsoleMode(console, mode);
     DWORD written;
-    WriteConsoleW(console, sequence, (DWORD)wcslen(sequence), &written, NULL);
+    WriteConsoleW(console, sequence, static_cast<DWORD>(wcslen(sequence)), &written, NULL);
     SetConsoleMode(console, originalMode);
 }

@@ -1,4 +1,4 @@
-// updated 11 June 2022
+// updated 12 June 2022
 
 #include <gtest/gtest.h>
 #include <vector>
@@ -63,8 +63,9 @@ TEST(mapTests, saveload) {
     m.save();
     std::string path = m.getPath().substr(6);
 
-    Map m2 = Map::load(path);
-    Location l2 = m2.get(Dir::NORTH);
+    Map* m2 = Map::load(path);
+    Location l2 = m2->get(Dir::NORTH);
+    delete m2;
 
     ASSERT_EQ(l.biome, l2.biome);
     ASSERT_EQ(l.here.size(), l2.here.size());

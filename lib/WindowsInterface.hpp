@@ -1,4 +1,4 @@
-// Updated: 21 January 2022
+// Updated: 12 June 2022
 
 #ifndef WINDOWSINTERFACE_HPP
 #define WINDOWSINTERFACE_HPP
@@ -17,8 +17,9 @@ class WindowsInterface : public Interface {
         ~WindowsInterface();
         WindowsInterface(const WindowsInterface& other) = delete;
         void output(const std::string& text, Color color = Color::WHITE, bool endLine = true) override;
-        std::string askSelect(const std::string& prompt, const std::vector<std::string>& options) override;
+        std::string askSelect(const std::string& prompt, const std::vector<std::string>& options, bool clear = false) override;
         std::string askInput(const std::string& prompt) override;
+        void clearScreen() override;
     
     private:
         void write(PCWSTR sequence);

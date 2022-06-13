@@ -1,6 +1,7 @@
 TODO
 Include diff ratio in player
 Write GameEngine
+Test Launcher and GameEngine
 
 IDEA
 Refresh ht and hp completely at towns? For a price?

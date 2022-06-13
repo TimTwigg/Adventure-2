@@ -1,4 +1,4 @@
-// Updated: 11 June 2022
+// Updated: 12 June 2022
 
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
@@ -12,10 +12,11 @@ using json = nlohmann::json;
 
 class Player {
     public:
-        static Player load(const std::string& savepath);
+        static Player* load(const std::string& path);
+        static std::vector<std::string> INVALID_STAT_NAMES;
 
     public:
-        Player(SkillSets skillset, const std::string& savepath);
+        Player(SkillSets skillset, const std::string& path);
         Player(const Player& other) = default;
         ~Player() = default;
         void save() const;
@@ -54,6 +55,7 @@ class Player {
         json data;
         std::vector<std::shared_ptr<Object>> inventory;
         std::vector<std::string> invalid_stat_names;
+        std::string savepath;
 
         void level_up();
         void level_stats();

@@ -1,4 +1,4 @@
-// updated 11 June 2022
+// updated 12 June 2022
 
 #ifndef GAMEENGINE_HPP
 #define GAMEENGINE_HPP
@@ -8,30 +8,20 @@
 #include "Player.hpp"
 #include "Map.hpp"
 #include "Interface.hpp"
-#include "SkillSets.hpp"
-
-struct GameData {
-    SkillSets skillset;
-    std::string filepath;
-};
+#include "GameData.hpp"
 
 class GameEngine {
     public:
-        static GameEngine* load(std::shared_ptr<Interface> interface, const std::string& filepath);
-
-    public:
-        GameEngine(std::shared_ptr<Interface> interface, GameData data);
+        GameEngine(std::shared_ptr<Interface> i, GameData data);
         GameEngine(const GameEngine& other) = delete;
-        ~GameEngine() = default;
         void save() const;
+        void config();
         void run();
 
     private:
-        GameEngine(Player& p, Map& m, std::shared_ptr<Interface> i);
-
-        Player player;
-        Map map;
-        std::shared_ptr<Interface> interface;
+        std::shared_ptr<Player> player;
+        std::shared_ptr<Map> map;
+        std::shared_ptr<Interface> i;
 };
 
 #endif

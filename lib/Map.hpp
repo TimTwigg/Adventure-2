@@ -29,7 +29,7 @@ class Map {
     public:
         // Load a map from the given save path
         // Save path should be the name of a save folder
-        static Map load(const std::string& path);
+        static Map* load(const std::string& path);
 
     public:
         Map(const std::string& savepath);

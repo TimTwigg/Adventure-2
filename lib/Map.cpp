@@ -126,7 +126,7 @@ void Map::save() const {
     o.close();
 }
 
-Map Map::load(const std::string& path) {
+Map* Map::load(const std::string& path) {
     fs::path p{"saves\\" + path};
     if (!fs::exists(p)) throw AdventureException("Map::load() save does not exist.");
 
@@ -136,13 +136,13 @@ Map Map::load(const std::string& path) {
     i >> filedata;
     i.close();
 
-    Map m;
-    m.savepath = path;
-    m.xy = std::make_pair(filedata["x"].get<int>(), filedata["y"].get<int>());
+    Map* m = new Map();
+    m->savepath = path;
+    m->xy = std::make_pair(filedata["x"].get<int>(), filedata["y"].get<int>());
     std::for_each(filedata["db"].begin(), filedata["db"].end(), [&](const json& item){
         std::pair<int, int> key = std::make_pair(item["x"].get<int>(), item["y"].get<int>());
         Location l = Location(item["biome"].get<std::string>(), item["here"].get<std::vector<std::string>>());
-        m.db[key] = l;
+        m->db[key] = l;
     });
 
     return m;

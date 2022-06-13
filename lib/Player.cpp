@@ -1,4 +1,4 @@
-// Updated: 11 June 2022
+// Updated: 12 June 2022
 
 #include <string>
 #include <fstream>
@@ -20,20 +20,20 @@
 using json = nlohmann::json;
 namespace fs = std::filesystem;
 
-namespace {
-    // names of data contents whose values are not numeric
-    std::vector<std::string> INVALID_STAT_NAMES{"skillset", "savepath", "ratios"};
-}
+// names of data contents whose values are not numeric
+std::vector<std::string> Player::INVALID_STAT_NAMES{"skillset", "ratios"};
 
-Player::Player(SkillSets skillset, const std::string& savepath) : invalid_stat_names{INVALID_STAT_NAMES} {
-    std::string savefile = "saves\\" + savepath;
+Player::Player(SkillSets skillset, const std::string& path) : invalid_stat_names{Player::INVALID_STAT_NAMES} {
+    std::string savefile = "saves\\" + path;
     int num{0};
     while (true) {
         fs::path p{savefile};
         if (!fs::exists(p)) break;
         ++num;
-        savefile = "saves\\" + savepath + "-" + std::to_string(num);
+        savefile = "saves\\" + path + "-" + std::to_string(num);
     }
+
+    savepath = savefile;
 
     json skset = SET::getSet(skillset);
 
@@ -56,30 +56,30 @@ Player::Player(SkillSets skillset, const std::string& savepath) : invalid_stat_n
     data["mining_ratio"] = skset["mining_ratio"].get<double>();
     data["carry_ratio"] = skset["carry_ratio"].get<double>();
     data["wealth"] = 0;
-    data["savepath"] = savefile;
     data["ratios"] = skset;
 }
 
-Player Player::load(const std::string& savepath) {
-    Player player;
-    player.invalid_stat_names = INVALID_STAT_NAMES;
+Player* Player::load(const std::string& path) {
+    Player* player = new Player();
+    player->invalid_stat_names = Player::INVALID_STAT_NAMES;
+    player->savepath = path;
 
-    fs::path p{savepath};
+    fs::path p{path};
     if (!fs::exists(p)) throw AdventureException("Player::Player() save does not exist.");
     std::ifstream i;
-    i.open(savepath + "\\player.game");
+    i.open(path + "\\player.game");
     json filedata;
     i >> filedata;
     i.close();
-    player.data = filedata[0];
+    player->data = filedata[0];
 
     std::for_each(filedata[1].begin(), filedata[1].end(), [&](std::string s){
-        if (s.substr(0, 8) == "RESOURCE") player.inventory.push_back(std::shared_ptr<Object>(Resource::from_string(s)));
-        else if (s.substr(0, 9) == "CRESOURCE") player.inventory.push_back(std::shared_ptr<Object>(CResource::from_string(s)));
-        else if (s.substr(0, 9) == "CONTAINER") player.inventory.push_back(std::shared_ptr<Object>(Container::from_string(s)));
-        else if (s.substr(0, 4) == "TOOL") player.inventory.push_back(std::shared_ptr<Object>(Tool::from_string(s)));
-        else if (s.substr(0, 6) == "WEAPON") player.inventory.push_back(std::shared_ptr<Object>(Weapon::from_string(s)));
-        else throw AdventureException("Player::Player(const std::string& savepath) (" + savepath + ") Unrecognized inventory string: " + s);
+        if (s.substr(0, 8) == "RESOURCE") player->inventory.push_back(std::shared_ptr<Object>(Resource::from_string(s)));
+        else if (s.substr(0, 9) == "CRESOURCE") player->inventory.push_back(std::shared_ptr<Object>(CResource::from_string(s)));
+        else if (s.substr(0, 9) == "CONTAINER") player->inventory.push_back(std::shared_ptr<Object>(Container::from_string(s)));
+        else if (s.substr(0, 4) == "TOOL") player->inventory.push_back(std::shared_ptr<Object>(Tool::from_string(s)));
+        else if (s.substr(0, 6) == "WEAPON") player->inventory.push_back(std::shared_ptr<Object>(Weapon::from_string(s)));
+        else throw AdventureException("Player::Player(const std::string& savepath) (" + path + ") Unrecognized inventory string: " + s);
     });
 
     return player;
@@ -88,7 +88,7 @@ Player Player::load(const std::string& savepath) {
 Player::Player() {}
 
 void Player::save() const {
-    std::string path_string{data["savepath"].get<std::string>()};
+    std::string path_string{savepath};
     fs::path p{path_string};
     if (!fs::exists(p)) fs::create_directory(p);
     path_string += "\\player.game";
@@ -161,7 +161,7 @@ std::vector<std::string> Player::getInvalidStatNames() const noexcept {
 }
 
 std::string Player::getSavepath() const noexcept {
-    return data["savepath"].get<std::string>();
+    return savepath;
 }
 
 SkillSets Player::getSkillset() const noexcept {
