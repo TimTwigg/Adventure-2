@@ -1,10 +1,11 @@
-// Updated: 12 June 2022
+// Updated: 13 June 2022
 
 #include <string>
 #include <iostream>
 #include <windows.h>
 #include <vector>
 #include <conio.h>
+#include <cstdlib>
 #include "WindowsInterface.hpp"
 #include "Colors.hpp"
 
@@ -132,4 +133,8 @@ void WindowsInterface::write(PCWSTR sequence) {
     DWORD written;
     WriteConsoleW(console, sequence, static_cast<DWORD>(wcslen(sequence)), &written, NULL);
     SetConsoleMode(console, originalMode);
+}
+
+void WindowsInterface::wait() {
+    char c = getch();
 }

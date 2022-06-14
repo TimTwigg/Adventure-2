@@ -1,4 +1,4 @@
-// updated 11 June 2022
+// updated 14 June 2022
 
 #include <map>
 #include <vector>
@@ -127,11 +127,11 @@ void Map::save() const {
 }
 
 Map* Map::load(const std::string& path) {
-    fs::path p{"saves\\" + path};
+    fs::path p{path};
     if (!fs::exists(p)) throw AdventureException("Map::load() save does not exist.");
 
     std::ifstream i;
-    i.open("saves\\" + path + "\\map.game");
+    i.open(path + "\\map.game");
     json filedata;
     i >> filedata;
     i.close();

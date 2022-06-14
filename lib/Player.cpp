@@ -1,4 +1,4 @@
-// Updated: 12 June 2022
+// Updated: 14 June 2022
 
 #include <string>
 #include <fstream>
@@ -16,6 +16,7 @@
 #include "CResource.hpp"
 #include "Tool.hpp"
 #include "Weapon.hpp"
+#include "Formulae.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
 namespace fs = std::filesystem;
@@ -23,14 +24,15 @@ namespace fs = std::filesystem;
 // names of data contents whose values are not numeric
 std::vector<std::string> Player::INVALID_STAT_NAMES{"skillset", "ratios"};
 
-Player::Player(SkillSets skillset, const std::string& path) : invalid_stat_names{Player::INVALID_STAT_NAMES} {
-    std::string savefile = "saves\\" + path;
+Player::Player(SkillSets skillset, const std::string& path, float diff_ratio) : invalid_stat_names{Player::INVALID_STAT_NAMES} {
+    if (path.size() < 1) throw AdventureException("Player: save path required");
+    std::string savefile = path;
     int num{0};
     while (true) {
         fs::path p{savefile};
         if (!fs::exists(p)) break;
         ++num;
-        savefile = "saves\\" + path + "-" + std::to_string(num);
+        savefile = path + "_" + std::to_string(num);
     }
 
     savepath = savefile;
@@ -57,17 +59,19 @@ Player::Player(SkillSets skillset, const std::string& path) : invalid_stat_names
     data["carry_ratio"] = skset["carry_ratio"].get<double>();
     data["wealth"] = 0;
     data["ratios"] = skset;
+    data["diff_ratio"] = diff_ratio;
 }
 
 Player* Player::load(const std::string& path) {
+    fs::path p{path};
+    if (!fs::exists(p)) throw AdventureException("Player::load save does not exist: " + path);
+
     Player* player = new Player();
     player->invalid_stat_names = Player::INVALID_STAT_NAMES;
     player->savepath = path;
 
-    fs::path p{path};
-    if (!fs::exists(p)) throw AdventureException("Player::Player() save does not exist.");
     std::ifstream i;
-    i.open(path + "\\player.game");
+    i.open(player->savepath + "\\player.game");
     json filedata;
     i >> filedata;
     i.close();
@@ -269,8 +273,12 @@ void Player::heal(double hp) noexcept {
     if (data["health"].get<double>() > data["max_health"].get<double>()) data["health"] = data["max_health"];
 }
 
-double Player::attackDmg() const {
-    return stat("base_damage");
+double Player::attackDmg(double weaponDmgModifier) {
+    return Formula::playerDamage(stat("base_damage") * weaponDmgModifier, gen, stat("diff_ratio"));
+}
+
+double Player::fistDmg() {
+    return Formula::playerDamage(stat("fist_damage"), gen, stat("diff_ratio"));
 }
 
 void Player::addXP(int xp) noexcept {

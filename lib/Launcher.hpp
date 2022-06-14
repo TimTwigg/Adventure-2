@@ -1,4 +1,4 @@
-// updated 12 June 2022
+// updated 13 June 2022
 
 #ifndef LAUNCHER_HPP
 #define LAUNCHER_HPP
@@ -16,7 +16,7 @@ class Launcher {
     
     private:
         void menu();
-        void loadGame();
+        bool loadGame();
         void newGame();
         void config();
     

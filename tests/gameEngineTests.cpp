@@ -1,4 +1,4 @@
-// updated 12 June 2022
+// updated 14 June 2022
 
 #include <gtest/gtest.h>
 #include <memory>
@@ -9,7 +9,7 @@
 
 namespace {
     std::shared_ptr<Interface> i{new WindowsInterface()};
-    GameData data{"test", true, SkillSets::TRAVELER, {}};
+    GameData data{"saves\\test", true, SkillSets::TRAVELER, {}};
 }
 
 TEST(gameEngineTests, constructor) {

@@ -1,4 +1,4 @@
-// Updated: 12 June 2022
+// Updated: 14 June 2022
 
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
@@ -7,6 +7,7 @@
 #include <memory>
 #include "SkillSets.hpp"
 #include "Object.hpp"
+#include "RandomGenerator.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
 
@@ -16,9 +17,8 @@ class Player {
         static std::vector<std::string> INVALID_STAT_NAMES;
 
     public:
-        Player(SkillSets skillset, const std::string& path);
-        Player(const Player& other) = default;
-        ~Player() = default;
+        Player(SkillSets skillset, const std::string& path, float diff_ratio = 1);
+        Player(const Player& other) = delete;
         void save() const;
         
         double stat(const std::string& stat_name) const;
@@ -40,7 +40,8 @@ class Player {
 
         void damage(double dmg);
         void heal(double hp) noexcept;
-        double attackDmg() const;
+        double attackDmg(double weaponDmgModifier);
+        double fistDmg();
 
         void addXP(int xp) noexcept;
         
@@ -56,6 +57,7 @@ class Player {
         std::vector<std::shared_ptr<Object>> inventory;
         std::vector<std::string> invalid_stat_names;
         std::string savepath;
+        RandomGenerator gen;
 
         void level_up();
         void level_stats();

@@ -1,4 +1,4 @@
-// updated 12 June 2022
+// updated 14 June 2022
 
 #include <gtest/gtest.h>
 #include <vector>
@@ -13,15 +13,15 @@ namespace {
     std::vector<std::string> names{"level", "xp", "skillset", "health", "max_health",
         "base_damage", "fist_base_damage", "hunger", "max_hunger", "thirst", "max_thirst", "carry_weight",
         "speed", "swimming_speed", "consumption_ratio", "chopping_ratio", "mining_ratio",
-       "carry_ratio", "wealth", "ratios"};
+       "carry_ratio", "wealth", "ratios", "diff_ratio"};
 }
 
 TEST(PlayerTests, Constructor) {
-    Player p{SkillSets::TRAVELER, "test"};
+    Player p{SkillSets::TRAVELER, "saves\\test"};
 }
 
 TEST(PlayerTests, getStatNames) {
-    Player p{SkillSets::TRAVELER, "test"};
+    Player p{SkillSets::TRAVELER, "saves\\test"};
     std::vector<std::string> v = p.getStatNames();
     ASSERT_EQ(v.size(), names.size());
     
@@ -31,7 +31,7 @@ TEST(PlayerTests, getStatNames) {
 }
 
 TEST(PlayerTests, statMethods) {
-    Player p{SkillSets::JESTER, "test"};
+    Player p{SkillSets::JESTER, "saves\\test"};
     std::vector<std::string> inv_names = p.getInvalidStatNames();
     for (auto n : p.getStatNames()) {
         if (std::find(inv_names.begin(), inv_names.end(), n) != inv_names.end()) {
@@ -45,7 +45,7 @@ TEST(PlayerTests, statMethods) {
 }
 
 TEST(PlayerTests, getters) {
-    Player p{SkillSets::JESTER, "test"};
+    Player p{SkillSets::JESTER, "saves\\test"};
     std::string savepath = p.getSavepath();
     SkillSets ss = p.getSkillset();
     ASSERT_EQ(ss, SkillSets::JESTER);
@@ -53,7 +53,7 @@ TEST(PlayerTests, getters) {
 }
 
 TEST(PlayerTests, wealthSetters) {
-    Player p{SkillSets::BRAWLER, "test"};
+    Player p{SkillSets::BRAWLER, "saves\\test"};
     ASSERT_EQ(p.stat("wealth"), 0);
 
     p.addWealth(100);
@@ -69,7 +69,7 @@ TEST(PlayerTests, wealthSetters) {
 }
 
 TEST(PlayerTests, saveLoadFiles) {
-    Player p{SkillSets::WARRIOR, "test"};
+    Player p{SkillSets::WARRIOR, "saves\\test"};
     p.addWealth(10);
     p.save();
     Player* q = Player::load(p.getSavepath());
@@ -87,7 +87,7 @@ TEST(PlayerTests, saveLoadFiles) {
     ASSERT_EQ(p.getSavepath(), q->getSavepath());
     delete q;
 
-    Player a{SkillSets::TRAVELER, "test"};
+    Player a{SkillSets::TRAVELER, "saves\\test"};
     a.addItem(OBJCLASS::RESOURCE, "stone", 5);
     a.addItem(OBJCLASS::CRESOURCE, "arrow", 15);
     a.save();
@@ -99,7 +99,7 @@ TEST(PlayerTests, saveLoadFiles) {
 }
 
 TEST(PlayerTests, healthManagers) {
-    Player p{SkillSets::SCOUT, "test"};
+    Player p{SkillSets::SCOUT, "saves\\test"};
     int total_hp = p.stat("health");
     
     p.damage(10);
@@ -118,13 +118,13 @@ TEST(PlayerTests, healthManagers) {
 }
 
 TEST(PlayerTests, addXP) {
-    Player p{SkillSets::SCOUT, "test"};
+    Player p{SkillSets::SCOUT, "saves\\test"};
     p.addXP(10);
     ASSERT_EQ(p.stat("xp"), 10);
 }
 
 TEST(PlayerTests, hungerManagers) {
-    Player p{SkillSets::SCOUT, "test"};
+    Player p{SkillSets::SCOUT, "saves\\test"};
     double hunger = p.stat("hunger");
 
     p.eat(15);
@@ -141,7 +141,7 @@ TEST(PlayerTests, hungerManagers) {
 }
 
 TEST(PlayerTests, thirstManagers) {
-    Player p{SkillSets::BRAWLER, "test"};
+    Player p{SkillSets::BRAWLER, "saves\\test"};
     double thirst = p.stat("thirst");
 
     p.drink(15);
@@ -158,7 +158,7 @@ TEST(PlayerTests, thirstManagers) {
 }
 
 TEST(PlayerTests, inventoryManagers) {
-    Player p{SkillSets::MINER, "test"};
+    Player p{SkillSets::MINER, "saves\\test"};
     ASSERT_FALSE(p.inInventory("feather"));
     ASSERT_TRUE(p.inInventory("cooked-chicken", 0));
     ASSERT_FALSE(p.inInventory("stone-pick"));
@@ -183,7 +183,7 @@ TEST(PlayerTests, inventoryManagers) {
 }
 
 TEST(PlayerTests, weight) {
-    Player p{SkillSets::TRAVELER, "test"};
+    Player p{SkillSets::TRAVELER, "saves\\test"};
     ASSERT_EQ(p.weight(), 0);
 
     p.addItem(OBJCLASS::RESOURCE, "stone"); // 10

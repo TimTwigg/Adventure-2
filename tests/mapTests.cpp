@@ -1,4 +1,4 @@
-// updated 12 June 2022
+// updated 14 June 2022
 
 #include <gtest/gtest.h>
 #include <vector>
@@ -61,7 +61,7 @@ TEST(mapTests, saveload) {
     Map m{"saves\\test"};
     Location l = m.get(Dir::NORTH);
     m.save();
-    std::string path = m.getPath().substr(6);
+    std::string path = m.getPath();
 
     Map* m2 = Map::load(path);
     Location l2 = m2->get(Dir::NORTH);

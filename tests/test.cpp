@@ -1,4 +1,4 @@
-// updated 30 April 2022
+// updated 14 June 2022
 
 #include <gtest/gtest.h>
 #include <filesystem>
@@ -14,7 +14,7 @@ void clear_files() {
         std::string s = "rmdir " + savefile + " /S /Q";
 		int i = system(s.c_str());
         ++num;
-        savefile = "saves\\test-" + std::to_string(num);
+        savefile = "saves\\test_" + std::to_string(num);
     }
 }
 

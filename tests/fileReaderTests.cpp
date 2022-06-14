@@ -1,6 +1,7 @@
-// updated 15 February 2022
+// updated 13 June 2022
 
 #include <gtest/gtest.h>
+#include <vector>
 #include "FileReader.hpp"
 #include "AdventureException.hpp"
 #include "json.hpp"
@@ -26,4 +27,11 @@ TEST(fileReaderTests, getFromFile) {
     ASSERT_THROW(FileReader::getFromFile("  ", "Food"), AdventureException);
     ASSERT_THROW(FileReader::getFromFile("skillsets.json", ""), AdventureException);
     ASSERT_THROW(FileReader::getFromFile("skillsets.json", "  "), AdventureException);
+}
+
+TEST(fileReaderTests, getTitlesFromFile) {
+    std::vector<std::string> v = FileReader::getTitlesFromFile("skillsets.json");
+    ASSERT_EQ(v.size(), 9);
+    std::vector<std::string> keys{{"Brawler", "Forager", "Hunter", "Jester", "Lumberjack", "Miner", "Scout", "Traveler", "Warrior"}};
+    ASSERT_EQ(v, keys);
 }
