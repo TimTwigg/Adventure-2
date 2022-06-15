@@ -1,4 +1,4 @@
-// updated 13 June 2022
+// updated 14 June 2022
 
 #include <string>
 #include <memory>
@@ -21,6 +21,9 @@ namespace {
 }
 
 Launcher::Launcher(std::shared_ptr<Interface> i) : i{i} {
+    data.configs = {
+        {"prompt", ART::DEFAULTPROMPT}
+    };
 }
 
 GameEngine* Launcher::run() {
@@ -61,6 +64,7 @@ void Launcher::newGame() {
     std::string filename = i->askInput("Save Name: ");
     strip(filename);
     if (filename.size() < 1) {
+        // use datetime as default save name
         auto t = std::time(nullptr);
         auto tm = *std::localtime(&t);
         std::stringstream ss;
@@ -70,15 +74,23 @@ void Launcher::newGame() {
     }
     data.filename = "saves\\" + filename;
     
+    // game options
     std::vector<std::string> skillsets = FileReader::getTitlesFromFile("skillsets.json");
     std::string skillset = i->askSelect("Skill Set", skillsets);
     std::string diff = i->askSelect("Difficulty", {"Easy", "Medium", "Hard"});
+    std::string autosave = i->askSelect("Autosave", {"Yes", "No"});
 
+    // difficulty setting
     float diff_ratio;
     if (diff == "Easy") diff_ratio = 0.5;
     else if (diff == "Medium") diff_ratio = 1.0;
     else if (diff == "Hard") diff_ratio = 1.5;
 
+    // autosave setting
+    if (autosave == "Yes") data.configs["autosave"] = true;
+    else data.configs["autosave"] = false;
+
+    // input the settings
     data.skillset = SET::to_skillset(skillset);
     data.configs["diff"] = diff_ratio;
     data.isNew = true;

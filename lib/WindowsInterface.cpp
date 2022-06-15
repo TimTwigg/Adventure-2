@@ -1,4 +1,4 @@
-// Updated: 13 June 2022
+// Updated: 15 June 2022
 
 #include <string>
 #include <iostream>
@@ -20,9 +20,9 @@ WindowsInterface::WindowsInterface() : console{GetStdHandle(STD_OUTPUT_HANDLE)} 
     };
 
     colorIndex = {
-        {Part::PROMPT, Color::GREEN_LIGHT},
+        {Part::PROMPT, Color::GRAY},
         {Part::SELECTOR, Color::BLUE_LIGHT},
-        {Part::ANSWER, Color::BLUE_DARK},
+        {Part::ANSWER, Color::GREEN_LIGHT},
         {Part::TEXT, Color::WHITE}
     };
 
@@ -102,6 +102,12 @@ std::string WindowsInterface::askSelect(const std::string& prompt, const std::ve
     }
 
     return options[current];
+}
+
+bool WindowsInterface::askYesNo(const std::string& prompt, bool clear) {
+    std::string answer = askSelect(prompt, {"Yes", "No"}, clear);
+    if (answer == "Yes") return true;
+    else return false;
 }
 
 std::string WindowsInterface::askInput(const std::string& prompt) {

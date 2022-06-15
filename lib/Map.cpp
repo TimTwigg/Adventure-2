@@ -1,4 +1,4 @@
-// updated 14 June 2022
+// updated 15 June 2022
 
 #include <map>
 #include <vector>
@@ -99,6 +99,10 @@ Location Map::get(Dir d) {
 
 std::string Map::getPath() const noexcept {
     return savepath;
+}
+
+void Map::setPath(std::string newPath) noexcept {
+    savepath = newPath;
 }
 
 void Map::save() const {

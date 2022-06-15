@@ -1,4 +1,4 @@
-// updated 30 April 2022
+// updated 15 June 2022
 
 #ifndef MAP_HPP
 #define MAP_HPP
@@ -38,6 +38,7 @@ class Map {
         Location get(int x, int y) const;
         Location get(Dir d);
         std::string getPath() const noexcept;
+        void setPath(std::string newPath) noexcept;
         void save() const;
 
     private:

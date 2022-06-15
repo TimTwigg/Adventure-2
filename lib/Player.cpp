@@ -1,4 +1,4 @@
-// Updated: 14 June 2022
+// Updated: 15 June 2022
 
 #include <string>
 #include <fstream>
@@ -166,6 +166,10 @@ std::vector<std::string> Player::getInvalidStatNames() const noexcept {
 
 std::string Player::getSavepath() const noexcept {
     return savepath;
+}
+
+void Player::setSavePath(std::string newPath) noexcept {
+    savepath = newPath;
 }
 
 SkillSets Player::getSkillset() const noexcept {

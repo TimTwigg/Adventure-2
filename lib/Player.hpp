@@ -1,4 +1,4 @@
-// Updated: 14 June 2022
+// Updated: 15 June 2022
 
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
@@ -25,6 +25,7 @@ class Player {
         std::vector<std::string> getStatNames() const noexcept;
         std::vector<std::string> getInvalidStatNames() const noexcept;
         std::string getSavepath() const noexcept;
+        void setSavePath(std::string newPath) noexcept;
         SkillSets getSkillset() const noexcept;
         
         // returns true if the object is in the player's inventory, with enough multiplicity

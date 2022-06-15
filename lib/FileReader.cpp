@@ -1,4 +1,4 @@
-// updated 13 June 2022
+// updated 14 June 2022
 
 #include <fstream>
 #include <string>
@@ -74,4 +74,14 @@ std::vector<std::string> FileReader::getSaveFileNames() {
     std::vector<std::string> v;
     for (const auto& f : fs::directory_iterator("saves")) v.push_back(f.path().stem().string());
     return v;
+}
+
+json FileReader::getConfigs(std::string path) {
+    if (!fs::exists(fs::path(path))) throw AdventureException("FileReader::getConfigs path does not exist");
+    std::ifstream in;
+    json j;
+    in.open(path + "\\config.game");
+    in >> j;
+    in.close();
+    return j;
 }
