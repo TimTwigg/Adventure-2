@@ -1,4 +1,4 @@
-// updated 7 April 2022
+// updated 16 June 2022
 
 #ifndef CONTAINER_HPP
 #define CONTAINER_HPP
@@ -10,7 +10,7 @@
 
 class Container : public Object {
     public:
-        static Container* from_string(const std::string& code);
+        static Container* fromString(const std::string& code);
 
     public:
         explicit Container(std::string name);

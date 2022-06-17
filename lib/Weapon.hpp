@@ -1,4 +1,4 @@
-// updated 7 April 2022
+// updated 16 June 2022
 
 #ifndef WEAPON_HPP
 #define WEAPON_HPP
@@ -9,7 +9,7 @@
 
 class Weapon : public Object {
     public:
-        static Weapon* from_string(const std::string& code);
+        static Weapon* fromString(const std::string& code);
 
     public:
         explicit Weapon(std::string name);

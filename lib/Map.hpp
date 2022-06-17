@@ -1,4 +1,4 @@
-// updated 15 June 2022
+// updated 16 June 2022
 
 #ifndef MAP_HPP
 #define MAP_HPP
@@ -7,7 +7,9 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <memory>
 #include "RandomGenerator.hpp"
+#include "Thing.hpp"
 
 enum class Dir {
     NORTH,
@@ -18,11 +20,13 @@ enum class Dir {
 
 struct Location {
     std::string biome;
-    std::vector<std::string> here;
+    std::vector<std::string> miscHere;
+    std::vector<std::shared_ptr<Thing>> thingsHere;
 
     Location();
     Location(RandomGenerator& gen);
     Location(const std::string& biome, const std::vector<std::string>& here);
+    std::vector<std::string> save() const;
 };
 
 class Map {

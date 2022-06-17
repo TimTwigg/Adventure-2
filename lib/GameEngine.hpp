@@ -1,4 +1,4 @@
-// updated 15 June 2022
+// updated 16 June 2022
 
 #ifndef GAMEENGINE_HPP
 #define GAMEENGINE_HPP
@@ -27,8 +27,18 @@ class GameEngine {
         std::shared_ptr<Map> map;
         std::shared_ptr<Interface> i;
         json configs;
+        // the query input by the player
         std::string query;
+        // the words of the query split on whitespace
+        std::vector<std::string> command;
         RandomGenerator gen;
+
+        // helper functions
+
+        // split a string on whitespace and return the words in a vector
+        std::vector<std::string> split(const std::string& str);
+        // print a Location (Location defined in Map.hpp)
+        void printLocation(Location l);
 
         // command functions
 
@@ -56,7 +66,6 @@ class GameEngine {
         void time();
         void fill();
         void train();
-        void clear();
         void save();
         void help();
         void command_help();

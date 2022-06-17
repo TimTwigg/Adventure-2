@@ -1,4 +1,4 @@
-// updated 11 June 2022
+// updated 16 June 2022
 
 #include <string>
 #include <vector>
@@ -32,7 +32,7 @@ Enemy::Enemy(std::string name) {
     for (const std::pair<std::string, int>& item : data["drops"].get<std::map<std::string, int>>()) {
         if (item.first.substr(0, 7) == "weapons") this->drops.push_back(std::shared_ptr<Object>(new Weapon(item.first.substr(8))));
         else if (item.first.substr(0, 9) == "resources") this->drops.push_back(std::shared_ptr<Object>(new Resource(item.first.substr(10), item.second)));
-        else if (item.first.substr(0, 5) == "tools") this->drops.push_back(std::shared_ptr<Object>(Tool::from_string(item.first.substr(6))));
+        else if (item.first.substr(0, 5) == "tools") this->drops.push_back(std::shared_ptr<Object>(Tool::fromString(item.first.substr(6))));
     }
 }
 

@@ -1,4 +1,4 @@
-// updated 7 April 2022
+// updated 16 June 2022
 
 #include <map>
 #include <string>
@@ -45,7 +45,7 @@ void Weapon::use() {
     --uses;
 }
 
-Weapon* Weapon::from_string(const std::string& code) {
+Weapon* Weapon::fromString(const std::string& code) {
     std::stringstream ss{code};
     std::vector<std::string> v;
     while (ss.good()) {

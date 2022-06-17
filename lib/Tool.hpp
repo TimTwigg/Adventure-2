@@ -1,4 +1,4 @@
-// updated 7 April 2022
+// updated 16 June 2022
 
 #ifndef TOOL_HPP
 #define TOOL_HPP
@@ -9,7 +9,7 @@
 
 class Tool : public Object {
     public:
-        static Tool* from_string(const std::string& code);
+        static Tool* fromString(const std::string& code);
         
     public:
         explicit Tool(std::string name);

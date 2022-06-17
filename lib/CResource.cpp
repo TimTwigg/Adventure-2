@@ -1,4 +1,4 @@
-// updated 7 April 2022
+// updated 16 June 2022
 
 #include <string>
 #include <map>
@@ -31,7 +31,7 @@ CResource::operator std::string() const noexcept {
     return "C" + Resource::operator std::string();
 }
 
-CResource* CResource::from_string(const std::string& code) {
+CResource* CResource::fromString(const std::string& code) {
     std::stringstream ss{code};
     std::vector<std::string> v;
     while (ss.good()) {

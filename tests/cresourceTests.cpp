@@ -1,4 +1,4 @@
-// updated 8 April 2022
+// updated 16 June 2022
 
 #include <gtest/gtest.h>
 #include <map>
@@ -21,7 +21,7 @@ TEST(cresourceTests, getRecipe) {
 }
 
 TEST(cresourceTests, fromString) {
-    CResource* r = CResource::from_string("CRESOURCE, arrow, 9");
+    CResource* r = CResource::fromString("CRESOURCE, arrow, 9");
     ASSERT_EQ(r->getCount(), 9);
     delete r;
 }

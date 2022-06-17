@@ -1,4 +1,4 @@
-// Updated: 15 June 2022
+// Updated: 16 June 2022
 
 #include <string>
 #include <fstream>
@@ -78,11 +78,11 @@ Player* Player::load(const std::string& path) {
     player->data = filedata[0];
 
     std::for_each(filedata[1].begin(), filedata[1].end(), [&](std::string s){
-        if (s.substr(0, 8) == "RESOURCE") player->inventory.push_back(std::shared_ptr<Object>(Resource::from_string(s)));
-        else if (s.substr(0, 9) == "CRESOURCE") player->inventory.push_back(std::shared_ptr<Object>(CResource::from_string(s)));
-        else if (s.substr(0, 9) == "CONTAINER") player->inventory.push_back(std::shared_ptr<Object>(Container::from_string(s)));
-        else if (s.substr(0, 4) == "TOOL") player->inventory.push_back(std::shared_ptr<Object>(Tool::from_string(s)));
-        else if (s.substr(0, 6) == "WEAPON") player->inventory.push_back(std::shared_ptr<Object>(Weapon::from_string(s)));
+        if (s.substr(0, 8) == "RESOURCE") player->inventory.push_back(std::shared_ptr<Object>(Resource::fromString(s)));
+        else if (s.substr(0, 9) == "CRESOURCE") player->inventory.push_back(std::shared_ptr<Object>(CResource::fromString(s)));
+        else if (s.substr(0, 9) == "CONTAINER") player->inventory.push_back(std::shared_ptr<Object>(Container::fromString(s)));
+        else if (s.substr(0, 4) == "TOOL") player->inventory.push_back(std::shared_ptr<Object>(Tool::fromString(s)));
+        else if (s.substr(0, 6) == "WEAPON") player->inventory.push_back(std::shared_ptr<Object>(Weapon::fromString(s)));
         else throw AdventureException("Player::Player(const std::string& savepath) (" + path + ") Unrecognized inventory string: " + s);
     });
 

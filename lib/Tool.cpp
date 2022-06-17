@@ -1,4 +1,4 @@
-// updated 7 April 2022
+// updated 16 June 2022
 
 #include <string>
 #include <map>
@@ -39,7 +39,7 @@ void Tool::use() {
     --uses;
 }
 
-Tool* Tool::from_string(const std::string& code) {
+Tool* Tool::fromString(const std::string& code) {
     std::stringstream ss{code};
     std::vector<std::string> v;
     while (ss.good()) {

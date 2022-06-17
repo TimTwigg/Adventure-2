@@ -1,4 +1,4 @@
-// updated 8 April 2022
+// updated 16 June 2022
 
 #include <gtest/gtest.h>
 #include <string>
@@ -43,7 +43,7 @@ TEST(weaponTests, use) {
 }
 
 TEST(waeponTests, fromString) {
-    Weapon* w = Weapon::from_string("WEAPON, stone-sword, 1");
+    Weapon* w = Weapon::fromString("WEAPON, stone-sword, 1");
     ASSERT_EQ(w->getUses(), 1);
     delete w;
 }

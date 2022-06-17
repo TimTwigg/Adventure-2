@@ -1,4 +1,4 @@
-// updated 7 April 2022
+// updated 16 June 2022
 
 #include <string>
 #include <sstream>
@@ -58,7 +58,7 @@ void Container::empty() noexcept {
     content = Liquid();
 }
 
-Container* Container::from_string(const std::string& code) {
+Container* Container::fromString(const std::string& code) {
     std::stringstream ss{code};
     std::vector<std::string> v;
     while (ss.good()) {

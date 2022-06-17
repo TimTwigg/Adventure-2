@@ -1,4 +1,4 @@
-// updated 8 April 2022
+// updated 16 June 2022
 
 #include <gtest/gtest.h>
 #include <string>
@@ -34,7 +34,7 @@ TEST(toolTests, operatorString) {
 }
 
 TEST(toolTests, fromString) {
-    Tool* t = Tool::from_string("Tool, stone-axe, 1");
+    Tool* t = Tool::fromString("Tool, stone-axe, 1");
     ASSERT_EQ(t->getUses(), 1);
     delete t;
 }

@@ -1,4 +1,4 @@
-// updated 15 June 2022
+// updated 16 June 2022
 
 #include <map>
 #include <vector>
@@ -11,6 +11,14 @@
 #include "RandomGenerator.hpp"
 #include "FileReader.hpp"
 #include "AdventureException.hpp"
+#include "Animal.hpp"
+#include "Enemy.hpp"
+#include "Civilization.hpp"
+#include "Container.hpp"
+#include "CResource.hpp"
+#include "Resource.hpp"
+#include "Tool.hpp"
+#include "Weapon.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
 namespace fs = std::filesystem;
@@ -26,36 +34,67 @@ Location::Location(RandomGenerator& gen) {
     data = data[biome];
 
     if (biome == "Forest" || biome == "Jungle" || (data["trees"].get<bool>() && gen.getRandBool())) {
-        here.push_back("trees");
+        miscHere.push_back("trees");
         if (biome == "Forest" || biome == "Jungle" || gen.getRandBool()) {
             int count = gen.getRandInt(0, 3);
-            for (int i = 0; i < count; ++i) here.push_back("wood");
+            if (count > 0) thingsHere.push_back(std::shared_ptr<Thing>(new Resource("wood", count)));
         }
     }
 
     if (biome == "Mountain" || (data["stone"].get<bool>() && gen.getRandBool())) {
-        here.push_back("stone deposit");
+        miscHere.push_back("stone deposit");
         if (biome == "Mountain" || gen.getRandBool()) {
             int count = gen.getRandInt(0, 3);
-            for (int i = 0; i < count; ++i) here.push_back("stone");
+            if (count > 0) thingsHere.push_back(std::shared_ptr<Thing>(new Resource("stone", count)));
         }
     }
 
-    if (data["metal"].get<bool>() && gen.getRandBool()) here.push_back("metal deposit");
-    if (data["gold"].get<bool>() && gen.getRandBool()) here.push_back("gold deposit");
-    if (biome != "River" && gen.getRandBool() && gen.getRandInt(0, 10) * data["river"].get<double>() >= gen.getRandInt(1, 10)) here.push_back("river");
+    if (data["metal"].get<bool>() && gen.getRandBool()) miscHere.push_back("metal deposit");
+    if (data["gold"].get<bool>() && gen.getRandBool()) miscHere.push_back("gold deposit");
+    if (biome != "River" && gen.getRandBool() && gen.getRandInt(0, 10) * data["river"].get<double>() >= gen.getRandInt(1, 10)) miscHere.push_back("river");
+    
     std::vector<std::string> civs = data["civ-types"].get<std::vector<std::string>>();
-    if (civs.size() > 0 && gen.getRandBool() && gen.getRandBool()) here.push_back(civs[gen.getRandInt(0, civs.size()-1)]);
+    if (civs.size() > 0 && gen.getRandBool() && gen.getRandBool()) thingsHere.push_back(std::shared_ptr<Thing>(new Civilization(civs[gen.getRandInt(0, civs.size()-1)])));
+    
     std::vector<std::string> animals = data["animals"].get<std::vector<std::string>>();
     if (animals.size() > 0) {
-        for (auto& a : animals) {
-            if (gen.getRandBool()) here.push_back(a);
+        for (const std::string& a : animals) {
+            if (gen.getRandBool()) thingsHere.push_back(std::shared_ptr<Thing>(new Animal(a)));
         }
     }
-    // TODO: enemies
+    
+    std::vector<std::string> enemies = data["enemies"].get<std::vector<std::string>>();
+    if (enemies.size() > 0) {
+        for (const std::string& e : enemies) {
+            // TODO: uncomment to add enemies into the game.
+            // Should they only start appearing at a certain level? Some other marker?
+            /////////////////////////
+            //if (gen.getRandBool() && gen.getRandBool()) thingsHere.push_back(std::shared_ptr<Thing>(new Enemy(e)));
+            /////////////////////////
+        }
+    }
 }
 
-Location::Location(const std::string& biome, const std::vector<std::string>& here) : biome{biome}, here{here} {
+Location::Location(const std::string& biome, const std::vector<std::string>& here) : biome{biome} {
+    std::for_each(here.begin(), here.end(), [&](const std::string& code){
+        std::string type = code.substr(0, std::find(code.begin(), code.end(), ',') - code.begin());
+        if (type == "ANIMAL") thingsHere.push_back(std::shared_ptr<Thing>(Animal::fromString(code)));
+        else if (type == "ENEMY") thingsHere.push_back(std::shared_ptr<Thing>(Enemy::fromString(code)));
+        else if (type == "CIVILIZATION") thingsHere.push_back(std::shared_ptr<Thing>(Civilization::fromString(code)));
+        else if (type == "CONTAINER") thingsHere.push_back(std::shared_ptr<Thing>(Container::fromString(code)));
+        else if (type == "CRESOURCE") thingsHere.push_back(std::shared_ptr<Thing>(CResource::fromString(code)));
+        else if (type == "RESOURCE") thingsHere.push_back(std::shared_ptr<Thing>(Resource::fromString(code)));
+        else if (type == "TOOL") thingsHere.push_back(std::shared_ptr<Thing>(Tool::fromString(code)));
+        else if (type == "WEAPON") thingsHere.push_back(std::shared_ptr<Thing>(Weapon::fromString(code)));
+        else miscHere.push_back(code);
+    });
+}
+
+std::vector<std::string> Location::save() const {
+    std::vector<std::string> v;
+    std::for_each(miscHere.begin(), miscHere.end(), [&](std::string s){v.push_back(s);});
+    std::for_each(thingsHere.begin(), thingsHere.end(), [&](std::shared_ptr<Thing> p){v.push_back(p->operator std::string());});
+    return v;
 }
 
 Map::Map(const std::string& savepath) : savepath{savepath}, gen{RandomGenerator()}, xy{std::make_pair(0, 0)} {
@@ -122,7 +161,7 @@ void Map::save() const {
         item["x"] = pair.first.first;
         item["y"] = pair.first.second;
         item["biome"] = pair.second.biome;
-        item["here"] = pair.second.here;
+        item["here"] = pair.second.save();
         out["db"].push_back(item);
     });
 
@@ -145,8 +184,7 @@ Map* Map::load(const std::string& path) {
     m->xy = std::make_pair(filedata["x"].get<int>(), filedata["y"].get<int>());
     std::for_each(filedata["db"].begin(), filedata["db"].end(), [&](const json& item){
         std::pair<int, int> key = std::make_pair(item["x"].get<int>(), item["y"].get<int>());
-        Location l = Location(item["biome"].get<std::string>(), item["here"].get<std::vector<std::string>>());
-        m->db[key] = l;
+        m->db[key] = Location(item["biome"].get<std::string>(), item["here"].get<std::vector<std::string>>());
     });
 
     return m;

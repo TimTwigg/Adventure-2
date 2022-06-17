@@ -1,10 +1,12 @@
-// updated 15 June 2022
+// updated 16 June 2022
 
 #include <string>
 #include <memory>
 #include <fstream>
 #include <iomanip>
 #include <filesystem>
+#include <algorithm>
+#include <sstream>
 #include "GameEngine.hpp"
 #include "Player.hpp"
 #include "Map.hpp"
@@ -42,6 +44,7 @@ GameEngine::GameEngine(std::shared_ptr<Interface> i, GameData data) : i{i} {
 
 void GameEngine::run() {
     int counter = 0;
+    i->clearScreen();
 
     // mainloop
     while (true) {
@@ -53,15 +56,17 @@ void GameEngine::run() {
         }
 
         query = i->askInput(configs["prompt"].get<std::string>());
+        std::transform(query.begin(), query.end(), query.begin(), [](unsigned char c){return std::tolower(c);});
+        command = split(query);
 
         // look
-        if (query.substr(0, 4) == "look") look();
+        if (command[0] == "look") look();
 
         // inventory
         else if (query == "inventory" || query == "i") inventory();
 
         // go
-        else if (query.substr(0, 2) == "go") go();
+        else if (command[0] == "go") go();
 
         // 'me'
         else if (query == "me") me();
@@ -73,58 +78,58 @@ void GameEngine::run() {
         else if (query == "hp") hp();
 
         // attack
-        else if (query.substr(0, 6) == "attack") attack();
+        else if (command[0] == "attack") attack();
 
         // mine
-        else if (query.substr(0, 4) == "mine") mine();
+        else if (command[0] == "mine") mine();
 
         // chop
-        else if (query.substr(0, 4) == "chop") chop();
+        else if (command[0] == "chop") chop();
 
         // eat
-        else if (query.substr(0, 3) == "eat") eat();
+        else if (command[0] == "eat") eat();
 
         // drink
-        else if (query.substr(0, 5) == "drink") drink();
+        else if (command[0] == "drink") drink();
 
         // take
-        else if (query.substr(0, 4) == "take") take();
+        else if (command[0] == "take") take();
 
         // drop
-        else if (query.substr(0, 4) == "drop") drop();
+        else if (command[0] == "drop") drop();
 
         // raid
-        else if (query.substr(0, 4) == "raid") raid();
+        else if (command[0] == "raid") raid();
 
         // trade
-        else if (query.substr(0, 5) == "trade") trade();
+        else if (command[0] == "trade") trade();
 
         // craft
-        else if (query.substr(0, 5) == "craft") craft();
+        else if (command[0] == "craft") craft();
 
         // build
-        else if (query.substr(0, 5) == "build") build();
+        else if (command[0] == "build") build();
 
         // recipe
-        else if (query.substr(0, 6) == "recipe") recipe();
+        else if (command[0] == "recipe") recipe();
 
         // smoke
-        else if (query.substr(0, 5) == "smoke") smoke();
+        else if (command[0] == "smoke") smoke();
 
         // sleep
         else if (query == "sleep") sleep();
 
         // wait
-        else if (query.substr(0, 4) == "wait") wait();
+        else if (command[0] == "wait") wait();
 
         // time
         else if (query == "time") time();
 
         // fill
-        else if (query.substr(0, 4) == "fill") fill();
+        else if (command[0] == "fill") fill();
 
         // train
-        else if (query.substr(0, 5) == "train") train();
+        else if (command[0] == "train") train();
 
         // clear
         else if (query == "clear") i->clearScreen();
@@ -167,8 +172,46 @@ void GameEngine::run() {
     }
 }
 
-void GameEngine::look() {
+std::vector<std::string> GameEngine::split(const std::string& str) {
+    std::istringstream iss{str};
+    return std::vector<std::string>{std::istream_iterator<std::string>{iss}, std::istream_iterator<std::string>{}};
+}
 
+void GameEngine::printLocation(Location l) {
+    std::string action, preposition, article;
+    
+    if (l.biome == "Ocean" || l.biome == "River") action = "swimming";
+    else action = "standing";
+
+    if (l.biome == "Mountain" || l.biome == "Plain" || l.biome == "Island") preposition = "on";
+    else preposition = "in";
+
+    // check if the first letter is a vowel.
+    // method for checking taken from 
+    // https://stackoverflow.com/questions/47846406/c-fastest-way-to-check-if-char-is-vowel-or-consonant
+    if ((0x208222 >> (l.biome[0] & 0x1f)) & 1) article = "an";
+    else article = "a";
+
+    std::string partA = "You are " + action + " " + preposition + " " + article + " " + l.biome + ". ";
+
+    // TODO
+    /*
+    if (l.here.size() == 0) i->output(partA + "There is nothing here.");
+    else if (l.here.size() == 1) {
+
+    }
+    else {
+        
+    }*/
+}
+
+void GameEngine::look() {
+    if (command.size() == 1 || command[1] == "here") printLocation(map->get());
+    else if (command[1] == "north") printLocation(map->get(Dir::NORTH));
+    else if (command[1] == "east") printLocation(map->get(Dir::EAST));
+    else if (command[1] == "south") printLocation(map->get(Dir::SOUTH));
+    else if (command[1] == "west") printLocation(map->get(Dir::WEST));
+    else i->output("Couldn't recognize command, try 'look [north | east | south | west]'", Color::RED_LIGHT);
 }
 
 void GameEngine::inventory() {
@@ -260,10 +303,6 @@ void GameEngine::fill() {
 }
 
 void GameEngine::train() {
-
-}
-
-void GameEngine::clear() {
 
 }
 
