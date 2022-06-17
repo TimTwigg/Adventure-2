@@ -1,8 +1,6 @@
 TODO
 Add enemies to map biome generation
 peaceful setting
-convert string object names in map location.here to objects, and back again for look
-GameEngine::printLocation
 Write Civilization
 Write GameEngine
 Test GameEngine

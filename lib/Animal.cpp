@@ -1,4 +1,4 @@
-// updated 11 June 2022
+// updated 17 June 2022
 
 #include <string>
 #include <vector>
@@ -13,11 +13,12 @@
 #include "FileReader.hpp"
 #include "Resource.hpp"
 #include "Formulae.hpp"
+#include "StringHelpers.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
 
 Animal::Animal(std::string name) {
-    Entity::format(name);
+    strHelp::format(name);
     if (name.size() < 1) throw AdventureException("Animal: animal name required");
     json data = FileReader::getFromFile("animals.json", name);
     this->name = name;

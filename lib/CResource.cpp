@@ -1,4 +1,4 @@
-// updated 16 June 2022
+// updated 17 June 2022
 
 #include <string>
 #include <map>
@@ -7,11 +7,12 @@
 #include "CResource.hpp"
 #include "AdventureException.hpp"
 #include "FileReader.hpp"
+#include "StringHelpers.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
 
 CResource::CResource(std::string name, unsigned int count) {
-    Object::format(name);
+    strHelp::format(name);
     if (name.size() < 1) throw AdventureException("Resource: resource name required");
     json data = FileReader::getFromFile("craftableResources.json", name);
     this->category = data["category"].get<Category>();

@@ -1,4 +1,4 @@
-// Updated: 16 June 2022
+// Updated: 17 June 2022
 
 #ifndef OBJECT_HPP
 #define OBJECT_HPP
@@ -29,6 +29,7 @@ class Object : public Thing {
     public:
         virtual int getWeight() const noexcept;
         OBJCLASS getType() const noexcept;
+        Things getThingType() const noexcept override;
     
     protected:
         int weight;
@@ -41,6 +42,10 @@ inline int Object::getWeight() const noexcept {
 
 inline OBJCLASS Object::getType() const noexcept {
     return type;
+}
+
+inline Things Object::getThingType() const noexcept {
+    return Things::Object;
 }
 
 #endif

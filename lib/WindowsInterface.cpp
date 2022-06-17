@@ -1,11 +1,11 @@
-// Updated: 15 June 2022
+// Updated: 17 June 2022
 
 #include <string>
 #include <iostream>
 #include <windows.h>
 #include <vector>
-#include <conio.h>
-#include <cstdlib>
+#include <conio.h> // getch
+#include <algorithm>
 #include "WindowsInterface.hpp"
 #include "Colors.hpp"
 
@@ -61,10 +61,10 @@ void WindowsInterface::output(const std::string& text, Color color, bool endLine
     SetConsoleTextAttribute(console, defaultColor);
 }
 
-std::string WindowsInterface::askSelect(const std::string& prompt, const std::vector<std::string>& options, bool clear) {
-    if (clear) clearScreen();
+std::string WindowsInterface::askSelect(const std::string& prompt, const std::vector<std::string>& options, const std::string& initial) {
     output(prompt, colorIndex[Part::PROMPT]);
-    int current = 0;
+    int current = std::find(options.begin(), options.end(), initial) - options.begin();
+    if (current == options.size()) current = 0;
     int size = options.size();
     for (int i = 0; i < size; ++i) {
         if (i == current) output(" >> ", colorIndex[Part::SELECTOR], false);
@@ -104,15 +104,15 @@ std::string WindowsInterface::askSelect(const std::string& prompt, const std::ve
     return options[current];
 }
 
-bool WindowsInterface::askYesNo(const std::string& prompt, bool clear) {
-    std::string answer = askSelect(prompt, {"Yes", "No"}, clear);
+bool WindowsInterface::askYesNo(const std::string& prompt) {
+    std::string answer = askSelect(prompt, {"Yes", "No"});
     if (answer == "Yes") return true;
     else return false;
 }
 
-std::string WindowsInterface::askInput(const std::string& prompt) {
-    output(prompt + " ", colorIndex[Part::PROMPT], false);
-    SetConsoleTextAttribute(console, kIndex[colorIndex[Part::ANSWER]]);
+std::string WindowsInterface::askInput(const std::string& prompt, Color promptC, Color inputC) {
+    output(prompt + " ", promptC, false);
+    SetConsoleTextAttribute(console, kIndex[inputC]);
     std::string answer;
     std::getline(std::cin, answer);
     SetConsoleTextAttribute(console, defaultColor);

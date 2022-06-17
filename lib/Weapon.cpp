@@ -1,4 +1,4 @@
-// updated 16 June 2022
+// updated 17 June 2022
 
 #include <map>
 #include <string>
@@ -7,11 +7,12 @@
 #include "Weapon.hpp"
 #include "FileReader.hpp"
 #include "AdventureException.hpp"
+#include "StringHelpers.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
 
 Weapon::Weapon(std::string name) {
-    Object::format(name);
+    strHelp::format(name);
     if (name.size() < 1) throw AdventureException("Weapon: weapon name required");
     json data = FileReader::getFromFile("weapons.json", name);
     this->value = data["value"].get<int>();

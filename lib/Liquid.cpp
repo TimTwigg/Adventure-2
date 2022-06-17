@@ -1,15 +1,16 @@
-// updated 6 April 2022
+// updated 17 June 2022
 
 #include <string>
 #include "Object.hpp"
 #include "Liquid.hpp"
 #include "AdventureException.hpp"
 #include "FileReader.hpp"
+#include "StringHelpers.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
 
 Liquid::Liquid(std::string name) {
-    Object::format(name);
+    strHelp::format(name);
     if (name.size() < 1) throw AdventureException("Liquid: liquid name required");
     json data = FileReader::getFromFile("liquids.json", name);
     this->name = name;

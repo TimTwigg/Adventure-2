@@ -1,4 +1,4 @@
-// updated 14 June 2022
+// updated 17 June 2022
 
 #include <string>
 #include <memory>
@@ -11,18 +11,20 @@
 #include "TextArt.hpp"
 #include "GameData.hpp"
 #include "FileReader.hpp"
+#include "StringHelpers.hpp"
 #include "SkillSets.hpp"
 namespace fs = std::filesystem;
 
-namespace {
-    void strip(std::string& s) {
-        s.erase(remove_if(s.begin(), s.end(), isspace), s.end());
-    }
-}
-
 Launcher::Launcher(std::shared_ptr<Interface> i) : i{i} {
     data.configs = {
-        {"prompt", ART::DEFAULTPROMPT}
+        {"prompt", ART::DEFAULTPROMPT},
+        {"colors", {
+            {"prompt", "GRAY"},
+            {"input", "GREEN_LIGHT"},
+            {"error", "RED_LIGHT"},
+            {"output", "WHITE"},
+            {"art", "WHITE"}
+        }}
     };
 }
 
@@ -62,7 +64,7 @@ void Launcher::newGame() {
     i->clearScreen();
     i->output(ART::NEWGAME);
     std::string filename = i->askInput("Save Name: ");
-    strip(filename);
+    strHelp::strip(filename);
     if (filename.size() < 1) {
         // use datetime as default save name
         auto t = std::time(nullptr);
@@ -100,16 +102,9 @@ void Launcher::config() {
     while (true) {
         i->clearScreen();
         i->output(ART::CONFIG);
-        std::string option = i->askSelect("Config Options", {"Prompt", "Rename Save", "Back"});
+        std::string option = i->askSelect("Config Options", {"Rename Save", "Back"});
 
-        if (option == "Prompt") {
-            std::string prompt = i->askSelect("Prompt Style", {ART::DEFAULTPROMPT, ART::ARROW, "Custom"});
-            if (prompt == "Custom") {
-                prompt = i->askInput("Custom Prompt: ");
-            }
-            data.configs["prompt"] = prompt;
-        }
-        else if (option == "Rename Save") {
+        if (option == "Rename Save") {
             std::vector<std::string> saves = FileReader::getSaveFileNames();
             saves.push_back("Back");
             std::string filename = i->askSelect("Choose Save", saves);

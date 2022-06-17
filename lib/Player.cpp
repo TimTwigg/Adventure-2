@@ -1,4 +1,4 @@
-// Updated: 16 June 2022
+// Updated: 17 June 2022
 
 #include <string>
 #include <fstream>
@@ -17,6 +17,7 @@
 #include "Tool.hpp"
 #include "Weapon.hpp"
 #include "Formulae.hpp"
+#include "StringHelpers.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
 namespace fs = std::filesystem;
@@ -255,6 +256,32 @@ int Player::itemCount(std::string obj) const noexcept {
         }
     }
     return count;
+}
+
+std::string Player::listInventory() const noexcept {
+    if (inventory.size() == 0) return "You got nothin!";
+    else {
+        std::vector<std::string> i;
+        std::for_each(inventory.begin(), inventory.end(), [&](const std::shared_ptr<Object>& o){i.push_back(o->printString());});
+        std::string article;
+        if (i[0][i[0].size()-1] == 's') article = "";
+        else if (strHelp::isVowel(i[0][0])) article = "an ";
+        else article = "a ";
+
+        if (i.size() == 1) return "You have " + article + i[0] + ".";
+        else {
+            std::string list = i[0];
+            std::for_each(i.begin()+1, i.end()-1, [&](const std::string& s){
+                if (s[s.size()-1] == 's') list = list + ", " + s;
+                else if (strHelp::isVowel(s[0])) list = list + ", an " + s;
+                else list = list + ", a " + s;
+            });
+            const std::string& thing = i[i.size()-1];
+            if (thing[thing.size()-1] == 's') list = list + ", and " + thing;
+            else list = list + ", and a " + thing;
+            return "You have " + article + list + ".";
+        }
+    }
 }
 
 void Player::addWealth(unsigned int amount) noexcept {

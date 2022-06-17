@@ -1,4 +1,4 @@
-// updated 16 June 2022
+// updated 17 June 2022
 
 #ifndef GAMEENGINE_HPP
 #define GAMEENGINE_HPP
@@ -35,10 +35,10 @@ class GameEngine {
 
         // helper functions
 
-        // split a string on whitespace and return the words in a vector
-        std::vector<std::string> split(const std::string& str);
+        // choose the appropriate article
+        std::string chooseArticle(const std::string& s);
         // print a Location (Location defined in Map.hpp)
-        void printLocation(Location l);
+        void printLocation(Location l, bool farOff = false);
 
         // command functions
 

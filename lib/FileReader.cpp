@@ -1,4 +1,4 @@
-// updated 14 June 2022
+// updated 17 June 2022
 
 #include <fstream>
 #include <string>
@@ -6,18 +6,13 @@
 #include <filesystem>
 #include "FileReader.hpp"
 #include "AdventureException.hpp"
+#include "StringHelpers.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
 namespace fs = std::filesystem;
 
-namespace {
-    void strip(std::string& s) {
-        s.erase(remove_if(s.begin(), s.end(), isspace), s.end());
-    }
-}
-
 json FileReader::readFile(std::string filename) {
-    strip(filename);
+    strHelp::strip(filename);
     if (filename.size() < 1) throw AdventureException("FileReader: filename required");
 
     std::ifstream in;    
@@ -32,8 +27,8 @@ json FileReader::readFile(std::string filename) {
 }
 
 json FileReader::getFromFile(std::string filename, std::string itemname) {
-    strip(filename);
-    strip(itemname);
+    strHelp::strip(filename);
+    strHelp::strip(itemname);
     if (filename.size() < 1) throw AdventureException("FileReader: filename required");
     if (itemname.size() < 1) throw AdventureException("FileReader: itemname required");
 
@@ -53,7 +48,7 @@ json FileReader::getFromFile(std::string filename, std::string itemname) {
 }
 
 std::vector<std::string> FileReader::getTitlesFromFile(std::string filename) {
-    strip(filename);
+    strHelp::strip(filename);
     if (filename.size() < 1) throw AdventureException("FileReader: filename required");
 
     std::ifstream in;

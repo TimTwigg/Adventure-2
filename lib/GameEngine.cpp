@@ -1,4 +1,4 @@
-// updated 16 June 2022
+// updated 17 June 2022
 
 #include <string>
 #include <memory>
@@ -6,7 +6,6 @@
 #include <iomanip>
 #include <filesystem>
 #include <algorithm>
-#include <sstream>
 #include "GameEngine.hpp"
 #include "Player.hpp"
 #include "Map.hpp"
@@ -18,6 +17,7 @@
 //#include "Enemy.hpp"
 #include "Interface.hpp"
 #include "FileReader.hpp"
+#include "StringHelpers.hpp"
 #include "TextArt.hpp"
 namespace fs = std::filesystem;
 
@@ -55,9 +55,11 @@ void GameEngine::run() {
             if (configs["autosave"].get<bool>()) save();
         }
 
-        query = i->askInput(configs["prompt"].get<std::string>());
-        std::transform(query.begin(), query.end(), query.begin(), [](unsigned char c){return std::tolower(c);});
-        command = split(query);
+        query = i->askInput(configs["prompt"].get<std::string>(), configs["colors"]["prompt"].get<Color>(), configs["colors"]["input"].get<Color>());
+        if (query.size() > 0) {
+            strHelp::lower(query);
+            command = strHelp::split(query);
+        }
 
         // look
         if (command[0] == "look") look();
@@ -150,7 +152,7 @@ void GameEngine::run() {
         else if (query == "help") help();
 
         // help with commands
-        else if (query[0] == '?' || query[-1] == '?') command_help();
+        else if (query[0] == '?' || query[query.size()-1] == '?') command_help();
 
         // help with objects
         else if (query[0] == '@') object_help();
@@ -164,58 +166,79 @@ void GameEngine::run() {
         // invalid command
         else {
             int index = gen.getRandInt(0, error_msgs.size() - 1);
-            i->output(error_msgs[index], Color::RED_LIGHT);
+            i->output(error_msgs[index], configs["colors"]["error"].get<Color>());
         }
 
         // get attacked if appropriate
 
     }
+    i->output("Goodbye", Color::BLUE_LIGHT);
 }
 
-std::vector<std::string> GameEngine::split(const std::string& str) {
-    std::istringstream iss{str};
-    return std::vector<std::string>{std::istream_iterator<std::string>{iss}, std::istream_iterator<std::string>{}};
+std::string GameEngine::chooseArticle(const std::string& s) {
+    if (strHelp::isVowel(s[0])) return "an";
+    else return "a";
 }
 
-void GameEngine::printLocation(Location l) {
-    std::string action, preposition, article;
-    
-    if (l.biome == "Ocean" || l.biome == "River") action = "swimming";
-    else action = "standing";
-
-    if (l.biome == "Mountain" || l.biome == "Plain" || l.biome == "Island") preposition = "on";
-    else preposition = "in";
-
-    // check if the first letter is a vowel.
-    // method for checking taken from 
-    // https://stackoverflow.com/questions/47846406/c-fastest-way-to-check-if-char-is-vowel-or-consonant
-    if ((0x208222 >> (l.biome[0] & 0x1f)) & 1) article = "an";
-    else article = "a";
-
-    std::string partA = "You are " + action + " " + preposition + " " + article + " " + l.biome + ". ";
-
-    // TODO
-    /*
-    if (l.here.size() == 0) i->output(partA + "There is nothing here.");
-    else if (l.here.size() == 1) {
-
+void GameEngine::printLocation(Location l, bool farOff) {
+    std::string partA;
+    if (farOff) {
+        partA = "There is " + chooseArticle(l.biome) + " " + l.biome + ". ";
     }
     else {
-        
-    }*/
+        std::string action, preposition;
+    
+        if (l.biome == "Ocean" || l.biome == "River") action = "swimming";
+        else action = "standing";
+
+        if (l.biome == "Mountain" || l.biome == "Plain" || l.biome == "Island") preposition = "on";
+        else preposition = "in";
+
+        partA = "You are " + action + " " + preposition + " " + chooseArticle(l.biome) + " " + l.biome + ". ";
+    }
+
+    std::vector<std::string> here;
+    std::for_each(l.miscHere.begin(), l.miscHere.end(), [&](const std::string& s){here.push_back(s);});
+    std::for_each(l.thingsHere.begin(), l.thingsHere.end(), [&](const std::shared_ptr<Thing>& p){here.push_back(p->printString());});
+
+    std::string partB;
+    if (farOff) partB = " there.";
+    else partB = " here.";
+
+    if (here.size() == 0) i->output(partA + "There is nothing" + partB, configs["colors"]["output"].get<Color>());
+    else if (here.size() == 1) {
+        const std::string& thing = here[0]; 
+        if (thing[thing.size()-1] == 's') i->output(partA + "There are " + thing + partB, configs["colors"]["output"].get<Color>());
+        else i->output(partA + "There is " + chooseArticle(here[0]) + " " + thing + partB, configs["colors"]["output"].get<Color>());
+    }
+    else {
+        std::string list = here[0];
+        std::string article;
+        if (list[list.size()-1] == 's') article = "are";
+        else article = "is";
+
+        std::for_each(here.begin()+1, here.end()-1, [&](const std::string& s){
+            if (s[s.size()-1] == 's') list = list + ", " + s;
+            else list = list + ", a " + s;
+        });
+        const std::string& thing = here[here.size()-1];
+        if (thing[thing.size()-1] == 's') list = list + ", and " + thing;
+        else list = list + ", and a " + thing;
+        i->output(partA + "There " + article + " " + list + partB, configs["colors"]["output"].get<Color>());
+    }
 }
 
 void GameEngine::look() {
     if (command.size() == 1 || command[1] == "here") printLocation(map->get());
-    else if (command[1] == "north") printLocation(map->get(Dir::NORTH));
-    else if (command[1] == "east") printLocation(map->get(Dir::EAST));
-    else if (command[1] == "south") printLocation(map->get(Dir::SOUTH));
-    else if (command[1] == "west") printLocation(map->get(Dir::WEST));
-    else i->output("Couldn't recognize command, try 'look [north | east | south | west]'", Color::RED_LIGHT);
+    else if (command[1] == "north") printLocation(map->get(Dir::NORTH), true);
+    else if (command[1] == "east") printLocation(map->get(Dir::EAST), true);
+    else if (command[1] == "south") printLocation(map->get(Dir::SOUTH), true);
+    else if (command[1] == "west") printLocation(map->get(Dir::WEST), true);
+    else i->output("Could not recognize command, try 'look [north | east | south | west]'", configs["colors"]["error"].get<Color>());
 }
 
 void GameEngine::inventory() {
-
+    i->output(player->listInventory(), configs["colors"]["output"].get<Color>());
 }
 
 void GameEngine::go() {
@@ -315,6 +338,8 @@ void GameEngine::save() {
     out.open(path);
     out << std::setw(4) << configs << std::endl;
     out.close();
+
+    i->output("Game Saved!", configs["colors"]["output"].get<Color>());
 }
 
 void GameEngine::help() {
@@ -330,9 +355,9 @@ void GameEngine::object_help() {
 }
 
 void GameEngine::config() {
-    i->output(ART::CONFIG);
+    i->output(ART::CONFIG, configs["colors"]["art"].get<Color>());
     while (true) {
-        std::string option = i->askSelect("Config Options", {"Prompt", "Rename Save", "Autosave", "Difficulty Rating", "Back"});
+        std::string option = i->askSelect("Config Options", {"Prompt", "Rename Save", "Autosave", "Difficulty Rating", "Colors", "Back"});
 
         if (option == "Prompt") {
             std::string prompt = i->askSelect("Prompt Style", {ART::DEFAULTPROMPT, ART::ARROW, "Custom"});
@@ -358,10 +383,22 @@ void GameEngine::config() {
         }
 
         else if (option == "Difficulty Rating") {
-            std::string answer = i->askSelect("Difficulty Setting", {"Easy", "Medium", "Hard"});
+            std::string answer = i->askSelect("Difficulty Setting", {"Easy", "Medium", "Hard"}, configs["diff"].get<std::string>());
             if (answer == "Easy") configs["diff"] = 0.5;
             else if (answer == "Medium") configs["diff"] = 1.0;
             else if (answer == "Hard") configs["diff"] = 1.5;
+        }
+
+        else if (option == "Colors") {
+            std::map<std::string, std::string> options = configs["colors"].get<std::map<std::string, std::string>>();
+            std::vector<std::string> v;
+            std::for_each(options.begin(), options.end(), [&](const auto& item){v.push_back(item.first + ": " + item.second);});
+            std::string answer = i->askSelect("Color Option", v);
+
+            std::string key = answer.substr(0, std::find(answer.begin(), answer.end(), ':')-answer.begin());
+            std::string color = i->askSelect(key, {"WHITE", "BLUE_DARK", "BLUE_LIGHT", "CYAN", "GREEN_DARK", "GREEN_LIGHT",
+                "RED_DARK", "RED_LIGHT", "YELLOW", "PURPLE", "GRAY"}, configs["colors"][key].get<std::string>());
+            configs["colors"][key] = color;
         }
 
         else if (option == "Back") break;

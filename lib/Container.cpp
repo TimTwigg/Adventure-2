@@ -1,4 +1,4 @@
-// updated 16 June 2022
+// updated 17 June 2022
 
 #include <string>
 #include <sstream>
@@ -8,11 +8,12 @@
 #include "Liquid.hpp"
 #include "FileReader.hpp"
 #include "AdventureException.hpp"
+#include "StringHelpers.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
 
 Container::Container(std::string name) {
-    Object::format(name);
+    strHelp::format(name);
     if (name.size() < 1) throw AdventureException("Container: container name required");
     json data = FileReader::getFromFile("containers.json", name);
     this->value = data["value"].get<int>();

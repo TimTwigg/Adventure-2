@@ -1,4 +1,4 @@
-// updated 16 June 2022
+// updated 17 June 2022
 
 #ifndef RESOURCE_HPP
 #define RESOURCE_HPP
@@ -31,6 +31,7 @@ class Resource : public Object {
     public:
         explicit Resource(std::string name, unsigned int count = 1);
         operator std::string() const noexcept override;
+        std::string printString() const noexcept override;
         Category getCategory() const noexcept;
         int getWeight() const noexcept override;
         int getCount() const noexcept;

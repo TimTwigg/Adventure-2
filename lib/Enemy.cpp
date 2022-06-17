@@ -1,4 +1,4 @@
-// updated 16 June 2022
+// updated 17 June 2022
 
 #include <string>
 #include <vector>
@@ -15,11 +15,12 @@
 #include "Resource.hpp"
 #include "Weapon.hpp"
 #include "Tool.hpp"
+#include "StringHelpers.hpp"
 #include  "json.hpp"
 using json = nlohmann::json;
 
 Enemy::Enemy(std::string name) {
-    Entity::format(name);
+    strHelp::format(name);
     if (name.size() < 1) throw AdventureException("Enemy: enemy name required");
     json data = FileReader::getFromFile("enemies.json", name);
     this->name = name;

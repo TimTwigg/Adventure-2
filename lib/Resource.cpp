@@ -1,4 +1,4 @@
-// updated 16 June 2022
+// updated 17 June 2022
 
 #include <string>
 #include <algorithm>
@@ -7,11 +7,12 @@
 #include "Resource.hpp"
 #include "AdventureException.hpp"
 #include "FileReader.hpp"
+#include "StringHelpers.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
 
 Resource::Resource(std::string name, unsigned int count) : count{count} {
-    Object::format(name);
+    strHelp::format(name);
     if (name.size() < 1) throw AdventureException("Resource: resource name required");
     json data = FileReader::getFromFile("resources.json", name);
     category = data["category"].get<Category>();
@@ -24,6 +25,11 @@ Resource::Resource(std::string name, unsigned int count) : count{count} {
 
 Resource::operator std::string() const noexcept {
     return "RESOURCE, " + name + ", " + std::to_string(count);
+}
+
+std::string Resource::printString() const noexcept {
+    if (count < 2) return Thing::printString();
+    else return std::to_string(count) + " " + name + "s";
 }
 
 Category Resource::getCategory() const noexcept {

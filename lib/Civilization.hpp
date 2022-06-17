@@ -1,4 +1,4 @@
-// updated 16 June 2022
+// updated 17 June 2022
 
 #ifndef CIVILIZATION_HPP
 #define CIVILIZATION_HPP
@@ -13,6 +13,7 @@ class Civilization : public Thing {
     public:
         Civilization(std::string name);
         operator std::string() const noexcept override;
+        Things getThingType() const noexcept override;
 };
 
 #endif

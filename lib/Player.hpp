@@ -1,4 +1,4 @@
-// Updated: 15 June 2022
+// Updated: 17 June 2022
 
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
@@ -35,6 +35,7 @@ class Player {
         void addItem(OBJCLASS objClass, std::string obj, unsigned int count = 1);
         void removeItem(OBJCLASS objClass, std::string obj, unsigned int count = 1);
         int itemCount(std::string obj) const noexcept;
+        std::string listInventory() const noexcept;
         
         void addWealth(unsigned int amount) noexcept;
         void removeWealth(unsigned int amount);
