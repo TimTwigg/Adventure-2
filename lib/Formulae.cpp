@@ -1,4 +1,4 @@
-// updated 11 June 2022
+// updated 18 June 2022
 
 #include "Formulae.hpp"
 #include "RandomGenerator.hpp"
@@ -21,5 +21,12 @@ double Formula::enemyDamage(double baseDamage, RandomGenerator& gen, int diff_ra
     int ratio = 5;
     int modifier = gen.getRandInt(3, 6);
     int bonus = gen.getRandInt(1, 6) * ratio;
+    return ((baseDamage * modifier) / ratio) * diff_ratio + bonus;
+}
+
+double Formula::civilizationDamage(double baseDamage, RandomGenerator& gen, int diff_ratio) {
+    int ratio = 5;
+    int modifier = gen.getRandInt(4, 6);
+    int bonus = gen.getRandInt(2, 6) * ratio;
     return ((baseDamage * modifier) / ratio) * diff_ratio + bonus;
 }

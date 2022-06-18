@@ -1,4 +1,4 @@
-// updated 16 June 2022
+// updated 18 June 2022
 
 #include <map>
 #include <vector>
@@ -75,26 +75,35 @@ Location::Location(RandomGenerator& gen) {
     }
 }
 
-Location::Location(const std::string& biome, const std::vector<std::string>& here) : biome{biome} {
-    std::for_each(here.begin(), here.end(), [&](const std::string& code){
-        std::string type = code.substr(0, std::find(code.begin(), code.end(), ',') - code.begin());
-        if (type == "ANIMAL") thingsHere.push_back(std::shared_ptr<Thing>(Animal::fromString(code)));
-        else if (type == "ENEMY") thingsHere.push_back(std::shared_ptr<Thing>(Enemy::fromString(code)));
-        else if (type == "CIVILIZATION") thingsHere.push_back(std::shared_ptr<Thing>(Civilization::fromString(code)));
-        else if (type == "CONTAINER") thingsHere.push_back(std::shared_ptr<Thing>(Container::fromString(code)));
-        else if (type == "CRESOURCE") thingsHere.push_back(std::shared_ptr<Thing>(CResource::fromString(code)));
-        else if (type == "RESOURCE") thingsHere.push_back(std::shared_ptr<Thing>(Resource::fromString(code)));
-        else if (type == "TOOL") thingsHere.push_back(std::shared_ptr<Thing>(Tool::fromString(code)));
-        else if (type == "WEAPON") thingsHere.push_back(std::shared_ptr<Thing>(Weapon::fromString(code)));
-        else miscHere.push_back(code);
-    });
+Location::Location(const std::string& biome, json here) : biome{biome} {
+    for (auto& j : here) {
+        if (j.is_object()) thingsHere.push_back(std::shared_ptr<Thing>(Civilization::load(j)));
+        else {
+            std::string code = j.get<std::string>();
+            std::string type = code.substr(0, std::find(code.begin(), code.end(), ',') - code.begin());
+            if (type == "ANIMAL") thingsHere.push_back(std::shared_ptr<Thing>(Animal::fromString(code)));
+            else if (type == "ENEMY") thingsHere.push_back(std::shared_ptr<Thing>(Enemy::fromString(code)));
+            else if (type == "CONTAINER") thingsHere.push_back(std::shared_ptr<Thing>(Container::fromString(code)));
+            else if (type == "CRESOURCE") thingsHere.push_back(std::shared_ptr<Thing>(CResource::fromString(code)));
+            else if (type == "RESOURCE") thingsHere.push_back(std::shared_ptr<Thing>(Resource::fromString(code)));
+            else if (type == "TOOL") thingsHere.push_back(std::shared_ptr<Thing>(Tool::fromString(code)));
+            else if (type == "WEAPON") thingsHere.push_back(std::shared_ptr<Thing>(Weapon::fromString(code)));
+            else miscHere.push_back(code);
+        }
+    }
 }
 
-std::vector<std::string> Location::save() const {
-    std::vector<std::string> v;
-    std::for_each(miscHere.begin(), miscHere.end(), [&](std::string s){v.push_back(s);});
-    std::for_each(thingsHere.begin(), thingsHere.end(), [&](std::shared_ptr<Thing> p){v.push_back(p->operator std::string());});
-    return v;
+json Location::save() const {
+    json j;
+    std::for_each(miscHere.begin(), miscHere.end(), [&](std::string s){j.push_back(s);});
+    std::for_each(thingsHere.begin(), thingsHere.end(), [&](std::shared_ptr<Thing> p){
+        if (p->getThingType() == Things::Civilization) {
+            Civilization* c = static_cast<Civilization*>(p.get());
+            j.push_back(c->save());
+        }
+        else j.push_back(p->operator std::string());
+    });
+    return j;
 }
 
 Map::Map(const std::string& savepath) : savepath{savepath}, gen{RandomGenerator()}, xy{std::make_pair(0, 0)} {
@@ -184,7 +193,7 @@ Map* Map::load(const std::string& path) {
     m->xy = std::make_pair(filedata["x"].get<int>(), filedata["y"].get<int>());
     std::for_each(filedata["db"].begin(), filedata["db"].end(), [&](const json& item){
         std::pair<int, int> key = std::make_pair(item["x"].get<int>(), item["y"].get<int>());
-        m->db[key] = Location(item["biome"].get<std::string>(), item["here"].get<std::vector<std::string>>());
+        m->db[key] = Location(item["biome"].get<std::string>(), item["here"]);
     });
 
     return m;

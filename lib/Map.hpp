@@ -1,4 +1,4 @@
-// updated 16 June 2022
+// updated 18 June 2022
 
 #ifndef MAP_HPP
 #define MAP_HPP
@@ -10,6 +10,8 @@
 #include <memory>
 #include "RandomGenerator.hpp"
 #include "Thing.hpp"
+#include "json.hpp"
+using json = nlohmann::json;
 
 enum class Dir {
     NORTH,
@@ -25,8 +27,8 @@ struct Location {
 
     Location();
     Location(RandomGenerator& gen);
-    Location(const std::string& biome, const std::vector<std::string>& here);
-    std::vector<std::string> save() const;
+    Location(const std::string& biome, json here);
+    json save() const;
 };
 
 class Map {
