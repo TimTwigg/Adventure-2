@@ -1,4 +1,4 @@
-// updated 17 June 2022
+// updated 18 June 2022
 
 #ifndef GAMEENGINE_HPP
 #define GAMEENGINE_HPP
@@ -56,6 +56,7 @@ class GameEngine {
         void take();
         void drop();
         void raid();
+        void loot();
         void trade();
         void craft();
         void build();

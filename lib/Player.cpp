@@ -1,8 +1,7 @@
-// Updated: 17 June 2022
+// Updated: 18 June 2022
 
 #include <string>
 #include <fstream>
-#include <iomanip>
 #include <map>
 #include <vector>
 #include <algorithm>
@@ -108,7 +107,7 @@ void Player::save() const {
         to_go[1].push_back(o->operator std::string());
     }
 
-    o << std::setw(4) << to_go << std::endl;
+    o << to_go.dump(4) << std::endl;
     o.close();
 }
 

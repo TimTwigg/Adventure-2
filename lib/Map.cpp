@@ -174,7 +174,7 @@ void Map::save() const {
         out["db"].push_back(item);
     });
 
-    o << std::setw(4) << out << std::endl;
+    o << out.dump(4) << std::endl;
     o.close();
 }
 

@@ -1,9 +1,8 @@
-// updated 17 June 2022
+// updated 18 June 2022
 
 #include <string>
 #include <memory>
 #include <fstream>
-#include <iomanip>
 #include <filesystem>
 #include <algorithm>
 #include "GameEngine.hpp"
@@ -102,6 +101,9 @@ void GameEngine::run() {
 
         // raid
         else if (command[0] == "raid") raid();
+
+        // loot
+        else if (command[0] == "loot") loot();
 
         // trade
         else if (command[0] == "trade") trade();
@@ -289,6 +291,10 @@ void GameEngine::raid() {
 
 }
 
+void GameEngine::loot() {
+    
+}
+
 void GameEngine::trade() {
 
 }
@@ -336,7 +342,7 @@ void GameEngine::save() {
     std::string path = player->getSavepath() + "\\config.game";
     std::ofstream out;
     out.open(path);
-    out << std::setw(4) << configs << std::endl;
+    out << configs.dump(4) << std::endl;
     out.close();
 
     i->output("Game Saved!", configs["colors"]["output"].get<Color>());

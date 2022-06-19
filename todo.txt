@@ -4,11 +4,10 @@ peaceful setting
 test Civilization
 Write GameEngine
 Test GameEngine
-add loot command
+
 finish Civilization::setTrades() - add animals, potions, machines etc
 Add player-built buildings/stuff
 create Machine
-use json dump instead of iomanip ::setw
 
 IDEA
 Refresh ht and hp completely at towns? For a price?
