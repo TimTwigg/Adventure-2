@@ -1,4 +1,4 @@
-// updated 18 June 2022
+// updated 19 June 2022
 
 #include <string>
 #include <memory>
@@ -240,23 +240,27 @@ void GameEngine::look() {
 }
 
 void GameEngine::inventory() {
-    i->output(player->listInventory(), configs["colors"]["output"].get<Color>());
+    i->output("  Inventory    | " + player->listInventory(), configs["colors"]["info"].get<Color>());
 }
 
 void GameEngine::go() {
-
+    if (command[1] == "north") printLocation(map->go(Dir::NORTH));
+    else if (command[1] == "east") printLocation(map->go(Dir::EAST));
+    else if (command[1] == "south") printLocation(map->go(Dir::SOUTH));
+    else if (command[1] == "west") printLocation(map->go(Dir::WEST));
+    else i->output("Could not recognize command, try 'go [north | east | south | west]'", configs["colors"]["error"].get<Color>());
 }
 
 void GameEngine::me() {
-
+    i->output(player->getMe(), configs["colors"]["info"].get<Color>());
 }
 
 void GameEngine::ht() {
-
+    i->output(player->getHT(), configs["colors"]["info"].get<Color>());
 }
 
 void GameEngine::hp() {
-
+    i->output(player->getHP(), configs["colors"]["info"].get<Color>());
 }
 
 void GameEngine::attack() {

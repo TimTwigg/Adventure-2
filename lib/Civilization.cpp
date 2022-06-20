@@ -1,4 +1,4 @@
-// updated 18 June 2022
+// updated 19 June 2022
 
 #include <string>
 #include <map>
@@ -80,7 +80,8 @@ void Civilization::setTrades(json data) {
                     std::map<std::string, int> bank = databank[category];
                     std::vector<std::string> keys = keybank[category];
                     std::string name = keys[gen.getRandInt(0, bank.size()-1)];
-                    while (buying.find(std::make_pair(category, name)) != buying.end()) {
+                    for (int j = 0; j < 10; ++j) {
+                        if (buying.find(std::make_pair(category, name)) == buying.end()) break;
                         name = keys[gen.getRandInt(0, keys.size()-1)];
                     }
                     int price = bank[name] * (gen.getRandInt(6, 15) / 10);
@@ -98,7 +99,8 @@ void Civilization::setTrades(json data) {
                     std::map<std::string, int> bank = databank[category];
                     std::vector<std::string> keys = keybank[category];
                     std::string name = keys[gen.getRandInt(0, keys.size()-1)];
-                    while (selling.find(std::make_pair(category, name)) != selling.end()) {
+                    for (int j = 0; j < 10; ++j) {
+                        if (selling.find(std::make_pair(category, name)) == selling.end()) break;
                         name = keys[gen.getRandInt(0, keys.size()-1)];
                     }
                     int price = bank[name] * (gen.getRandInt(7, 22) / 10);
@@ -115,7 +117,8 @@ void Civilization::setTrades(json data) {
                 if (keybank.find(category) != keybank.end()) {
                     std::vector<std::string> keys = keybank[category];
                     std::string name = keys[gen.getRandInt(0, keys.size()-1)];
-                    while (loot.find(std::make_pair(category, name)) != loot.end()) {
+                    for (int j = 0; j < 10; ++j) {
+                        if (loot.find(std::make_pair(category, name)) == loot.end()) break;
                         name = keys[gen.getRandInt(0, keys.size()-1)];
                     }
                     int num = gen.getRandInt(0, count);

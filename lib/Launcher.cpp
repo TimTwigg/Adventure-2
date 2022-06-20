@@ -1,4 +1,4 @@
-// updated 17 June 2022
+// updated 19 June 2022
 
 #include <string>
 #include <memory>
@@ -23,7 +23,8 @@ Launcher::Launcher(std::shared_ptr<Interface> i) : i{i} {
             {"input", "GREEN_LIGHT"},
             {"error", "RED_LIGHT"},
             {"output", "WHITE"},
-            {"art", "WHITE"}
+            {"art", "WHITE"},
+            {"info", "BLUE_LIGHT"}
         }}
     };
 }

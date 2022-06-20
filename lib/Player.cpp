@@ -1,4 +1,4 @@
-// Updated: 18 June 2022
+// Updated: 19 June 2022
 
 #include <string>
 #include <fstream>
@@ -20,6 +20,8 @@
 #include "json.hpp"
 using json = nlohmann::json;
 namespace fs = std::filesystem;
+
+#include <iostream>
 
 // names of data contents whose values are not numeric
 std::vector<std::string> Player::INVALID_STAT_NAMES{"skillset", "ratios"};
@@ -281,6 +283,36 @@ std::string Player::listInventory() const noexcept {
             return "You have " + article + list + ".";
         }
     }
+}
+
+std::string Player::getMe() const noexcept {
+    std::string diff;
+    int diff_r = data["diff_ratio"].get<float>();
+    if (diff_r == 0.5) diff = "Easy";
+    else if (diff_r == 1.0) diff = "Medium";
+    else diff = "Hard";
+    std::string me =
+        "  Class          | " + data["skillset"].get<std::string>() + "\n" +
+        "  Level          | " + std::to_string(data["level"].get<int>()) + "\n" +
+        "  XP             | " + std::to_string(data["xp"].get<int>()) + "\n" +
+        "  Wealth         | " + std::to_string(data["wealth"].get<int>()) + "\n" +
+        "  Difficulty     | " + diff + "\n" +
+        "  Health         | " + std::to_string(data["health"].get<int>()) + " / " + std::to_string(data["max_health"].get<int>()) + "\n" +
+        "  Hunger         | " + std::to_string(data["hunger"].get<int>()) + " / " + std::to_string(data["max_hunger"].get<int>()) + "\n" +
+        "  Thirst         | " + std::to_string(data["thirst"].get<int>()) + " / " + std::to_string(data["max_thirst"].get<int>()) + "\n" +
+        "  Base Damage    | " + std::to_string(data["base_damage"].get<int>()) + "\n" +
+        "  Fist Damage    | " + std::to_string(data["fist_base_damage"].get<int>()) + "\n" +
+        "  Inventory      | " + listInventory();
+    return me;
+}
+
+std::string Player::getHT() const noexcept {
+    return "  Hunger    | " + std::to_string(data["hunger"].get<int>()) + " / " + std::to_string(data["max_hunger"].get<int>()) + "\n" +
+        "  Thirst    | " + std::to_string(data["thirst"].get<int>()) + " / " + std::to_string(data["max_thirst"].get<int>());
+}
+
+std::string Player::getHP() const noexcept {
+    return "  Health    | " + std::to_string(data["health"].get<int>()) + " / " + std::to_string(data["max_health"].get<int>());
 }
 
 void Player::addWealth(unsigned int amount) noexcept {

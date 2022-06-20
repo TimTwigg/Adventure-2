@@ -1,4 +1,4 @@
-// updated 18 June 2022
+// updated 19 June 2022
 
 #ifndef MAP_HPP
 #define MAP_HPP
@@ -43,6 +43,7 @@ class Map {
         Location get() const noexcept;
         Location get(int x, int y) const;
         Location get(Dir d);
+        Location go(Dir d);
         std::string getPath() const noexcept;
         void setPath(std::string newPath) noexcept;
         void save() const;
@@ -54,6 +55,10 @@ class Map {
         RandomGenerator gen;
         std::string savepath;
         std::pair<int, int> xy;
+
+        // get the appropriate coordinates from current location and direction
+        // sets the location in those coords if not set
+        std::pair<int, int> getCoords(Dir d);
 };
 
 #endif

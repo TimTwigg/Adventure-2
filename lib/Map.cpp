@@ -1,4 +1,4 @@
-// updated 18 June 2022
+// updated 19 June 2022
 
 #include <map>
 #include <vector>
@@ -126,23 +126,14 @@ Location Map::get(int x, int y) const {
 }
 
 Location Map::get(Dir d) {
-    std::pair<int, int> coords;
-    switch (d) {
-        case Dir::NORTH:
-            coords = std::make_pair(xy.first, xy.second + 1);
-            break;
-        case Dir::EAST:
-            coords = std::make_pair(xy.first + 1, xy.second);
-            break;
-        case Dir::SOUTH:
-            coords = std::make_pair(xy.first, xy.second - 1);
-            break;
-        case Dir::WEST:
-            coords = std::make_pair(xy.first - 1, xy.second);
-            break;
-    }
-    if (db.find(coords) == db.end()) db[coords] = Location(gen);
+    std::pair<int, int> coords = getCoords(d);
     return db.at(coords);
+}
+
+Location Map::go(Dir d) {
+    std::pair<int, int> coords = getCoords(d);
+    xy = coords;
+    return db.at(xy);
 }
 
 std::string Map::getPath() const noexcept {
@@ -197,4 +188,24 @@ Map* Map::load(const std::string& path) {
     });
 
     return m;
+}
+
+std::pair<int, int> Map::getCoords(Dir d) {
+    std::pair<int, int> coords;
+    switch (d) {
+        case Dir::NORTH:
+            coords = std::make_pair(xy.first, xy.second + 1);
+            break;
+        case Dir::EAST:
+            coords = std::make_pair(xy.first + 1, xy.second);
+            break;
+        case Dir::SOUTH:
+            coords = std::make_pair(xy.first, xy.second - 1);
+            break;
+        case Dir::WEST:
+            coords = std::make_pair(xy.first - 1, xy.second);
+            break;
+    }
+    if (db.find(coords) == db.end()) db[coords] = Location(gen);
+    return coords;
 }
