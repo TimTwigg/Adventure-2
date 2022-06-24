@@ -1,4 +1,4 @@
-// updated 19 June 2022
+// updated 24 June 2022
 
 #include <string>
 #include <map>
@@ -174,21 +174,21 @@ std::map<std::pair<std::string, std::string>, std::pair<unsigned int, unsigned i
     return buying;
 }
 
-void Civilization::buy(std::string type, const std::string& name) {
+void Civilization::sell(std::string type, const std::string& name) {
     std::pair<std::string, std::string> key = std::make_pair(type, name);
-    if (selling.find(key) == selling.end()) throw AdventureException("Civilization::buy not selling (" + type + ", " + name + ")");
+    if (selling.find(key) == selling.end()) throw AdventureException("Civilization::sell not selling (" + type + ", " + name + ")");
     auto value = selling[key];
-    value.second = value.second - 1;
-    if (value.second < 1) selling.erase(key);
+    value.first = value.first - 1;
+    if (value.first < 1) selling.erase(key);
     else selling[key] = value;
 }
 
-void Civilization::sell(std::string type, const std::string& name) {
+void Civilization::buy(std::string type, const std::string& name) {
     std::pair<std::string, std::string> key = std::make_pair(type, name);
-    if (buying.find(key) == buying.end()) throw AdventureException("Civilization::sell not buying (" + type + ", " + name + ")");
+    if (buying.find(key) == buying.end()) throw AdventureException("Civilization::buy not buying (" + type + ", " + name + ")");
     auto value = buying[key];
-    value.second = value.second - 1;
-    if (value.second < 1) buying.erase(key);
+    value.first = value.first - 1;
+    if (value.first < 1) buying.erase(key);
     else buying[key] = value;
 }
 

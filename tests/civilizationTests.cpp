@@ -1,4 +1,4 @@
-// updated 19 June 2022
+// updated 24 June 2022
 
 #include <gtest/gtest.h>
 #include <string>
@@ -36,4 +36,31 @@ TEST(civTests, saveload) {
     ASSERT_EQ(c.getName(), c2->getName());
     ASSERT_EQ(c.getWealth(), c2->getWealth());
     delete c2;
+}
+
+TEST(civTests, buysell) {
+    Civilization  c{"city"};
+    auto buying = c.getBuyingTrades();
+    auto item = *buying.begin();
+    c.buy(item.first.first, item.first.second);
+    ASSERT_EQ(c.getBuyingTrades().at(item.first).first+1, item.second.first);
+
+    auto selling = c.getSellingTrades();
+    auto item2 = *selling.begin();
+    c.sell(item2.first.first, item2.first.second);
+    ASSERT_EQ(c.getSellingTrades().at(item2.first).first+1, item2.second.first);
+}
+
+TEST(civTests, raid) {
+    Civilization c{"town"};
+    bool raided = c.raid(1500);
+    ASSERT_FALSE(raided);
+    raided = c.raid(499);
+    ASSERT_FALSE(raided);
+    raided = c.raid(2);
+    ASSERT_TRUE(raided);
+    ASSERT_TRUE(c.isRaided());
+    ASSERT_FALSE(c.isLooted());
+    auto loot = c.getLoot();
+    ASSERT_TRUE(c.isLooted());
 }
