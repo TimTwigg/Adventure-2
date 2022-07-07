@@ -1,4 +1,4 @@
-// updated 19 June 2022
+// updated 7 July 2022
 
 #include <string>
 #include <memory>
@@ -248,7 +248,11 @@ void GameEngine::go() {
     else if (command[1] == "east") printLocation(map->go(Dir::EAST));
     else if (command[1] == "south") printLocation(map->go(Dir::SOUTH));
     else if (command[1] == "west") printLocation(map->go(Dir::WEST));
-    else i->output("Could not recognize command, try 'go [north | east | south | west]'", configs["colors"]["error"].get<Color>());
+    else {
+        i->output("Could not recognize command, try 'go [north | east | south | west]'", configs["colors"]["error"].get<Color>());
+        return;
+    }
+    player->passTime((240 / player->stat("speed")));
 }
 
 void GameEngine::me() {
@@ -328,7 +332,12 @@ void GameEngine::wait() {
 }
 
 void GameEngine::time() {
-
+    double t = player->stat("time");
+    int d = player->stat("days");
+    int hours = t;
+    t = (t - hours) * 60;
+    int mins = t;
+    i->output("It is " + std::to_string(hours) + ":" + std::to_string(mins) + " on day " + std::to_string(d), configs["colors"]["info"].get<Color>());
 }
 
 void GameEngine::fill() {

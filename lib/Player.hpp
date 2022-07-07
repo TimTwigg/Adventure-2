@@ -1,4 +1,4 @@
-// Updated: 19 June 2022
+// Updated: 7 July 2022
 
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
@@ -56,6 +56,8 @@ class Player {
         void drink(double points) noexcept;
 
         double weight() const noexcept;
+
+        void passTime(int minutes) noexcept;
 
     private:
         json data;

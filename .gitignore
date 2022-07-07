@@ -42,3 +42,6 @@ build/
 
 # saves
 saves/
+
+# log files
+logs/

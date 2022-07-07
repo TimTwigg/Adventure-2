@@ -1,4 +1,4 @@
-// Updated: 19 June 2022
+// Updated: 7 July 2022
 
 #include <string>
 #include <fstream>
@@ -54,7 +54,6 @@ Player::Player(SkillSets skillset, const std::string& path, float diff_ratio) : 
     data["max_thirst"] = DEFAULT::thirst * skset["hunger_ratio"].get<double>();
     data["carry_weight"] = DEFAULT::carry_weight * skset["carry_ratio"].get<double>();
     data["speed"] = skset["speed"].get<double>();
-    data["swimming_speed"] = skset["swimming_speed"].get<double>();
     data["consumption_ratio"] = skset["consumption_ratio"].get<double>();
     data["chopping_ratio"] = skset["chopping_ratio"].get<double>();
     data["mining_ratio"] = skset["mining_ratio"].get<double>();
@@ -62,6 +61,8 @@ Player::Player(SkillSets skillset, const std::string& path, float diff_ratio) : 
     data["wealth"] = 0;
     data["ratios"] = skset;
     data["diff_ratio"] = diff_ratio;
+    data["time"] = 6.0;
+    data["days"] = 1;
 }
 
 Player* Player::load(const std::string& path) {
@@ -376,4 +377,13 @@ double Player::weight() const noexcept {
         carryable += o->getWeight();
     }
     return carryable;
+}
+
+void Player::passTime(int minutes) noexcept {
+    double t = data["time"].get<double>() + minutes;
+    if (t >= 24) {
+        t -= 24;
+        data["days"] = data["days"].get<int>() + 1;
+    }
+    data["time"] = t;
 }
