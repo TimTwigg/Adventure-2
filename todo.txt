@@ -13,6 +13,7 @@ Refresh ht and hp completely at towns? For a price?
 For buildings - have preset options that require set amounts of resources? Similar to Hearthfire?
 Be able to place a chest and store resources in a certain location, later to return.
 Visual representation of map? Include user-placed things and show whether settlements have been visited/raided/etc.
+Ability to name sections of a map? Search for named section and get direction towards it?
 Enemies scaling with player?
 Civilization resets trades after a while?
 Civilizations and entities heal over time?

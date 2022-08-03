@@ -1,4 +1,4 @@
-// updated 7 July 2022
+// updated 2 August 2022
 
 #include <gtest/gtest.h>
 #include <vector>
@@ -12,7 +12,7 @@
 namespace {
     std::vector<std::string> names{"level", "xp", "skillset", "health", "max_health",
         "base_damage", "fist_base_damage", "hunger", "max_hunger", "thirst", "max_thirst", "carry_weight",
-        "speed", "swimming_speed", "consumption_ratio", "chopping_ratio", "mining_ratio",
+        "speed", "consumption_ratio", "chopping_ratio", "mining_ratio",
        "carry_ratio", "wealth", "ratios", "diff_ratio", "time", "days"};
 }
 
@@ -130,13 +130,13 @@ TEST(PlayerTests, hungerManagers) {
     p.eat(15);
     ASSERT_EQ(p.stat("hunger"), hunger);
 
-    p.reduceHunger(10);
+    p.reduceHT(10, 0);
     ASSERT_EQ(p.stat("hunger"), hunger - 10);
 
     p.eat(5);
     ASSERT_EQ(p.stat("hunger"), hunger - 5);
 
-    p.reduceHunger(hunger + 5);
+    p.reduceHT(hunger + 5, 0);
     ASSERT_EQ(p.stat("hunger"), 0);
 }
 
@@ -147,13 +147,13 @@ TEST(PlayerTests, thirstManagers) {
     p.drink(15);
     ASSERT_EQ(p.stat("thirst"), thirst);
 
-    p.reduceThirst(10);
+    p.reduceHT(0, 10);
     ASSERT_EQ(p.stat("thirst"), thirst - 10);
 
     p.drink(5);
     ASSERT_EQ(p.stat("thirst"), thirst - 5);
 
-    p.reduceThirst(thirst + 5);
+    p.reduceHT(0, thirst + 5);
     ASSERT_EQ(p.stat("thirst"), 0);
 }
 

@@ -1,4 +1,4 @@
-// Updated: 7 July 2022
+// Updated: 2 August 2022
 
 #include <string>
 #include <fstream>
@@ -44,15 +44,15 @@ Player::Player(SkillSets skillset, const std::string& path, float diff_ratio) : 
     data["level"] = 1;
     data["xp"] = 0;
     data["skillset"] = skillset;
-    data["health"] = DEFAULT::health * skset["health"].get<double>();
-    data["max_health"] = DEFAULT::health * skset["health"].get<double>();
-    data["base_damage"] = DEFAULT::damage * skset["damage"].get<double>();
-    data["fist_base_damage"] = DEFAULT::fist_damage * skset["fist_damage"].get<double>();
-    data["hunger"] = DEFAULT::hunger * skset["hunger_ratio"].get<double>();
-    data["max_hunger"] = DEFAULT::hunger * skset["hunger_ratio"].get<double>();
-    data["thirst"] = DEFAULT::thirst * skset["hunger_ratio"].get<double>();
-    data["max_thirst"] = DEFAULT::thirst * skset["hunger_ratio"].get<double>();
-    data["carry_weight"] = DEFAULT::carry_weight * skset["carry_ratio"].get<double>();
+    data["health"] = DEFAULTS::health * skset["health"].get<double>();
+    data["max_health"] = DEFAULTS::health * skset["health"].get<double>();
+    data["base_damage"] = DEFAULTS::damage * skset["damage"].get<double>();
+    data["fist_base_damage"] = DEFAULTS::fist_damage * skset["fist_damage"].get<double>();
+    data["hunger"] = DEFAULTS::hunger * skset["hunger_ratio"].get<double>();
+    data["max_hunger"] = DEFAULTS::hunger * skset["hunger_ratio"].get<double>();
+    data["thirst"] = DEFAULTS::thirst * skset["hunger_ratio"].get<double>();
+    data["max_thirst"] = DEFAULTS::thirst * skset["hunger_ratio"].get<double>();
+    data["carry_weight"] = DEFAULTS::carry_weight * skset["carry_ratio"].get<double>();
     data["speed"] = skset["speed"].get<double>();
     data["consumption_ratio"] = skset["consumption_ratio"].get<double>();
     data["chopping_ratio"] = skset["chopping_ratio"].get<double>();
@@ -115,19 +115,19 @@ void Player::save() const {
 }
 
 void Player::level_up() {
-    if (data["xp"].get<int>() < DEFAULT::xp_per_level) return;
+    if (data["xp"].get<int>() < DEFAULTS::xp_per_level) return;
 
-    int excess_xp = data["xp"].get<int>() - DEFAULT::xp_per_level;
+    int excess_xp = data["xp"].get<int>() - DEFAULTS::xp_per_level;
     data["level"] = data["level"].get<unsigned int>() + 1;
     data["xp"] = excess_xp;
 
     // get level-based ratio for stat upgrades
     double ratio;
     unsigned int level = data["level"].get<unsigned int>();
-    if (level < DEFAULT::level_1) ratio = DEFAULT::level_ratio_1;
-    else if (level < DEFAULT::level_2) ratio = DEFAULT::level_ratio_2;
-    else if (level < DEFAULT::level_3) ratio = DEFAULT::level_ratio_3;
-    else ratio = DEFAULT::level_ratio_uncapped;
+    if (level < DEFAULTS::level_1) ratio = DEFAULTS::level_ratio_1;
+    else if (level < DEFAULTS::level_2) ratio = DEFAULTS::level_ratio_2;
+    else if (level < DEFAULTS::level_3) ratio = DEFAULTS::level_ratio_3;
+    else ratio = DEFAULTS::level_ratio_uncapped;
 
     // upgrade stats
     data["health"] = static_cast<unsigned int>(data["health"].get<unsigned int>() * ratio);
@@ -135,15 +135,15 @@ void Player::level_up() {
     data["fist_base_damage"] = static_cast<unsigned int>(data["fist_base_damage"].get<unsigned int>() * ratio);
 
     // level all stats if appropriate
-    if (level % DEFAULT::stat_level_interval == 0) level_stats();
+    if (level % DEFAULTS::stat_level_interval == 0) level_stats();
 }
 
 void Player::level_stats() {
     json skset = SET::getSet(data["skillset"].get<SkillSets>());
     std::map<std::string, double> bonuses;
     for (auto& pair : skset.items()) {
-        if (pair.value() > 1) bonuses.emplace(pair.key(), DEFAULT::stat_level_bonus);
-        else bonuses.emplace(pair.key(), DEFAULT::stat_level_no_bonus);
+        if (pair.value() > 1) bonuses.emplace(pair.key(), DEFAULTS::stat_level_bonus);
+        else bonuses.emplace(pair.key(), DEFAULTS::stat_level_no_bonus);
     }
 
     for (auto& pair : bonuses) {
@@ -308,12 +308,12 @@ std::string Player::getMe() const noexcept {
 }
 
 std::string Player::getHT() const noexcept {
-    return "  Hunger    | " + std::to_string(data["hunger"].get<int>()) + " / " + std::to_string(data["max_hunger"].get<int>()) + "\n" +
-        "  Thirst    | " + std::to_string(data["thirst"].get<int>()) + " / " + std::to_string(data["max_thirst"].get<int>());
+    return "  Hunger         | " + std::to_string(data["hunger"].get<int>()) + " / " + std::to_string(data["max_hunger"].get<int>()) + "\n" +
+        "  Thirst         | " + std::to_string(data["thirst"].get<int>()) + " / " + std::to_string(data["max_thirst"].get<int>());
 }
 
 std::string Player::getHP() const noexcept {
-    return "  Health    | " + std::to_string(data["health"].get<int>()) + " / " + std::to_string(data["max_health"].get<int>());
+    return "  Health         | " + std::to_string(data["health"].get<int>()) + " / " + std::to_string(data["max_health"].get<int>());
 }
 
 void Player::addWealth(unsigned int amount) noexcept {
@@ -349,14 +349,16 @@ void Player::addXP(int xp) noexcept {
     level_up();
 }
 
-void Player::reduceHunger(double points) noexcept {
-    data["hunger"] = data["hunger"].get<double>() - points;
-    if (data["hunger"].get<double>() < 0) data["hunger"] = 0;
-}
-
-void Player::reduceThirst(double points) noexcept {
-    data["thirst"] = data["thirst"].get<double>() - points;
-    if (data["thirst"].get<double>() < 0) data["thirst"] = 0;
+void Player::reduceHT(double hunger, double thirst) {
+    if (hunger > 0) {
+        data["hunger"] = data["hunger"].get<double>() - hunger;
+        if (data["hunger"].get<double>() < 0) data["hunger"] = 0;
+    }
+    
+    if (thirst > 0) {
+        data["thirst"] = data["thirst"].get<double>() - thirst;
+        if (data["thirst"].get<double>() < 0) data["thirst"] = 0;
+    }
 }
 
 void Player::eat(double points) noexcept {
@@ -370,13 +372,13 @@ void Player::drink(double points) noexcept {
 }
 
 double Player::weight() const noexcept {
-    double carryable = 0.0;
+    double carrying = 0.0;
     int n = inventory.size();
     for (int i = 0; i < n; ++i) {
         Object* o = inventory[i].get();
-        carryable += o->getWeight();
+        carrying += o->getWeight();
     }
-    return carryable;
+    return carrying;
 }
 
 void Player::passTime(int minutes) noexcept {

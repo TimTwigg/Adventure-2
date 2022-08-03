@@ -1,4 +1,4 @@
-// Updated: 17 June 2022
+// Updated: 2 August 2022
 
 #ifndef OBJECT_HPP
 #define OBJECT_HPP
@@ -27,6 +27,7 @@ NLOHMANN_JSON_SERIALIZE_ENUM(OBJCLASS, {
 
 class Object : public Thing {
     public:
+        virtual ~Object() = default;
         virtual int getWeight() const noexcept;
         OBJCLASS getType() const noexcept;
         Things getThingType() const noexcept override;

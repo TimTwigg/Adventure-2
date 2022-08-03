@@ -1,4 +1,4 @@
-// Updated: 7 July 2022
+// Updated: 2 August 2022
 
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
@@ -50,8 +50,7 @@ class Player {
 
         void addXP(int xp) noexcept;
         
-        void reduceHunger(double points) noexcept;
-        void reduceThirst(double points) noexcept;
+        void reduceHT(double hunger, double thirst);
         void eat(double points) noexcept;
         void drink(double points) noexcept;
 

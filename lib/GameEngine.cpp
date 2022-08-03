@@ -1,4 +1,4 @@
-// updated 7 July 2022
+// updated 2 August 2022
 
 #include <string>
 #include <memory>
@@ -8,7 +8,7 @@
 #include "GameEngine.hpp"
 #include "Player.hpp"
 #include "Map.hpp"
-//#include "Resource.hpp"
+#include "Resource.hpp"
 //#include "CResource.hpp"
 //#include "Tool.hpp"
 //#include "Weapon.hpp"
@@ -17,6 +17,7 @@
 #include "Interface.hpp"
 #include "FileReader.hpp"
 #include "StringHelpers.hpp"
+#include "StatDefaults.hpp"
 #include "TextArt.hpp"
 namespace fs = std::filesystem;
 
@@ -169,6 +170,7 @@ void GameEngine::run() {
         else {
             int index = gen.getRandInt(0, error_msgs.size() - 1);
             i->output(error_msgs[index], configs["colors"]["error"].get<Color>());
+            continue;
         }
 
         // get attacked if appropriate
@@ -240,10 +242,12 @@ void GameEngine::look() {
 }
 
 void GameEngine::inventory() {
-    i->output("  Inventory    | " + player->listInventory(), configs["colors"]["info"].get<Color>());
+    i->output("  Inventory      | " + player->listInventory(), configs["colors"]["info"].get<Color>());
 }
 
 void GameEngine::go() {
+    if (player->weight() > player->stat("carry_weight")) i->output("You are carrying too much. Drop something to move", configs["colors"]["error"].get<Color>());
+
     if (command[1] == "north") printLocation(map->go(Dir::NORTH));
     else if (command[1] == "east") printLocation(map->go(Dir::EAST));
     else if (command[1] == "south") printLocation(map->go(Dir::SOUTH));
@@ -252,7 +256,8 @@ void GameEngine::go() {
         i->output("Could not recognize command, try 'go [north | east | south | west]'", configs["colors"]["error"].get<Color>());
         return;
     }
-    player->passTime((240 / player->stat("speed")));
+    player->passTime((DEFAULTS::travel_time / player->stat("speed")));
+    player->reduceHT(3, 2);
 }
 
 void GameEngine::me() {
@@ -288,7 +293,32 @@ void GameEngine::drink() {
 }
 
 void GameEngine::take() {
-
+    command = strHelp::reduce(command);
+    if (command.size() < 2) {
+        i->output("What do you want to take?", configs["colors"]["error"].get<Color>());
+        return;
+    }
+    std::string target = command[1];
+    Location& l = map->getRef();
+    Object* obj = nullptr;
+    int pos = 0;
+    for (std::shared_ptr<Thing> t : l.thingsHere) {
+        if (t->getName() == target && t->getThingType() == Things::Object) {
+            obj = static_cast<Object*>(t.get());
+            l.thingsHere.erase(l.thingsHere.begin() + pos);
+            break;
+        }
+        ++pos;
+    }
+    if (obj == nullptr) i->output("No " + target + " to take here", configs["colors"]["error"].get<Color>());
+    else {
+        if (obj->getType() == OBJCLASS::RESOURCE || obj->getType() == OBJCLASS::CRESOURCE) {
+            Resource* r = static_cast<Resource*>(obj);
+            player->addItem(r->getType(), r->getName(), r->getCount());
+        }
+        else player->addItem(obj->getType(), obj->getName());
+        delete obj;
+    }
 }
 
 void GameEngine::drop() {

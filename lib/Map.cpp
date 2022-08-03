@@ -1,4 +1,4 @@
-// updated 19 June 2022
+// updated 2 August 2022
 
 #include <map>
 #include <vector>
@@ -117,6 +117,10 @@ Map::Map(const Map& other) : gen{RandomGenerator()}, savepath{other.savepath}, x
 }
 
 Location Map::get() const noexcept {
+    return db.at(xy);
+}
+
+Location& Map::getRef() noexcept {
     return db.at(xy);
 }
 
