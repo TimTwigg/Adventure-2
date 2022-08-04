@@ -1,4 +1,4 @@
-// Updated: 2 August 2022
+// Updated: 4 August 2022
 
 #include <string>
 #include <fstream>
@@ -20,8 +20,6 @@
 #include "json.hpp"
 using json = nlohmann::json;
 namespace fs = std::filesystem;
-
-#include <iostream>
 
 // names of data contents whose values are not numeric
 std::vector<std::string> Player::INVALID_STAT_NAMES{"skillset", "ratios"};
@@ -382,7 +380,7 @@ double Player::weight() const noexcept {
 }
 
 void Player::passTime(int minutes) noexcept {
-    double t = data["time"].get<double>() + minutes;
+    double t = data["time"].get<double>() + (minutes / 60.0);
     if (t >= 24) {
         t -= 24;
         data["days"] = data["days"].get<int>() + 1;

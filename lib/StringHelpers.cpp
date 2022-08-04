@@ -1,4 +1,4 @@
-// updated 2 August 2022
+// updated 4 August 2022
 
 #include <string>
 #include <algorithm>
@@ -36,4 +36,9 @@ std::vector<std::string> strHelp::reduce(const std::vector<std::string>& v, cons
         if (s.size() > 0 && std::find(words.begin(), words.end(), s) == words.end()) out.push_back(s);
     });
     return out;
+}
+
+// adapted from https://stackoverflow.com/questions/4654636/how-to-determine-if-a-string-is-a-number-with-c
+bool strHelp::isNumber(const std::string& s) {
+    return !s.empty() && std::find_if(s.begin(), s.end(), [](unsigned char c){return !std::isdigit(c) && c != '.';}) == s.end();
 }

@@ -1,4 +1,4 @@
-// updated 17 June 2022
+// updated 4 August 2022
 
 #ifndef STRINGHELPERS_HPP
 #define STRINGHELPERS_HPP
@@ -24,6 +24,8 @@ namespace strHelp {
     std::vector<std::string> split(const std::string& str);
     // remove unimportant words
     std::vector<std::string> reduce(const std::vector<std::string>& v, const std::vector<std::string>& words = strHelp::uWords);
+    // check if string is a positive number
+    bool isNumber(const std::string& s);
 }
 
 #endif

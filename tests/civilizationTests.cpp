@@ -1,4 +1,4 @@
-// updated 24 June 2022
+// updated 4 August 2022
 
 #include <gtest/gtest.h>
 #include <string>
@@ -21,8 +21,6 @@ TEST(civTests, getters) {
     ASSERT_EQ(trades.size(), 6);
     trades = c.getSellingTrades();
     ASSERT_EQ(trades.size(), 6);
-    auto loot = c.getLoot();
-    ASSERT_GT(loot.size(), 0);
 }
 
 TEST(civTests, saveload) {
@@ -39,16 +37,24 @@ TEST(civTests, saveload) {
 }
 
 TEST(civTests, buysell) {
-    Civilization  c{"city"};
+    Civilization c{"city"};
     auto buying = c.getBuyingTrades();
     auto item = *buying.begin();
     c.buy(item.first.first, item.first.second);
-    ASSERT_EQ(c.getBuyingTrades().at(item.first).first+1, item.second.first);
+    if (item.second.first == 1) {
+        auto trades = c.getBuyingTrades();
+        ASSERT_EQ(trades.find(item.first), trades.end());
+    }
+    else ASSERT_EQ(c.getBuyingTrades().at(item.first).first+1, item.second.first);
 
     auto selling = c.getSellingTrades();
     auto item2 = *selling.begin();
     c.sell(item2.first.first, item2.first.second);
-    ASSERT_EQ(c.getSellingTrades().at(item2.first).first+1, item2.second.first);
+    if (item2.second.first == 1) {
+        auto trades = c.getSellingTrades();
+        ASSERT_EQ(trades.find(item2.first), trades.end());
+    }
+    else ASSERT_EQ(c.getSellingTrades().at(item2.first).first+1, item2.second.first);
 }
 
 TEST(civTests, raid) {

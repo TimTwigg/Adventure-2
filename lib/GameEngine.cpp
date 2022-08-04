@@ -1,4 +1,4 @@
-// updated 2 August 2022
+// updated 4 August 2022
 
 #include <string>
 #include <memory>
@@ -358,7 +358,13 @@ void GameEngine::sleep() {
 }
 
 void GameEngine::wait() {
-
+    command = strHelp::reduce(command);
+    if (command.size() < 2) i->output("Wait how long?", configs["colors"]["error"].get<Color>());
+    else if (!strHelp::isNumber(command[1])) i->output("Wait time must be number not " + command[1], configs["colors"]["error"].get<Color>());
+    else {
+        float n = std::stof(command[1]);
+        player->passTime(n * 60);
+    }
 }
 
 void GameEngine::time() {
@@ -367,7 +373,11 @@ void GameEngine::time() {
     int hours = t;
     t = (t - hours) * 60;
     int mins = t;
-    i->output("It is " + std::to_string(hours) + ":" + std::to_string(mins) + " on day " + std::to_string(d), configs["colors"]["info"].get<Color>());
+    std::string hourString = std::to_string(hours);
+    if (hourString.size() == 1) hourString = "0" + hourString;
+    std::string minString = std::to_string(mins);
+    if (minString.size() == 1) minString = "0" + minString;
+    i->output("It is " + hourString + ":" + minString + " on day " + std::to_string(d), configs["colors"]["info"].get<Color>());
 }
 
 void GameEngine::fill() {
