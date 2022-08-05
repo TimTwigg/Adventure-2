@@ -1,11 +1,18 @@
+# updated 5 August 2022
+# Counts the number of lines in code files
+
 from pathlib import Path
 
-def countlines(p_list) :
+breakdown = [""]
+
+def countlines(f_list) :
     count = 0
-    for py in p_list :
-        with py.open("r") as f :
+    for file in f_list :
+        startcount = count
+        with file.open("r") as f :
             for _ in f :
                 count += 1
+        breakdown.append(f"{file.name:25} | {count - startcount}")
     return count
 
 p = Path()
@@ -17,9 +24,13 @@ print("\nFiles: {} lines".format(count1))
 data_dirs = ["data", "infodata"]
 count2 = 0
 for dir in data_dirs :
+    breakdown.append("")
     p2 = p / dir
     files = [i.resolve() for i in p2.iterdir()]
     count2 += countlines(files)
 print("Data Files: {} lines".format(count2))
 
 print("Total: {} lines".format(count1 + count2))
+
+for l in breakdown:
+    print(l)
