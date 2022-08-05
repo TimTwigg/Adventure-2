@@ -1,4 +1,4 @@
-// updated 17 June 2022
+// updated 5 August 2022
 
 #ifndef ENTITY_HPP
 #define ENTITY_HPP
@@ -30,7 +30,6 @@ class Entity : public Thing {
     public:
         virtual ~Entity() = default;
         operator std::string() const noexcept override;
-        Things getThingType() const noexcept override;
         ENT getType() const noexcept;
         float getHP() const noexcept;
         unsigned int getXP() const noexcept;
@@ -50,10 +49,6 @@ class Entity : public Thing {
 
 inline Entity::operator std::string() const noexcept {
     return ENTtoString(type) + ", " + name + ", " + std::to_string(hp);
-}
-
-inline Things Entity::getThingType() const noexcept {
-    return Things::Entity;
 }
 
 inline ENT Entity::getType() const noexcept {

@@ -1,4 +1,4 @@
-// updated 17 June 2022
+// updated 5 August 2022
 // base class to join all objects and entities
 
 #ifndef THING_HPP
@@ -7,17 +7,10 @@
 #include <string>
 #include <algorithm>
 
-enum class Things {
-    Object,
-    Entity,
-    Civilization
-};
-
 class Thing {    
     public:
         std::string getName() const noexcept;
         virtual unsigned int getValue() const noexcept;
-        virtual Things getThingType() const noexcept = 0;
         // convert to string to allow for loading from string
         virtual operator std::string() const noexcept = 0;
         // string for printing

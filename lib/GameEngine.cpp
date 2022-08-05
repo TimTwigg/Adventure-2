@@ -1,4 +1,4 @@
-// updated 4 August 2022
+// updated 5 August 2022
 
 #include <string>
 #include <memory>
@@ -21,8 +21,6 @@
 #include "StatDefaults.hpp"
 #include "TextArt.hpp"
 namespace fs = std::filesystem;
-
-#include <iostream>
 
 const std::vector<std::string> GameEngine::error_msgs = {
     {"I'll think about it...",
@@ -304,22 +302,24 @@ void GameEngine::take() {
     std::string target = command[1];
     Location& l = map->getRef();
     Object* obj = nullptr;
-    int pos = 0;
-    for (std::shared_ptr<Thing> t : l.thingsHere) {
-        if (t->getName() == target && t->getThingType() == Things::Object) {
-            obj = static_cast<Object*>(t.get());
-            l.thingsHere.erase(l.thingsHere.begin() + pos);
+    for (std::shared_ptr<Thing>& t : l.thingsHere) {
+        if (t->getName() == target) {
+            obj = dynamic_cast<Object*>(t.get());
             break;
         }
-        ++pos;
     }
     if (obj == nullptr) i->output("No " + target + " to take here", configs["colors"]["error"].get<Color>());
     else {
         if (obj->getType() == OBJCLASS::RESOURCE || obj->getType() == OBJCLASS::CRESOURCE) {
             Resource* r = static_cast<Resource*>(obj);
-            player->addItem(r->getType(), r->getName(), r->getCount());
+            r->remove(1);
+            if (r->getCount() < 1) l.thingsHere.erase(std::find_if(l.thingsHere.begin(), l.thingsHere.end(), [&](std::shared_ptr<Thing> i){return i->getName() == r->getName();}));
+            player->addItem(r->getType(), r->getName(), 1);
         }
-        else player->addItem(obj->getType(), obj->getName());
+        else {
+            player->addItem(obj->getType(), obj->getName());
+            l.thingsHere.erase(std::find_if(l.thingsHere.begin(), l.thingsHere.end(), [&](std::shared_ptr<Thing> i){return i->getName() == obj->getName();}));
+        }
     }
 }
 
@@ -334,7 +334,7 @@ void GameEngine::drop() {
     if (command.size() > 2 && strHelp::isNumber(command[2])) num = std::stoi(command[2]);
     if (player->inInventory(target, num)) {
         Location& l = map->getRef();
-        l.thingsHere.push_back(player->removeItem(target, num));
+        l.addThing(player->removeItem(target, num));
     }
     else i->output("You don't have " + target + " to drop!", configs["colors"]["error"].get<Color>());
 }

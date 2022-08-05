@@ -1,4 +1,4 @@
-// updated 24 June 2022
+// updated 5 August 2022
 
 #ifndef CIVILIZATION_HPP
 #define CIVILIZATION_HPP
@@ -21,7 +21,6 @@ class Civilization : public Thing {
         Civilization(std::string name, bool isNew = true);
         operator std::string() const noexcept override;
         json save() const noexcept;
-        Things getThingType() const noexcept override;
         std::string printString() const noexcept override;
         trades getSellingTrades() const noexcept;
         trades getBuyingTrades() const noexcept;

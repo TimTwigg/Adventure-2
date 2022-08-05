@@ -1,4 +1,4 @@
-// updated 2 August 2022
+// updated 5 August 2022
 
 #include <map>
 #include <vector>
@@ -97,13 +97,34 @@ json Location::save() const {
     json j;
     std::for_each(miscHere.begin(), miscHere.end(), [&](std::string s){j.push_back(s);});
     std::for_each(thingsHere.begin(), thingsHere.end(), [&](std::shared_ptr<Thing> p){
-        if (p->getThingType() == Things::Civilization) {
-            Civilization* c = static_cast<Civilization*>(p.get());
-            j.push_back(c->save());
-        }
+        Civilization* c = dynamic_cast<Civilization*>(p.get());
+        if (c != nullptr) j.push_back(c->save());
         else j.push_back(p->operator std::string());
     });
     return j;
+}
+
+void Location::addThing(std::shared_ptr<Thing> thing) {
+    if (dynamic_cast<Object*>(thing.get()) != nullptr) {
+        Object* obj = static_cast<Object*>(thing.get());
+        OBJCLASS type = obj->getType();
+        if (type == OBJCLASS::RESOURCE || type == OBJCLASS::CRESOURCE) {
+            bool exists = false;
+            for (std::shared_ptr<Thing>& it : thingsHere) {
+                if (it->getName() == obj->getName()) {
+                    Resource* r = static_cast<Resource*>(obj);
+                    int count = r->getCount();
+                    Resource* rit = static_cast<Resource*>(it.get());
+                    rit->add(count);
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) thingsHere.push_back(thing);
+        }
+        else thingsHere.push_back(thing);
+    }
+    else thingsHere.push_back(thing);
 }
 
 Map::Map(const std::string& savepath) : savepath{savepath}, gen{RandomGenerator()}, xy{std::make_pair(0, 0)} {

@@ -1,4 +1,4 @@
-// Updated: 4 August 2022
+// Updated: 5 August 2022
 
 #include <string>
 #include <fstream>
@@ -20,6 +20,8 @@
 #include "json.hpp"
 using json = nlohmann::json;
 namespace fs = std::filesystem;
+
+#include <iostream>
 
 // names of data contents whose values are not numeric
 std::vector<std::string> Player::INVALID_STAT_NAMES{"skillset", "ratios"};
@@ -230,14 +232,14 @@ std::shared_ptr<Thing> Player::removeItem(std::string obj, unsigned int count) {
     for (auto it = inventory.begin(); it != inventory.end(); ++it) {
         Object* o = it->get();
         if (o->getName() == obj) {
-            if (o->getType() == OBJCLASS::RESOURCE) {
+            if (o->getType() == OBJCLASS::RESOURCE || o->getType() == OBJCLASS::CRESOURCE) {
                 Resource* r = static_cast<Resource*>(o);
-                if (r->getCount() > count) {
+                if (r->getCount() >= count) {
                     r->remove(count);
+                    if (r->getCount() < 1) inventory.erase(it);
                     if (r->getType() == OBJCLASS::RESOURCE) return std::shared_ptr<Thing>(new Resource(r->getName(), count));
                     else return std::shared_ptr<Thing>(new CResource(r->getName(), count));
                 }
-                else if (r->getCount() == count) inventory.erase(it);
                 else throw AdventureException("Player::removeItem not enough to remove: " + obj + " " + std::to_string(count));
             }
             else inventory.erase(it);

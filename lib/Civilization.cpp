@@ -1,4 +1,4 @@
-// updated 24 June 2022
+// updated 5 August 2022
 
 #include <string>
 #include <map>
@@ -154,10 +154,6 @@ Civilization* Civilization::load(json data) {
     c->selling = data["selling"].get<std::map<std::pair<std::string, std::string>, std::pair<unsigned int, unsigned int>>>();
     c->loot = data["loot"].get<std::map<std::pair<std::string, std::string>, int>>();
     return c;
-}
-
-Things Civilization::getThingType() const noexcept {
-    return Things::Civilization;
 }
 
 std::string Civilization::printString() const noexcept {
