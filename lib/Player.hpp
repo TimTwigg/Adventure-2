@@ -1,4 +1,4 @@
-// Updated: 2 August 2022
+// Updated: 4 August 2022
 
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
@@ -33,7 +33,8 @@ class Player {
         // inventory
         bool inInventory(std::string obj, unsigned int count = 1) const noexcept;
         void addItem(OBJCLASS objClass, std::string obj, unsigned int count = 1);
-        void removeItem(OBJCLASS objClass, std::string obj, unsigned int count = 1);
+        // removes the item from inventory and returns it
+        std::shared_ptr<Thing> removeItem(std::string obj, unsigned int count = 1);
         int itemCount(std::string obj) const noexcept;
         std::string listInventory() const noexcept;
         std::string getMe() const noexcept;

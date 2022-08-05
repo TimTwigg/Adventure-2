@@ -9,9 +9,10 @@
 #include "Player.hpp"
 #include "Map.hpp"
 #include "Resource.hpp"
-//#include "CResource.hpp"
-//#include "Tool.hpp"
-//#include "Weapon.hpp"
+#include "CResource.hpp"
+#include "Tool.hpp"
+#include "Weapon.hpp"
+#include "Container.hpp"
 //#include "Animal.hpp"
 //#include "Enemy.hpp"
 #include "Interface.hpp"
@@ -20,6 +21,8 @@
 #include "StatDefaults.hpp"
 #include "TextArt.hpp"
 namespace fs = std::filesystem;
+
+#include <iostream>
 
 const std::vector<std::string> GameEngine::error_msgs = {
     {"I'll think about it...",
@@ -317,12 +320,23 @@ void GameEngine::take() {
             player->addItem(r->getType(), r->getName(), r->getCount());
         }
         else player->addItem(obj->getType(), obj->getName());
-        delete obj;
     }
 }
 
 void GameEngine::drop() {
-
+    command = strHelp::reduce(command);
+    if (command.size() < 2) {
+        i->output("Drop what?", configs["colors"]["error"].get<Color>());
+        return;
+    }
+    std::string target = command[1];
+    int num = 1;
+    if (command.size() > 2 && strHelp::isNumber(command[2])) num = std::stoi(command[2]);
+    if (player->inInventory(target, num)) {
+        Location& l = map->getRef();
+        l.thingsHere.push_back(player->removeItem(target, num));
+    }
+    else i->output("You don't have " + target + " to drop!", configs["colors"]["error"].get<Color>());
 }
 
 void GameEngine::raid() {

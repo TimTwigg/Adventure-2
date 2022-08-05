@@ -226,18 +226,22 @@ void Player::addItem(OBJCLASS objClass, std::string obj, unsigned int count) {
     }
 }
 
-void Player::removeItem(OBJCLASS objClass, std::string obj, unsigned int count) {
+std::shared_ptr<Thing> Player::removeItem(std::string obj, unsigned int count) {
     for (auto it = inventory.begin(); it != inventory.end(); ++it) {
         Object* o = it->get();
         if (o->getName() == obj) {
             if (o->getType() == OBJCLASS::RESOURCE) {
                 Resource* r = static_cast<Resource*>(o);
-                if (r->getCount() > count) r->remove(count);
+                if (r->getCount() > count) {
+                    r->remove(count);
+                    if (r->getType() == OBJCLASS::RESOURCE) return std::shared_ptr<Thing>(new Resource(r->getName(), count));
+                    else return std::shared_ptr<Thing>(new CResource(r->getName(), count));
+                }
                 else if (r->getCount() == count) inventory.erase(it);
                 else throw AdventureException("Player::removeItem not enough to remove: " + obj + " " + std::to_string(count));
             }
             else inventory.erase(it);
-            return;
+            return *it;
         }
     }
     throw AdventureException("Player::removeItem could not find item: " + obj);

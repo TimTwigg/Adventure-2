@@ -1,4 +1,4 @@
-// updated 2 August 2022
+// updated 4 August 2022
 
 #include <gtest/gtest.h>
 #include <vector>
@@ -172,7 +172,7 @@ TEST(PlayerTests, inventoryManagers) {
     ASSERT_TRUE(p.inInventory("feather", 2));
     ASSERT_EQ(p.itemCount("feather"), 2);
 
-    p.removeItem(OBJCLASS::RESOURCE, "feather");
+    p.removeItem("feather");
     ASSERT_EQ(p.itemCount("feather"), 1);
 
     p.addItem(OBJCLASS::TOOL, "stone-pick");
