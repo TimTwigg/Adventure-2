@@ -1,2 +1,9 @@
-You can pick up as much as you like, but picking up more than your carry weight will prevent you from moving.
-Wait command number is in hours
+Enter commands to play the game. Commands are case insensitive and allow some limited flexibility in wording.
+Enter a command with a "?" for more info on that command, eg: "go?" or "?go".
+Enter @ and an object name for information on that object, eg: "@wood" or "@cooked-steak".
+@NEWLINE
+Commands available to you are :
+@COMMANDS
+.
+@NEWLINE
+Some commands have shortcuts, shown as "command [shortcut]".

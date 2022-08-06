@@ -1,4 +1,4 @@
-// updated 5 August 2022
+// updated 6 August 2022
 
 #include <string>
 #include <memory>
@@ -63,7 +63,7 @@ void GameEngine::run() {
         }
 
         // look
-        if (command[0] == "look") look();
+        if (command[0] == "look" || query == "l") look();
 
         // inventory
         else if (query == "inventory" || query == "i") inventory();
@@ -314,10 +314,17 @@ void GameEngine::take() {
     if (obj == nullptr) i->output("No " + target + " to take here", configs["colors"]["error"].get<Color>());
     else {
         if (obj->getType() == OBJCLASS::RESOURCE || obj->getType() == OBJCLASS::CRESOURCE) {
+            int num = 1;
+            if (command.size() > 2 && strHelp::isNumber(command[2])) num = std::stoi(command[2]);
             Resource* r = static_cast<Resource*>(obj);
-            r->remove(1);
-            if (r->getCount() < 1) l.thingsHere.erase(std::find_if(l.thingsHere.begin(), l.thingsHere.end(), [&](std::shared_ptr<Thing> i){return i->getName() == r->getName();}));
-            player->addItem(r->getType(), r->getName(), 1);
+            if (r->getCount() <= num) {
+                player->addItem(r->getType(), r->getName(), r->getCount());
+                l.thingsHere.erase(std::find_if(l.thingsHere.begin(), l.thingsHere.end(), [&](std::shared_ptr<Thing> i){return i->getName() == r->getName();}));
+            }
+            else {
+                r->remove(num);
+                player->addItem(r->getType(), r->getName(), num);
+            }
         }
         else {
             player->addItem(obj->getType(), obj->getName());
@@ -419,11 +426,19 @@ void GameEngine::save() {
 }
 
 void GameEngine::help() {
-
+    i->clearScreen();
+    i->output(ART::HELP, configs["colors"]["art"].get<Color>());
+    std::string content = FileReader::getInfoData("help.txt");
+    i->output(content, configs["colors"]["info"].get<Color>());
 }
 
 void GameEngine::command_help() {
-
+    std::string s = command[0];
+    s.erase(std::remove(s.begin(), s.end(), '?'), s.end());
+    json jdata = FileReader::getFromFile("commandUses.json", s, FileReader::infodatapath);
+    std::vector<std::string> data = jdata.get<std::vector<std::string>>();
+    i->output("Command: " + s + "\n  Usage: " + data[0], configs["colors"]["info"].get<Color>());
+    if (data.size() > 1) std::for_each(data.begin()+1, data.end(), [&](const std::string& line){i->output("  " + line, configs["colors"]["info"].get<Color>());});
 }
 
 void GameEngine::object_help() {

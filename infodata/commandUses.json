@@ -1,0 +1,101 @@
+{
+    "go": [
+        "go *direction*"
+    ],
+    "look": [
+        "look *here* OR *binoculars*"
+    ],
+    "eat": [
+        "eat *food-item*"
+    ],
+    "drink": [
+        "drink *liquid* *source*"
+    ],
+    "trade": [
+        "trade *settlement-type*"
+    ],
+    "attack": [
+        "attack *target* *weapon*"
+    ],
+    "raid": [
+        "raid *target* *weapon*"
+    ],
+    "i": [
+        "i OR i *object*",
+        "Lists your inventory, or if used with an object name checks if you have that object in your inven"
+    ],
+    "inventory": [
+        "inventory"
+    ],
+    "me": [
+        "me"
+    ],
+    "take": [
+        "take *object-name*",
+        "There is no limit on what you can pick up, but moving requires your load to be within your limit"
+    ],
+    "drop": [
+        "drop *object-name*"
+    ],
+    "craft": [
+        "craft *object*"
+    ],
+    "build": [
+        "build *machine*"
+    ],
+    "recipe": [
+        "recipe *object-name*"
+    ],
+    "cook": [
+        "cook *object-name* *heat-source*"
+    ],
+    "chop": [
+        "chop trees *tool*"
+    ],
+    "mine": [
+        "mine *type* *tool*"
+    ],
+    "fill": [
+        "fill *container* *liquid* *source*"
+    ],
+    "exit": [
+        "exit"
+    ],
+    "help": [
+        "help"
+    ],
+    "time": [
+        "time"
+    ],
+    "save": [
+        "save"
+    ],
+    "clear": [
+        "clear"
+    ],
+    "config": [
+        "config"
+    ],
+    "hp": [
+        "hp"
+    ],
+    "ht": [
+        "ht"
+    ],
+    "sleep": [
+        "sleep"
+    ],
+    "wait": [
+        "wait *hours*"
+    ],
+    "train": [
+        "train *weapon*"
+    ],
+    "loot": [
+        "loot *civilization* *weapon*"
+    ],
+    "smoke": [
+        "smoke *item*",
+        "Smoking requires both a smoker and a fuel source"
+    ]
+}

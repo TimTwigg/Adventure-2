@@ -1,0 +1,31 @@
+attack
+build
+chop
+clear
+config
+craft
+drink
+drop
+eat
+exit
+fill
+go
+help
+hp
+ht
+inventory [i]
+look [l]
+loot
+mine
+me
+raid
+recipe
+save
+sleep
+smoke
+take
+time
+train
+trade
+wait
+END

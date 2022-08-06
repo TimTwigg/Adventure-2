@@ -1,9 +1,9 @@
-# updated 5 August 2022
+# updated 6 August 2022
 # Counts the number of lines in code files
 
 from pathlib import Path
 
-breakdown = ["Code Files:"]
+breakdown = ["\nCode Files:"]
 
 def countlines(f_list) :
     count = 0

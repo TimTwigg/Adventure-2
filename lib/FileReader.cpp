@@ -1,9 +1,10 @@
-// updated 17 June 2022
+// updated 6 August 2022
 
 #include <fstream>
 #include <string>
 #include <vector>
 #include <filesystem>
+#include <sstream>
 #include "FileReader.hpp"
 #include "AdventureException.hpp"
 #include "StringHelpers.hpp"
@@ -15,23 +16,6 @@ json FileReader::readFile(std::string filename) {
     strHelp::strip(filename);
     if (filename.size() < 1) throw AdventureException("FileReader: filename required");
 
-    std::ifstream in;    
-    in.open(datapath + "\\" + filename);
-    if (!in) {
-        throw AdventureException("FileReader: File not Found: " + filename);
-    }
-
-    json j;
-    in >> j;
-    return j;
-}
-
-json FileReader::getFromFile(std::string filename, std::string itemname) {
-    strHelp::strip(filename);
-    strHelp::strip(itemname);
-    if (filename.size() < 1) throw AdventureException("FileReader: filename required");
-    if (itemname.size() < 1) throw AdventureException("FileReader: itemname required");
-
     std::ifstream in;
     in.open(datapath + filename);
     if (!in) {
@@ -40,9 +24,28 @@ json FileReader::getFromFile(std::string filename, std::string itemname) {
 
     json j;
     in >> j;
+    in.close();
+    return j;
+}
+
+json FileReader::getFromFile(std::string filename, std::string itemname, std::string origin) {
+    strHelp::strip(filename);
+    strHelp::strip(itemname);
+    if (filename.size() < 1) throw AdventureException("FileReader: filename required");
+    if (itemname.size() < 1) throw AdventureException("FileReader: itemname required");
+
+    std::ifstream in;
+    in.open(origin + filename);
+    if (!in) {
+        throw AdventureException("FileReader: File not Found: " + filename);
+    }
+
+    json j;
+    in >> j;
+    in.close();
 
     if (!j.contains(itemname)) {
-        throw AdventureException("FileReader: Item not Found: " + itemname + " in File: " + filename);
+        throw AdventureException("FileReader: Item not Found: \"" + itemname + "\" in File: " + filename);
     }
     return j[itemname];
 }
@@ -59,6 +62,7 @@ std::vector<std::string> FileReader::getTitlesFromFile(std::string filename) {
 
     json j;
     in >> j;
+    in.close();
 
     std::vector<std::string> v;
     for (const auto& [k, _] : j.items()) v.push_back(k);
@@ -79,4 +83,42 @@ json FileReader::getConfigs(std::string path) {
     in >> j;
     in.close();
     return j;
+}
+
+std::string FileReader::getInfoData(std::string filename) {
+    strHelp::strip(filename);
+    if (filename.size() < 1) throw AdventureException("FileReader: filename required");
+
+    std::ifstream in;
+    in.open(infodatapath + filename);
+    if (!in) {
+        throw AdventureException("FileReader: File not Found: " + filename);
+    }
+
+    std::stringstream out;
+    std::string line;
+    while (in) {
+        line.clear();
+        std::getline(in, line);
+        if (line[0] == '@') {
+            if (line == "@NEWLINE") out << std::endl;
+            else if (line == "@COMMANDS") {
+                std::ifstream inC;
+                inC.open(infodatapath + "commands.txt");
+                std::getline(inC, line);
+                out << line;
+                while (inC) {
+                    line.clear();
+                    std::getline(inC, line);
+                    if (line == "END") break;
+                    out << ", " << line;
+                }
+                inC.close();
+            }
+        }
+        else out << line << " ";
+    }
+    in.close();
+    out << std::endl;
+    return out.str();
 }
