@@ -247,7 +247,10 @@ void GameEngine::inventory() {
 }
 
 void GameEngine::go() {
-    if (player->weight() > player->stat("carry_weight")) i->output("You are carrying too much. Drop something to move", configs["colors"]["error"].get<Color>());
+    if (player->weight() > player->stat("carry_weight")) {
+        i->output("You are carrying too much. Drop something to move", configs["colors"]["error"].get<Color>());
+        return;
+    }
 
     if (command[1] == "north") printLocation(map->go(Dir::NORTH));
     else if (command[1] == "east") printLocation(map->go(Dir::EAST));

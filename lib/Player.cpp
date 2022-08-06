@@ -307,6 +307,7 @@ std::string Player::getMe() const noexcept {
         "  Thirst         | " + std::to_string(data["thirst"].get<int>()) + " / " + std::to_string(data["max_thirst"].get<int>()) + "\n" +
         "  Base Damage    | " + std::to_string(data["base_damage"].get<int>()) + "\n" +
         "  Fist Damage    | " + std::to_string(data["fist_base_damage"].get<int>()) + "\n" +
+        "  Weight Carried | " + std::to_string(static_cast<int>(weight())) + " / " + std::to_string(data["carry_weight"].get<int>()) + "\n" +
         "  Inventory      | " + listInventory();
     return me;
 }

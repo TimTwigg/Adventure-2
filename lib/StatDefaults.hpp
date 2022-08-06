@@ -1,4 +1,4 @@
-// Updated: 2 August 2022
+// Updated: 5 August 2022
 
 #ifndef STATDEFAULTS_HPP
 #define STATDEFAULTS_HPP
@@ -9,7 +9,7 @@ namespace DEFAULTS {
     const unsigned int fist_damage = 10;
     const unsigned int hunger = 50;
     const unsigned int thirst = 20;
-    const unsigned int carry_weight = 100;
+    const unsigned int carry_weight = 250;
     const unsigned int level_1 = 5;
     const unsigned int level_2 = 10;
     const unsigned int level_3 = 20;
