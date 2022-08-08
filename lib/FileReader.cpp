@@ -1,4 +1,4 @@
-// updated 6 August 2022
+// updated 7 August 2022
 
 #include <fstream>
 #include <string>
@@ -12,9 +12,15 @@
 using json = nlohmann::json;
 namespace fs = std::filesystem;
 
+#include <iostream>
+
 json FileReader::readFile(std::string filename) {
     strHelp::strip(filename);
     if (filename.size() < 1) throw AdventureException("FileReader: filename required");
+
+    if (cache.find(filename) != cache.end()) {
+        return cache[filename];
+    }
 
     std::ifstream in;
     in.open(datapath + filename);
@@ -25,6 +31,7 @@ json FileReader::readFile(std::string filename) {
     json j;
     in >> j;
     in.close();
+    cache[filename] = j;
     return j;
 }
 
@@ -34,15 +41,20 @@ json FileReader::getFromFile(std::string filename, std::string itemname, std::st
     if (filename.size() < 1) throw AdventureException("FileReader: filename required");
     if (itemname.size() < 1) throw AdventureException("FileReader: itemname required");
 
-    std::ifstream in;
-    in.open(origin + filename);
-    if (!in) {
-        throw AdventureException("FileReader: File not Found: " + filename);
-    }
-
     json j;
-    in >> j;
-    in.close();
+    if (cache.find(filename) != cache.end()) {
+        j = cache[filename];
+    }
+    else {
+        std::ifstream in;
+        in.open(origin + filename);
+        if (!in) {
+            throw AdventureException("FileReader: File not Found: " + filename);
+        }
+        in >> j;
+        in.close();
+        cache[filename] = j;
+    }
 
     if (!j.contains(itemname)) {
         throw AdventureException("FileReader: Item not Found: \"" + itemname + "\" in File: " + filename);
@@ -54,15 +66,21 @@ std::vector<std::string> FileReader::getTitlesFromFile(std::string filename) {
     strHelp::strip(filename);
     if (filename.size() < 1) throw AdventureException("FileReader: filename required");
 
-    std::ifstream in;
-    in.open(datapath + filename);
-    if (!in) {
-        throw AdventureException("FileReader: File not Found: " + filename);
-    }
-
     json j;
-    in >> j;
-    in.close();
+    if (cache.find(filename) != cache.end()) {
+        j = cache[filename];
+    }
+    else {
+        std::ifstream in;
+        in.open(datapath + filename);
+        if (!in) {
+            throw AdventureException("FileReader: File not Found: " + filename);
+        }
+
+        in >> j;
+        in.close();
+        cache[filename] = j;
+    }
 
     std::vector<std::string> v;
     for (const auto& [k, _] : j.items()) v.push_back(k);

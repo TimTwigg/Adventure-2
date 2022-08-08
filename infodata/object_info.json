@@ -1,0 +1,346 @@
+{
+    "raw-chicken": [
+        "Category: RAW-FOOD",
+        "Value: 3",
+        "Weight: 5",
+        "Acquire: kill a chicken"
+    ],
+    "cooked-chicken": [
+        "Category: FOOD",
+        "Value: 6",
+        "Weight: 5",
+        "Nutritional Value: 25",
+        "Acquire: cook a raw-chicken"
+    ],
+    "feather": [
+        "Category: OBJECT",
+        "Value: 2",
+        "Weight: 0",
+        "Acquire: kill a chicken or bird"
+    ],
+    "raw-egg": [
+        "Category: RAW-FOOD",
+        "Value: 1",
+        "Weight: 1",
+        "Acquire: collect from chicken"
+    ],
+    "cooked-egg": [
+        "Category: FOOD",
+        "Value: 2",
+        "Weight: 1",
+        "Nutritional Value: 9",
+        "Acquire: cook a raw-egg"
+    ],
+    "raw-beef": [
+        "Category: RAW-FOOD",
+        "Value: 4",
+        "Weight: 5",
+        "Acquire: kill a cow"
+    ],
+    "cooked-beef": [
+        "Category: FOOD",
+        "Value: 8",
+        "Weight: 5",
+        "Nutritional Value: 25",
+        "Acquire: cook a raw-beef"
+    ],
+    "wet-leather": [
+        "Category: OBJECT",
+        "Value: 2",
+        "Weight: 7",
+        "Acquire: kill a cow or horse"
+    ],
+    "leather": [
+        "Category: OBJECT",
+        "Value: 4",
+        "Weight: 5",
+        "Acquire: dry wet-leather"
+    ],
+    "raw-pork": [
+        "Category: RAW-FOOD",
+        "Value: 2",
+        "Weight: 5",
+        "Acquire: kill a pig"
+    ],
+    "cooked-pork": [
+        "Category: FOOD",
+        "Value: 8",
+        "Weight: 5",
+        "Nutritional Value: 25",
+        "Acquire: cook a raw-pork"
+    ],
+    "pig-bladder": [
+        "Category: OBJECT",
+        "Value: 3",
+        "Weight: 3",
+        "Acquire: kill a pig"
+    ],
+    "raw-horse": [
+        "Category: RAW-FOOD",
+        "Value: 4",
+        "Weight: 6",
+        "Acquire: kill a horse"
+    ],
+    "cooked-horse": [
+        "Category: FOOD",
+        "Value: 8",
+        "Weight: 6",
+        "Nutritional Value: 25",
+        "Acquire: cook a raw-horse"
+    ],
+    "raw-fish": [
+        "Category: RAW-FOOD",
+        "Value: 3",
+        "Weight: 3",
+        "Acquire: kill a fish"
+    ],
+    "cooked-fish": [
+        "Category: FOOD",
+        "Value: 6",
+        "Weight: 3",
+        "Nutritional Value: 15",
+        "Acquire: cook a raw-fish"
+    ],
+    "fish-bone": [
+        "Category: OBJECT",
+        "Value: 2",
+        "Weight: 1",
+        "Acquire: kill a fish"
+    ],
+    "raw-bird": [
+        "Category: RAW-FOOD",
+        "Value: 2",
+        "Weight: 2",
+        "Acquire: kill a bird"
+    ],
+    "cooked-bird": [
+        "Category: FOOD",
+        "Value: 4",
+        "Weight: 2",
+        "Nutritional Value: 8",
+        "Acquire: cook a raw-bird"
+    ],
+    "raw-shark": [
+        "Category: RAW-FOOD",
+        "Value: 2",
+        "Weight: 4",
+        "Acquire: kill a shark"
+    ],
+    "cooked-shark": [
+        "Category: FOOD",
+        "Value: 4",
+        "Weight: 4",
+        "Nutritional Value: 15",
+        "Acquire: cook a shark"
+    ],
+    "shark-tooth": [
+        "Category: OBJECT",
+        "Value: 20",
+        "Weight: 1",
+        "Acquire: kill a shark"
+    ],
+    "raw-snake": [
+        "Category: RAW-FOOD",
+        "Value: 3",
+        "Weight: 3",
+        "Acquire: kill a snake"
+    ],
+    "cooked-snake": [
+        "Category: FOOD",
+        "Value: 6",
+        "Weight: 3",
+        "Nutritional Value: 20",
+        "Acquire: cook a raw-snake"
+    ],
+    "snake-tooth": [
+        "Category: OBJECT",
+        "Value: 10",
+        "Weight: 1",
+        "Acquire: kill a snake"
+    ],
+    "raw-mutton": [
+        "Category: RAW-FOOD",
+        "Value: 4",
+        "Weight: 5",
+        "Acquire: kill a sheep"
+    ],
+    "cooked-mutton": [
+        "Category: FOOD",
+        "Value: 8",
+        "Weight: 5",
+        "Nutritional Value: 25",
+        "Acquire: cook a raw-mutton"
+    ],
+    "wool": [
+        "Category: OBJECT",
+        "Value: 3",
+        "Weight: 2",
+        "Acquire: kill or shear a sheep"
+    ],
+    "raw-venison": [
+        "Category: RAW-FOOD",
+        "Value: 4",
+        "Weight: 5",
+        "Acquire: kill a deer"
+    ],
+    "cooked-venison": [
+        "Category: FOOD",
+        "Value: 8",
+        "Weight: 5",
+        "Nutritional Value: 25",
+        "Acquire: cook a raw-venison"
+    ],
+    "horn": [
+        "Category: OBJECT",
+        "Value: 5",
+        "Weight: 2",
+        "Acquire: kill a deer or goat"
+    ],
+    "raw-goat": [
+        "Category: RAW-FOOD",
+        "Value: 4",
+        "Weight: 5",
+        "Acquire: kill a goat"
+    ],
+    "cooked-goat": [
+        "Category: FOOD",
+        "Value: 8",
+        "Weight: 5",
+        "Nutritional Value: 25",
+        "Acquire: cook a raw-goat"
+    ],
+    "raw-lion": [
+        "Category: RAW-FOOD",
+        "Value: 3",
+        "Weight: 6",
+        "Acquire: kill a lion"
+    ],
+    "cooked-lion": [
+        "Category: FOOD",
+        "Value: 6",
+        "Weight: 6",
+        "Nutritional Value: 10",
+        "Acquire: cook a raw-lion"
+    ],
+    "raw-jaguar": [
+        "Category: RAW-FOOD",
+        "Value: 3",
+        "Weight: 6",
+        "Acquire: kill a jaguar"
+    ],
+    "cooked-jaguar": [
+        "Category: FOOD",
+        "Value: 6",
+        "Weight: 6",
+        "Nutritional Value: 10",
+        "Acquire: cook a raw-jaguar"
+    ],
+    "lion-tooth": [
+        "Category: OBJECT",
+        "Value: 15",
+        "Weight: 2",
+        "Acquire: kill a lion"
+    ],
+    "lion-fur": [
+        "Category: OBJECT",
+        "Value: 20",
+        "Weight: 9",
+        "Acquire: kill a lion"
+    ],
+    "jaguar-tooth": [
+        "Category: OBJECT",
+        "Value: 15",
+        "Weight: 2",
+        "Acquire: kill a jaguar"
+    ],
+    "jaguar-skin": [
+        "Category: OBJECT",
+        "Value: 20",
+        "Weight: 8",
+        "Acquire: kill a jaguar"
+    ],
+    "metal-ore": [
+        "Category: OBJECT",
+        "Value: 8",
+        "Weight: 10",
+        "Acquire: mine"
+    ],
+    "metal": [
+        "Category: OBJECT",
+        "Value: 10",
+        "Weight: 8",
+        "Acquire: melt metal-ore"
+    ],
+    "gold-ore": [
+        "Category: OBJECT",
+        "Value: 15",
+        "Weight: 11",
+        "Acquire: mine"
+    ],
+    "gold": [
+        "Category: OBJECT",
+        "Value: 25",
+        "Weight: 9",
+        "Acquire: melt gold-ore"
+    ],
+    "glass": [
+        "Category: OBJECT",
+        "Value: 4",
+        "Weight: 6",
+        "Acquire: melt sand"
+    ],
+    "sand": [
+        "Category: MATERIAL",
+        "Value: 1",
+        "Weight: 7",
+        "Acquire: collect from biomes"
+    ],
+    "wood": [
+        "Category: MATERIAL",
+        "Value: 2",
+        "Weight: 6",
+        "Acquire: chop trees, collect from biomes"
+    ],
+    "stone": [
+        "Category: MATERIAL",
+        "Value: 2",
+        "Weight: 10",
+        "Acquire: mine, collect from biomes"
+    ],
+    "sinew": [
+        "Category: OBJECT",
+        "Value: 4",
+        "Weight: 2",
+        "Acquire: kill a deer"
+    ],
+    "cord": [
+        "Category: OBJECT",
+        "Value: 6",
+        "Weight: 3",
+        "Acquire: dry sinew"
+    ],
+    "saddle": [
+        "Category: OBJECT",
+        "Value: 10",
+        "Weight: 18",
+        "Acquire: craft from 2 leather and 1 metal"
+    ],
+    "arrow": [
+        "Category: AMMO",
+        "Value: 3",
+        "Weight: 1",
+        "Acquire: craft from 1 wood, 1 metal, and 2 feathers"
+    ],
+    "dart": [
+        "Category: AMMO",
+        "Value: 2",
+        "Weight: 1",
+        "Acquire: craft from 1 wood and 1 feather"
+    ],
+    "blanket": [
+        "Category: OBJECT",
+        "Value: 10",
+        "Weight: 3",
+        "Acquire: craft from 3 wool"
+    ]
+}

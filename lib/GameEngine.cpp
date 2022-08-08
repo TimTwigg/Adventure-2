@@ -1,4 +1,4 @@
-// updated 6 August 2022
+// updated 7 August 2022
 
 #include <string>
 #include <memory>
@@ -20,6 +20,7 @@
 #include "StringHelpers.hpp"
 #include "StatDefaults.hpp"
 #include "TextArt.hpp"
+#include "AdventureException.hpp"
 namespace fs = std::filesystem;
 
 const std::vector<std::string> GameEngine::error_msgs = {
@@ -66,7 +67,7 @@ void GameEngine::run() {
         if (command[0] == "look" || query == "l") look();
 
         // inventory
-        else if (query == "inventory" || query == "i") inventory();
+        else if (command[0] == "inventory" || command[0] == "i") inventory();
 
         // go
         else if (command[0] == "go") go();
@@ -243,7 +244,10 @@ void GameEngine::look() {
 }
 
 void GameEngine::inventory() {
-    i->output("  Inventory      | " + player->listInventory(), configs["colors"]["info"].get<Color>());
+    if (command.size() > 1) {
+        i->output(player->inInventory(command[1]) ? "  Yes" : "  No", configs["colors"]["info"].get<Color>());
+    }
+    else i->output("  Inventory      | " + player->listInventory(), configs["colors"]["info"].get<Color>());
 }
 
 void GameEngine::go() {
@@ -435,14 +439,33 @@ void GameEngine::help() {
 void GameEngine::command_help() {
     std::string s = command[0];
     s.erase(std::remove(s.begin(), s.end(), '?'), s.end());
-    json jdata = FileReader::getFromFile("commandUses.json", s, FileReader::infodatapath);
+    json jdata;
+    try {
+        jdata = FileReader::getFromFile("commandUses.json", s, FileReader::infodatapath);
+    }
+    catch (AdventureException e) {
+        i->output("No Command Found: " + s, configs["colors"]["error"].get<Color>());
+        return;
+    }
     std::vector<std::string> data = jdata.get<std::vector<std::string>>();
     i->output("Command: " + s + "\n  Usage: " + data[0], configs["colors"]["info"].get<Color>());
     if (data.size() > 1) std::for_each(data.begin()+1, data.end(), [&](const std::string& line){i->output("  " + line, configs["colors"]["info"].get<Color>());});
 }
 
 void GameEngine::object_help() {
-
+    std::string s = command[0];
+    s.erase(s.begin());
+    json data;
+    try {
+        data = FileReader::getFromFile("object_info.json", s, FileReader::infodatapath);
+    }
+    catch (AdventureException e) {
+        i->output("No Object Found: " + s, configs["colors"]["error"].get<Color>());
+        return;
+    }
+    i->output("Object: " + s, configs["colors"]["info"].get<Color>());
+    std::vector<std::string> v = data.get<std::vector<std::string>>();
+    std::for_each(v.begin(), v.end(), [&](const std::string& str){i->output("  " + str, configs["colors"]["info"].get<Color>());});
 }
 
 void GameEngine::config() {
