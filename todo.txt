@@ -3,10 +3,12 @@ Add enemies to map biome generation
 peaceful setting
 Write GameEngine
 Test GameEngine
+look around? (list all directions)
+Binoculars allow to look two blocks across instead of one
 
 finish Civilization::setTrades() - add animals, potions, machines etc
 Add player-built buildings/stuff
-create Machine
+create Machine and machine use commands (smoke uses smoker already, need to add command for furnace)
 
 IDEA
 Refresh ht and hp completely at towns? For a price?

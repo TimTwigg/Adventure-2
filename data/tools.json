@@ -61,5 +61,26 @@
         "target" : ["builds"],
         "recipe" : {"stone" : 1},
         "weight" : 6
+    },
+    "wood-shovel" : {
+        "hitpoints" : 5,
+        "value" : 5,
+        "target" : [],
+        "recipe" : {"wood": 2},
+        "weight" : 15
+    },
+    "stone-shovel" : {
+        "hitpoints" : 10,
+        "value" : 8,
+        "target" : [],
+        "recipe" : {"wood": 1, "stone": 1},
+        "weight" : 20
+    },
+    "metal-shovel" : {
+        "hitpoints" : 20,
+        "value" : 15,
+        "target" : [],
+        "recipe" : {"wood": 1, "metal": 1},
+        "weight" : 20
     }
 }

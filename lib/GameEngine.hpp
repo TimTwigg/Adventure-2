@@ -1,4 +1,4 @@
-// updated 18 June 2022
+// updated 13 September 2022
 
 #ifndef GAMEENGINE_HPP
 #define GAMEENGINE_HPP
@@ -51,6 +51,7 @@ class GameEngine {
         void attack();
         void mine();
         void chop();
+        void dig();
         void eat();
         void drink();
         void take();

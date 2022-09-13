@@ -1,4 +1,4 @@
-// updated 7 August 2022
+// updated 13 September 2022
 
 #include <string>
 #include <memory>
@@ -89,6 +89,9 @@ void GameEngine::run() {
 
         // chop
         else if (command[0] == "chop") chop();
+
+        // dig
+        else if (command[0] == "dig") dig();
 
         // eat
         else if (command[0] == "eat") eat();
@@ -285,10 +288,57 @@ void GameEngine::attack() {
 }
 
 void GameEngine::mine() {
+    command = strHelp::reduce(command);
+    if (command.size() < 4) {
+        i->output("Incorrect command format: 'mine [what] [tool]'", configs["colors"]["error"].get<Color>());
+        return;
+    }
+    // validate target
+    std::string target = command[1] + " " + command[2];
+    if (target == "stone deposit" || target == "metal deposit" || target == "gold deposit") {
+        Location& l = map->getRef();
+        if (std::find(l.miscHere.begin(), l.miscHere.end(), target) == l.miscHere.end()) {
+            i->output("No " + target + " here to mine", configs["colors"]["error"].get<Color>());
+            return;
+        }
+    }
+    else {
+        i->output("Can't mine a " + target, configs["colors"]["error"].get<Color>());
+        return;
+    }
+    
+    // validate tool
+    std::string tool = command[3];
+    if (tool == "stone-pick" || tool == "metal-pick") {
+        if (!player->inInventory(tool)) {
+            i->output("You don't have a " + tool + " to mine with", configs["colors"]["error"].get<Color>());
+            return;
+        }
+    }
+    else {
+        i->output("You can't mine with a " + tool, configs["colors"]["error"].get<Color>());
+    }
 
+    // gold can only be mined with metal
+    if (target == "gold deposit" && tool != "metal-pick") {
+        i->output("You can only mine gold with a metal-pick", configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // drop object
+    bool unbroken = player->use(tool);
+    if (!unbroken) i->output("You broke your " + tool, configs["colors"]["output"].get<Color>());
+    Location& l = map->getRef();
+    if (target == "stone deposit") l.addThing(std::shared_ptr<Thing>(new Resource("stone")));
+    else if (target == "metal deposit") l.addThing(std::shared_ptr<Thing>(new Resource("metal")));
+    else if (target == "gold deposit") l.addThing(std::shared_ptr<Thing>(new Resource("gold")));
 }
 
 void GameEngine::chop() {
+
+}
+
+void GameEngine::dig() {
 
 }
 

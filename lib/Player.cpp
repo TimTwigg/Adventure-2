@@ -1,4 +1,4 @@
-// Updated: 5 August 2022
+// Updated: 13 September 2022
 
 #include <string>
 #include <fstream>
@@ -247,6 +247,35 @@ std::shared_ptr<Thing> Player::removeItem(std::string obj, unsigned int count) {
         }
     }
     throw AdventureException("Player::removeItem could not find item: " + obj);
+}
+
+bool Player::use(std::string tool) {
+    for (auto it = inventory.begin(); it != inventory.end(); ++it) {
+        Object* o = it->get();
+        if (o->getName() == tool) {
+            if (o->getType() == OBJCLASS::TOOL) {
+                Tool* t = static_cast<Tool*>(o);
+                t->use();
+                if (t->getUses() < 1) {
+                    inventory.erase(it);
+                    return false;
+                }
+            }
+            else if (o->getType() == OBJCLASS::WEAPON) {
+                Weapon* w = static_cast<Weapon*>(o);
+                w->use();
+                if (w->getUses() < 1) {
+                    inventory.erase(it);
+                    return false;
+                }
+            }
+            else {
+                throw AdventureException("Player::use can only use a tool or weapon");
+            }
+            return true;
+        }
+    }
+    throw AdventureException("Player::use tool/weapon not found: " + tool);
 }
 
 int Player::itemCount(std::string obj) const noexcept {
