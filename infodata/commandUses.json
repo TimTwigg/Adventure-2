@@ -41,7 +41,7 @@
         "craft *object*"
     ],
     "build": [
-        "build *machine*"
+        "build"
     ],
     "recipe": [
         "recipe *object-name*"

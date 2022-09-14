@@ -1,4 +1,4 @@
-// Updated: 5 August 2022
+// Updated: 14 September 2022
 
 #ifndef OBJECT_HPP
 #define OBJECT_HPP
@@ -13,7 +13,8 @@ enum class OBJCLASS {
     CONTAINER,
     TOOL,
     WEAPON,
-    LIQUID
+    LIQUID,
+    MACHINE
 };
 
 NLOHMANN_JSON_SERIALIZE_ENUM(OBJCLASS, {
@@ -22,7 +23,8 @@ NLOHMANN_JSON_SERIALIZE_ENUM(OBJCLASS, {
     {OBJCLASS::CONTAINER, "CONTAINER"},
     {OBJCLASS::TOOL, "TOOL"},
     {OBJCLASS::WEAPON, "WEAPON"},
-    {OBJCLASS::LIQUID, "LIQUID"}
+    {OBJCLASS::LIQUID, "LIQUID"},
+    {OBJCLASS::MACHINE, "MACHINE"}
 })
 
 class Object : public Thing {

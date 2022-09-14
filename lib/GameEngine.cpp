@@ -1,4 +1,4 @@
-// updated 13 September 2022
+// updated 14 September 2022
 
 #include <string>
 #include <memory>
@@ -13,6 +13,7 @@
 #include "Tool.hpp"
 #include "Weapon.hpp"
 #include "Container.hpp"
+#include "Machine.hpp"
 //#include "Animal.hpp"
 //#include "Enemy.hpp"
 #include "Interface.hpp"
@@ -405,7 +406,7 @@ void GameEngine::dig() {
     // drop object
     bool unbroken = player->use(tool);
     if (!unbroken) i->output("You broke your " + tool, configs["colors"]["output"].get<Color>());
-    if (l.biome == "desert" || l.biome == "island") l.addThing(std::shared_ptr<Thing>(new Resource("sand")));
+    if (l.biome == "Desert" || l.biome == "Island") l.addThing(std::shared_ptr<Thing>(new Resource("sand")));
     else l.addThing(std::shared_ptr<Thing>(new Resource("dirt")));
 
     player->passTime(60);
@@ -494,14 +495,14 @@ void GameEngine::craft() {
 
     // validate type
     std::string type = command[1];
-    if (type != "object" && type != "tool" && type != "weapon" && type != "container") {
-        i->output("Type must be object/tool/weapon/container", configs["colors"]["error"].get<Color>());
+    if (type != "object" && type != "tool" && type != "weapon" && type != "container" && type != "machine") {
+        i->output("Type must be object/tool/weapon/container/machine", configs["colors"]["error"].get<Color>());
         return;
     }
 
-    // check that they have a crafting-bench
+    // check that they have a crafting-bench unless that's what they're crafting
     std::string target = command[2];
-    if (!player->inInventory("crafting-bench")) {
+    if (!player->inInventory("crafting-bench") && target != "crafting-bench") {
         i->output("You need a crafting-bench to craft!", configs["colors"]["error"].get<Color>());
         return;
     }
@@ -537,6 +538,7 @@ void GameEngine::craft() {
     else if (type == "weapon") player->addItem(OBJCLASS::WEAPON, target);
     else if (type == "tool") player->addItem(OBJCLASS::TOOL, target);
     else if (type == "container") player->addItem(OBJCLASS::CONTAINER, target);
+    else if (type == "machine") player->addItem(OBJCLASS::MACHINE, target);
 
     player->passTime(30);
     player->reduceHT(2, 1);

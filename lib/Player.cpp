@@ -1,4 +1,4 @@
-// Updated: 13 September 2022
+// Updated: 14 September 2022
 
 #include <string>
 #include <fstream>
@@ -15,6 +15,7 @@
 #include "CResource.hpp"
 #include "Tool.hpp"
 #include "Weapon.hpp"
+#include "Machine.hpp"
 #include "Formulae.hpp"
 #include "StringHelpers.hpp"
 #include "json.hpp"
@@ -86,6 +87,7 @@ Player* Player::load(const std::string& path) {
         else if (s.substr(0, 9) == "CONTAINER") player->inventory.push_back(std::shared_ptr<Object>(Container::fromString(s)));
         else if (s.substr(0, 4) == "TOOL") player->inventory.push_back(std::shared_ptr<Object>(Tool::fromString(s)));
         else if (s.substr(0, 6) == "WEAPON") player->inventory.push_back(std::shared_ptr<Object>(Weapon::fromString(s)));
+        else if (s.substr(0, 7) == "MACHINE") player->inventory.push_back(std::shared_ptr<Object>(Machine::fromString(s)));
         else throw AdventureException("Player::Player(const std::string& savepath) (" + path + ") Unrecognized inventory string: " + s);
     });
 
@@ -221,6 +223,9 @@ void Player::addItem(OBJCLASS objClass, std::string obj, unsigned int count) {
             break;
         case OBJCLASS::WEAPON:
             for (int i = 0; i < count; ++i) inventory.push_back(std::shared_ptr<Object>(new Weapon(obj)));
+            break;
+        case OBJCLASS::MACHINE:
+            inventory.push_back(std::shared_ptr<Object>(new Machine(obj)));
             break;
         default:
             throw AdventureException("Player::addItem invalid OBJCLASS");

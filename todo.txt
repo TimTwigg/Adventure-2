@@ -5,13 +5,12 @@ Write GameEngine
 Test GameEngine
 look around? (list all directions)
 Binoculars allow to look two blocks across instead of one
-create Machine and machine use commands (smoke uses smoker already, need to add command for furnace)
-test craft command
 
 finish Civilization::setTrades() - add animals, potions, machines etc
 Add player-built buildings/stuff
 chopping trees removes them if not in forest?
 crafting things like ammo crafts more than 1
+Add machine use commands (smoke uses smoker already, need to add command for furnace)
 
 IDEA
 Refresh ht and hp completely at towns? For a price?

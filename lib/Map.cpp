@@ -1,4 +1,4 @@
-// updated 5 August 2022
+// updated 14 September 2022
 
 #include <map>
 #include <vector>
@@ -19,6 +19,7 @@
 #include "Resource.hpp"
 #include "Tool.hpp"
 #include "Weapon.hpp"
+#include "Machine.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
 namespace fs = std::filesystem;
@@ -88,6 +89,7 @@ Location::Location(const std::string& biome, json here) : biome{biome} {
             else if (type == "RESOURCE") thingsHere.push_back(std::shared_ptr<Thing>(Resource::fromString(code)));
             else if (type == "TOOL") thingsHere.push_back(std::shared_ptr<Thing>(Tool::fromString(code)));
             else if (type == "WEAPON") thingsHere.push_back(std::shared_ptr<Thing>(Weapon::fromString(code)));
+            else if (type == "MACHINE") thingsHere.push_back(std::shared_ptr<Thing>(Machine::fromString(code)));
             else miscHere.push_back(code);
         }
     }
