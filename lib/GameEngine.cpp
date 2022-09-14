@@ -333,6 +333,9 @@ void GameEngine::mine() {
     if (target == "stone deposit") l.addThing(std::shared_ptr<Thing>(new Resource("stone")));
     else if (target == "metal deposit") l.addThing(std::shared_ptr<Thing>(new Resource("metal")));
     else if (target == "gold deposit") l.addThing(std::shared_ptr<Thing>(new Resource("gold")));
+
+    player->passTime(60);
+    player->reduceHT(3, 1);
 }
 
 void GameEngine::chop() {
@@ -367,6 +370,9 @@ void GameEngine::chop() {
     bool unbroken = player->use(tool);
     if (!unbroken) i->output("You broke your " + tool, configs["colors"]["output"].get<Color>());
     l.addThing(std::shared_ptr<Thing>(new Resource("wood")));
+
+    player->passTime(60);
+    player->reduceHT(3, 1);
 }
 
 void GameEngine::dig() {
@@ -401,6 +407,9 @@ void GameEngine::dig() {
     if (!unbroken) i->output("You broke your " + tool, configs["colors"]["output"].get<Color>());
     if (l.biome == "desert" || l.biome == "island") l.addThing(std::shared_ptr<Thing>(new Resource("sand")));
     else l.addThing(std::shared_ptr<Thing>(new Resource("dirt")));
+
+    player->passTime(60);
+    player->reduceHT(3, 1);
 }
 
 void GameEngine::eat() {
@@ -477,7 +486,60 @@ void GameEngine::trade() {
 }
 
 void GameEngine::craft() {
+    command = strHelp::reduce(command);
+    if (command.size() < 3) {
+        i->output("Incorrect command format: craft [type] [to-craft]", configs["colors"]["error"].get<Color>());
+        return;
+    }
 
+    // validate type
+    std::string type = command[1];
+    if (type != "object" && type != "tool" && type != "weapon" && type != "container") {
+        i->output("Type must be object/tool/weapon/container", configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // check that they have a crafting-bench
+    std::string target = command[2];
+    if (!player->inInventory("crafting-bench")) {
+        i->output("You need a crafting-bench to craft!", configs["colors"]["error"].get<Color>());
+        return;
+    }
+    // validate target
+    std::string file;
+    if (type == "object") file = "craftableResources.json";
+    else file = type + "s.json";
+    json data;
+    try {
+        data = FileReader::getFromFile(file, target);
+    }
+    catch (AdventureException e) {
+        i->output("No such " + type + ": " + target, configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // validate that they have all the needed parts
+    std::map<std::string, int> recipe = data["recipe"].get<std::map<std::string, int>>();
+    for (auto& [k,v] : recipe) {
+        if (!player->inInventory(k, v)) {
+            i->output("You don't have enough " + k, configs["colors"]["error"].get<Color>());
+            return;
+        }
+    }
+
+    // remove the parts
+    for (auto& [k,v] : recipe) {
+        player->removeItem(k, v);
+    }
+
+    // add crafted item
+    if (type == "object") player->addItem(OBJCLASS::CRESOURCE, target);
+    else if (type == "weapon") player->addItem(OBJCLASS::WEAPON, target);
+    else if (type == "tool") player->addItem(OBJCLASS::TOOL, target);
+    else if (type == "container") player->addItem(OBJCLASS::CONTAINER, target);
+
+    player->passTime(30);
+    player->reduceHT(2, 1);
 }
 
 void GameEngine::build() {

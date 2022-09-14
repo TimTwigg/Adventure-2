@@ -55,6 +55,9 @@
     "mine": [
         "mine *type* *tool*"
     ],
+    "dig": [
+        "dig *tool*"
+    ],
     "fill": [
         "fill *container* *liquid* *source*"
     ],
