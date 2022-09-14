@@ -9,6 +9,7 @@ Binoculars allow to look two blocks across instead of one
 finish Civilization::setTrades() - add animals, potions, machines etc
 Add player-built buildings/stuff
 create Machine and machine use commands (smoke uses smoker already, need to add command for furnace)
+chopping trees removes them if not in forest?
 
 IDEA
 Refresh ht and hp completely at towns? For a price?

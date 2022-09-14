@@ -293,6 +293,7 @@ void GameEngine::mine() {
         i->output("Incorrect command format: 'mine [what] [tool]'", configs["colors"]["error"].get<Color>());
         return;
     }
+
     // validate target
     std::string target = command[1] + " " + command[2];
     if (target == "stone deposit" || target == "metal deposit" || target == "gold deposit") {
@@ -335,11 +336,71 @@ void GameEngine::mine() {
 }
 
 void GameEngine::chop() {
+    command = strHelp::reduce(command);
+    if (command.size() < 3) {
+        i->output("Incorrect command format: 'chop [what] [tool]'", configs["colors"]["error"].get<Color>());
+        return;
+    }
 
+    // validate target
+    std::string target = command[1];
+    Location& l = map->getRef();
+    if (target != "trees" || std::find(l.miscHere.begin(), l.miscHere.end(), "trees") == l.miscHere.end()) {
+        i->output("No " + target + " to chop down here", configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // validate tool
+    std::string tool = command[2];
+    if (tool == "wood-axe" || tool == "stone-axe" || tool == "metal-axe") {
+        if (!player->inInventory(tool)) {
+            i->output("You don't have a " + tool, configs["colors"]["error"].get<Color>());
+            return;
+        }
+    }
+    else {
+        i->output("You can't chop " + target + " with a " + tool, configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // drop object
+    bool unbroken = player->use(tool);
+    if (!unbroken) i->output("You broke your " + tool, configs["colors"]["output"].get<Color>());
+    l.addThing(std::shared_ptr<Thing>(new Resource("wood")));
 }
 
 void GameEngine::dig() {
+    command = strHelp::reduce(command);
+    if (command.size() < 2) {
+        i->output("Incorrect command format: 'dig [tool]'", configs["colors"]["error"].get<Color>());
+        return;
+    }
 
+    // validate target
+    Location& l = map->getRef();
+    if (l.biome == "ocean" || l.biome == "mountain" || l.biome == "river") {
+        i->output("You can't dig in a " + l.biome, configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // validate tool
+    std::string tool = command[1];
+    if (tool == "wood-shovel" || tool == "stone-shovel" || tool == "metal-shovel") {
+        if (!player->inInventory(tool)) {
+            i->output("You don't have a " + tool, configs["colors"]["error"].get<Color>());
+            return;
+        }
+    }
+    else {
+        i->output("You can't dig with a " + tool, configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // drop object
+    bool unbroken = player->use(tool);
+    if (!unbroken) i->output("You broke your " + tool, configs["colors"]["output"].get<Color>());
+    if (l.biome == "desert" || l.biome == "island") l.addThing(std::shared_ptr<Thing>(new Resource("sand")));
+    else l.addThing(std::shared_ptr<Thing>(new Resource("dirt")));
 }
 
 void GameEngine::eat() {

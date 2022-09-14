@@ -319,6 +319,12 @@
         "Weight: 3",
         "Acquire: dry sinew"
     ],
+    "dirt": [
+        "Category: OBJECT",
+        "Value: 1",
+        "Weight: 5",
+        "Acquire: dig in dirt biomes"
+    ],
     "saddle": [
         "Category: OBJECT",
         "Value: 10",

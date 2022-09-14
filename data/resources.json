@@ -304,5 +304,11 @@
         "value": 6,
         "weight": 3,
         "general1": 0
+    },
+    "dirt": {
+        "category": "OBJECT",
+        "value": 1,
+        "weight": 5,
+        "general1": 0
     }
 }
