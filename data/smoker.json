@@ -1,0 +1,18 @@
+{
+    "raw-chicken" : "cooked-chicken",
+    "raw-beef" : "cooked-beef",
+    "raw-egg" : "cooked-egg",
+    "raw-pork" : "cooked-pork",
+    "raw-horse" : "cooked-horse",
+    "raw-fish" : "cooked-fish",
+    "raw-bird" : "cooked-bird",
+    "raw-shark" : "cooked-shark",
+    "raw-snake" : "cooked-snake",
+    "raw-mutton" : "cooked-mutton",
+    "raw-venison" : "cooked-venison",
+    "raw-goat" : "cooked-goat",
+    "raw-lion" : "cooked-lion",
+    "raw-jaguar" : "cooked-jaguar",
+    "wet-leather" : "leather",
+    "sinew" : "cord"
+}

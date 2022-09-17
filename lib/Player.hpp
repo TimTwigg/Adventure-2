@@ -1,4 +1,4 @@
-// Updated: 13 September 2022
+// Updated: 17 September 2022
 
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
@@ -33,8 +33,9 @@ class Player {
         // inventory
         bool inInventory(std::string obj, unsigned int count = 1) const noexcept;
         void addItem(OBJCLASS objClass, std::string obj, unsigned int count = 1);
+        void addItem(std::string code);
         // removes the item from inventory and returns it
-        std::shared_ptr<Thing> removeItem(std::string obj, unsigned int count = 1);
+        std::shared_ptr<Object> removeItem(std::string obj, unsigned int count = 1);
         // uses a tool or weapon by removing a hitpoint from it
         // returns false if the tool is broken
         bool use(std::string tool);

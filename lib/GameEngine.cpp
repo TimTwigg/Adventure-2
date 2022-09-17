@@ -414,7 +414,35 @@ void GameEngine::dig() {
 }
 
 void GameEngine::eat() {
+    command = strHelp::reduce(command);
+    if (command.size() < 2) {
+        i->output("Eat what?", configs["colors"]["error"].get<Color>());
+        return;
+    }
+    // validate that they have the item
+    std::string target = command[1];
+    if (!player->inInventory(target)) {
+        i->output("You don't have a " + target, configs["colors"]["error"].get<Color>());
+        return;
+    }
 
+    // validate that it is a resource
+    std::shared_ptr<Object> obj = player->removeItem(target);
+    if (obj->getType() != OBJCLASS::RESOURCE) {
+        i->output("You can't eat a " + obj->getName(), configs["colors"]["error"].get<Color>());
+        player->addItem(obj->operator std::string());
+        return;
+    }
+    // validate that it is edible
+    Resource* r = static_cast<Resource*>(obj.get());
+    if (!(r->getCategory() == Category::FOOD || r->getCategory() == Category::RAW_FOOD)) {
+        i->output("You can't eat a " + obj->getName(), configs["colors"]["error"].get<Color>());
+        player->addItem(obj->operator std::string());
+        return;
+    }
+
+    int hunger = r->getNutValue();
+    player->eat(hunger);
 }
 
 void GameEngine::drink() {
@@ -558,7 +586,67 @@ void GameEngine::recipe() {
 }
 
 void GameEngine::smoke() {
+    command = strHelp::reduce(command);
+    if (command.size() < 2) {
+        i->output("Smoke what?", configs["colors"]["error"].get<Color>());
+        return;
+    }
 
+    // check that they have fuel
+    if (!player->inInventory("wood")) {
+        i->output("You need fuel to use the smoker", configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // validate target
+    std::string target = command[1];
+    if (!player->inInventory(target)) {
+        i->output("You don't have a " + target + " to smoke", configs["colors"]["error"].get<Color>());
+        return;
+    }
+    // validate that target is smokable
+    std::string output;
+    try {
+        output = FileReader::getFromFile("smoker.json", target).get<std::string>();
+    }
+    catch (AdventureException e) {
+        i->output("You can't smoke a " + target, configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // smoke multiple items at once
+    if (command.size() > 2 && command[2] == "all") {
+        int count = player->itemCount(target);
+        int fuelNeeded = std::ceil(static_cast<float>(count) / DEFAULTS::smoker_items_per_wood);
+        if (!player->inInventory("wood", fuelNeeded)) {
+            // not enough fuel for all
+            i->output("Not enough wood", configs["colors"]["error"].get<Color>());
+            fuelNeeded = player->itemCount("wood");
+            player->addItem(OBJCLASS::RESOURCE, output, fuelNeeded*DEFAULTS::smoker_items_per_wood);
+            player->removeItem("wood", fuelNeeded);
+            player->removeItem(target, fuelNeeded*DEFAULTS::smoker_items_per_wood);
+            player->passTime(DEFAULTS::smoker_wood_burn_time*fuelNeeded);
+            player->reduceHT(fuelNeeded, fuelNeeded);
+            i->output("Smoked " + std::to_string(fuelNeeded*DEFAULTS::smoker_items_per_wood) + " " + target, configs["colors"]["info"].get<Color>());
+        }
+        else {
+            // enough fuel
+            player->addItem(OBJCLASS::RESOURCE, output, count);
+            player->removeItem("wood", fuelNeeded);
+            player->removeItem(target, count);
+            player->passTime(DEFAULTS::smoker_wood_burn_time*fuelNeeded);
+            player->reduceHT(fuelNeeded, fuelNeeded);
+            i->output("Smoked " + std::to_string(count) + " " + target, configs["colors"]["info"].get<Color>());
+        }
+    }
+    else {
+        player->addItem(OBJCLASS::RESOURCE, output);
+        player->removeItem("wood");
+        player->removeItem(target);
+        player->passTime(DEFAULTS::smoker_wood_burn_time);
+        player->reduceHT(1, 1);
+        i->output("Smoked " + target, configs["colors"]["info"].get<Color>());
+    }    
 }
 
 void GameEngine::sleep() {

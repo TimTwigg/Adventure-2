@@ -1,4 +1,4 @@
-// Updated: 5 August 2022
+// Updated: 17 September 2022
 
 #ifndef STATDEFAULTS_HPP
 #define STATDEFAULTS_HPP
@@ -22,6 +22,8 @@ namespace DEFAULTS {
     const float stat_level_no_bonus = 1.1;
     const unsigned int xp_per_level = 100;
     const unsigned int travel_time = 240;
+    const unsigned int smoker_items_per_wood = 4;
+    const unsigned int smoker_wood_burn_time = 60;
 }
 
 #endif

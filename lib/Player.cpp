@@ -1,4 +1,4 @@
-// Updated: 14 September 2022
+// Updated: 17 September 2022
 
 #include <string>
 #include <fstream>
@@ -21,8 +21,6 @@
 #include "json.hpp"
 using json = nlohmann::json;
 namespace fs = std::filesystem;
-
-#include <iostream>
 
 // names of data contents whose values are not numeric
 std::vector<std::string> Player::INVALID_STAT_NAMES{"skillset", "ratios"};
@@ -233,7 +231,17 @@ void Player::addItem(OBJCLASS objClass, std::string obj, unsigned int count) {
     }
 }
 
-std::shared_ptr<Thing> Player::removeItem(std::string obj, unsigned int count) {
+void Player::addItem(std::string code) {
+    if (code.substr(0, 8) == "RESOURCE") inventory.push_back(std::shared_ptr<Object>(Resource::fromString(code)));
+    else if (code.substr(0, 9) == "CRESOURCE") inventory.push_back(std::shared_ptr<Object>(CResource::fromString(code)));
+    else if (code.substr(0, 9) == "CONTAINER") inventory.push_back(std::shared_ptr<Object>(Container::fromString(code)));
+    else if (code.substr(0, 4) == "TOOL") inventory.push_back(std::shared_ptr<Object>(Tool::fromString(code)));
+    else if (code.substr(0, 6) == "WEAPON") inventory.push_back(std::shared_ptr<Object>(Weapon::fromString(code)));
+    else if (code.substr(0, 7) == "MACHINE") inventory.push_back(std::shared_ptr<Object>(Machine::fromString(code)));
+    else throw AdventureException("Player::addItem Unrecognized inventory string: " + code);
+}
+
+std::shared_ptr<Object> Player::removeItem(std::string obj, unsigned int count) {
     for (auto it = inventory.begin(); it != inventory.end(); ++it) {
         Object* o = it->get();
         if (o->getName() == obj) {
@@ -242,13 +250,14 @@ std::shared_ptr<Thing> Player::removeItem(std::string obj, unsigned int count) {
                 if (r->getCount() >= count) {
                     r->remove(count);
                     if (r->getCount() < 1) inventory.erase(it);
-                    if (r->getType() == OBJCLASS::RESOURCE) return std::shared_ptr<Thing>(new Resource(r->getName(), count));
-                    else return std::shared_ptr<Thing>(new CResource(r->getName(), count));
+                    if (r->getType() == OBJCLASS::RESOURCE) return std::shared_ptr<Object>(new Resource(r->getName(), count));
+                    else return std::shared_ptr<Object>(new CResource(r->getName(), count));
                 }
                 else throw AdventureException("Player::removeItem not enough to remove: " + obj + " " + std::to_string(count));
             }
-            else inventory.erase(it);
-            return *it;
+            std::shared_ptr<Object> out = *it;
+            inventory.erase(it);
+            return out;
         }
     }
     throw AdventureException("Player::removeItem could not find item: " + obj);
