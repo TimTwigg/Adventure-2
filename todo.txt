@@ -11,6 +11,7 @@ Add player-built buildings/stuff
 chopping trees removes them if not in forest?
 crafting things like ammo crafts more than 1
 Add machine use commands (smoke uses smoker already, need to add command for furnace)
+finish object_info.json - fill in blanks marked by "@@@"
 
 IDEA
 Refresh ht and hp completely at towns? For a price?

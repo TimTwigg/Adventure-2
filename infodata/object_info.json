@@ -348,5 +348,232 @@
         "Value: 10",
         "Weight: 3",
         "Acquire: craft from 3 wool"
+    ],
+    "bucket": [
+        "Category: CONTAINER",
+        "Liquid Count: 3",
+        "Value: 12",
+        "Weight: 6",
+        "Acquire: craft from 1 metal"
+    ],
+    "bottle": [
+        "Category: CONTAINER",
+        "Liquid Count: 2",
+        "Value: 6",
+        "Weight: 4",
+        "Acquire: craft from 1 glass"
+    ],
+    "vial": [
+        "Category: CONTAINER",
+        "Liquid Count: 1",
+        "Value: 6",
+        "Weight: 1",
+        "Acquire: craft from 1 glass"
+    ],
+    "furnace": [
+        "Category: MACHINE",
+        "Value: 20",
+        "Weight: 40",
+        "Acquire: craft from 3 stone and 1 metal",
+        "Requires fuel"
+    ],
+    "smoker": [
+        "Category: MACHINE",
+        "Value: 20",
+        "Weight: 28",
+        "Acquire: craft from 4 wood",
+        "Requires fuel"
+    ],
+    "crafting-bench": [
+        "Category: MACHINE",
+        "Value: 10",
+        "Weight: 14",
+        "Acquire: craft from 2 wood"
+    ],
+    "milk": [
+        "Category: LIQUID",
+        "Value: 3",
+        "Weight: 3",
+        "Acquire: milk a cow",
+        "Hunger: 3",
+        "Thirst: 3",
+        "HP: 25"
+    ],
+    "water": [
+        "Category: LIQUID",
+        "Value: 0",
+        "Weight: 3",
+        "Acquire: get from a river",
+        "Hunger: 0",
+        "Thirst: 4",
+        "HP: 25"
+    ],
+    "medicine": [
+        "Category: LIQUID",
+        "Value: 15",
+        "Weight: 2",
+        "Acquire: @@@",
+        "Hunger: 0",
+        "Thirst: 0",
+        "HP: 500"
+    ],
+    "protein-shake": [
+        "Category: LIQUID",
+        "Value: 15",
+        "Weight: 3",
+        "Acquire: @@@",
+        "Hunger: 20",
+        "Thirst: 5",
+        "HP: 50"
+    ],
+    "shears": [
+        "Category: TOOL",
+        "Value: 12",
+        "Weight: 6",
+        "Acquire: craft from 1 metal",
+        "Uses: 10"
+    ],
+    "stone-pick": [
+        "Category: TOOL",
+        "Value: 10",
+        "Weight: 20",
+        "Acquire: craft from 1 wood and 2 stone",
+        "Uses: 20"
+    ],
+    "metal-pick": [
+        "Category: TOOL",
+        "Value: 25",
+        "Weight: 20",
+        "Acquire: craft from 1 wood and 2 metal",
+        "Uses: 40"
+    ],
+    "stone-axe": [
+        "Category: TOOL",
+        "Value: 8",
+        "Weight: 20",
+        "Acquire: craft from 1 wood and 1 stone",
+        "Uses: 10"
+    ],
+    "metal-axe": [
+        "Category: TOOL",
+        "Value: 15",
+        "Weight: 20",
+        "Acquire: craft from 1 wood and 1 metal",
+        "Uses: 20"
+    ],
+    "wood-axe": [
+        "Category: TOOL",
+        "Value: 5",
+        "Weight: 15",
+        "Acquire: craft from 2 wood",
+        "Uses: 5"
+    ],
+    "binoculars": [
+        "Category: TOOL",
+        "Value: 17",
+        "Weight: 4",
+        "Acquire: craft from 1 glass and 1 metal"
+    ],
+    "hammer": [
+        "Category: TOOL",
+        "Value: 4",
+        "Weight: 6",
+        "Acquire: craft from 1 stone",
+        "Uses: 10"
+    ],
+    "wood-shovel": [
+        "Category: TOOL",
+        "Value: 5",
+        "Weight: 15",
+        "Acquire: craft from 2 wood",
+        "Uses: 5"
+    ],
+    "stone-shovel": [
+        "Category: TOOL",
+        "Value: 8",
+        "Weight: 20",
+        "Acquire: craft from 1 wood and 1 stone",
+        "Uses: 10"
+    ],
+    "metal-shovel": [
+        "Category: TOOL",
+        "Value: 15",
+        "Weight: 20",
+        "Acquire: craft from 1 wood and 1 metal",
+        "Uses: 20"
+    ],
+    "wood-spear": [
+        "Category: WEAPON",
+        "Value: 3",
+        "Weight: 10",
+        "Acquire: craft from 2 wood",
+        "Uses: 10",
+        "Melee damage ratio: 0.75",
+        "Ranged damage ratio: 0"
+    ],
+    "stone-spear": [
+        "Category: WEAPON",
+        "Value: 6",
+        "Weight: 12",
+        "Acquire: craft from 1 wood and 1 stone",
+        "Uses: 15",
+        "Melee damage ratio: 1",
+        "Ranged damage ratio: 0"
+    ],
+    "metal-spear": [
+        "Category: WEAPON",
+        "Value: 13",
+        "Weight: 15",
+        "Acquire: craft from 1 wood and 1 metal",
+        "Uses: 20",
+        "Melee damage ratio: 1.5",
+        "Ranged damage ratio: 0"
+    ],
+    "wood-sword": [
+        "Category: WEAPON",
+        "Value: 7",
+        "Weight: 12",
+        "Acquire: craft from 3 wood",
+        "Uses: 15",
+        "Melee damage ratio: 0.75",
+        "Ranged damage ratio: 0"
+    ],
+    "stone-sword": [
+        "Category: WEAPON",
+        "Value: 20",
+        "Weight: 15",
+        "Acquire: craft from 1 wood and 2 stone",
+        "Uses: 20",
+        "Melee damage ratio: 1",
+        "Ranged damage ratio: 0"
+    ],
+    "metal-sword": [
+        "Category: WEAPON",
+        "Value: 25",
+        "Weight: 18",
+        "Acquire: craft from 1 wood and 2 metal",
+        "Uses: 35",
+        "Melee damage ratio: 2",
+        "Ranged damage ratio: 0"
+    ],
+    "bow": [
+        "Category: WEAPON",
+        "Value: 10",
+        "Weight: 8",
+        "Acquire: craft from 1 wood and 1 string",
+        "Uses: 20",
+        "Melee damage ratio: 0",
+        "Ranged damage ratio: 2",
+        "Ammo type: arrow"
+    ],
+    "dart-gun": [
+        "Category: WEAPON",
+        "Value: 7",
+        "Weight: 6",
+        "Acquire: craft from 1 wood",
+        "Uses: 50",
+        "Melee damage ratio: 0",
+        "Ranged damage ratio: 1",
+        "Ammo type: dart"
     ]
 }

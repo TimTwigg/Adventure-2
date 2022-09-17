@@ -7,9 +7,9 @@
     },
     "smoker" : {
         "requires" : ["wood"],
-        "value" : 10,
-        "weight": 14,
-        "recipe" : {"wood" : 2}
+        "value" : 20,
+        "weight": 28,
+        "recipe" : {"wood" : 4}
     },
     "crafting-bench" : {
         "requires" : [],

@@ -56,7 +56,7 @@
         "weight" : 4
     },
     "hammer" : {
-        "hitpoints" : 25,
+        "hitpoints" : 10,
         "value" : 4,
         "target" : ["builds"],
         "recipe" : {"stone" : 1},

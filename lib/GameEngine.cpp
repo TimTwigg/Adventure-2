@@ -1,4 +1,4 @@
-// updated 14 September 2022
+// updated 17 September 2022
 
 #include <string>
 #include <memory>
@@ -504,6 +504,11 @@ void GameEngine::craft() {
     std::string target = command[2];
     if (!player->inInventory("crafting-bench") && target != "crafting-bench") {
         i->output("You need a crafting-bench to craft!", configs["colors"]["error"].get<Color>());
+        return;
+    }
+    // check that they have a hammer if crafting a machine
+    if (type == "machine" && !player->inInventory("hammer")) {
+        i->output("You need a hammer to craft a machine!", configs["colors"]["error"].get<Color>());
         return;
     }
     // validate target
