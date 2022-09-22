@@ -1,4 +1,4 @@
-// updated 17 June 2022
+// updated 22 September 2022
 
 #include <string>
 #include <sstream>
@@ -33,6 +33,10 @@ Container::operator std::string() const noexcept {
     return "CONTAINER, " + name + ", " + static_cast<std::string>(content) + ", " + std::to_string(amount);
 }
 
+std::string Container::printString() const noexcept {
+    return (getContentName() == "empty") ? "empty " + name : name + " of " + getContentName();
+}
+
 int Container::getWeight() const noexcept {
     return weight + content.getWeight() * amount;
 }
@@ -52,6 +56,7 @@ Liquid Container::getContent() const noexcept {
 void Container::reduce() {
     if (amount < 1) throw AdventureException("Container::reduce container already empty");
     --amount;
+    if (amount < 1) empty();
 }
 
 void Container::empty() noexcept {
@@ -75,4 +80,8 @@ Container* Container::fromString(const std::string& code) {
     c->amount = amount;
 
     return c;
+}
+
+std::string Container::getContentName() const noexcept {
+    return content.getName();
 }

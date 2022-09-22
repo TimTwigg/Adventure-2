@@ -5,6 +5,8 @@ Write GameEngine
 Test GameEngine
 look around? (list all directions)
 Binoculars allow to look two blocks across instead of one
+Replace Liquid class with enum class in Container.hpp
+Container enable set amount
 
 finish Civilization::setTrades() - add animals, potions, machines etc
 Add player-built buildings/stuff

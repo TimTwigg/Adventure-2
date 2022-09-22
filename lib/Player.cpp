@@ -1,4 +1,4 @@
-// Updated: 17 September 2022
+// Updated: 22 September 2022
 
 #include <string>
 #include <fstream>
@@ -194,6 +194,19 @@ bool Player::inInventory(std::string obj, unsigned int count) const noexcept {
     return false;
 }
 
+bool Player::inInventory(std::string container, std::string liquid) const noexcept {
+    for (auto it = inventory.begin(); it != inventory.end(); ++it) {
+        Object* o = it->get();
+        if (o->getName() == container) {
+            Container* c = static_cast<Container*>(o);
+            if (c->getContentName() == liquid) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 void Player::addItem(OBJCLASS objClass, std::string obj, unsigned int count) {
     if (objClass == OBJCLASS::RESOURCE) {
         for (auto it = inventory.begin(); it != inventory.end(); ++it) {
@@ -261,6 +274,22 @@ std::shared_ptr<Object> Player::removeItem(std::string obj, unsigned int count) 
         }
     }
     throw AdventureException("Player::removeItem could not find item: " + obj);
+}
+
+std::shared_ptr<Object> Player::removeContainer(std::string obj, std::string content) {
+    std::shared_ptr<Object> out;
+    for (auto it = inventory.begin(); it != inventory.end(); ++it) {
+        Object* o = it->get();
+        if (o->getName() == obj) {
+            Container* c = static_cast<Container*>(o);
+            if (c->getContentName() == content) {
+                out = *it;
+                inventory.erase(it);
+                return out;
+            }
+        }
+    }
+    throw AdventureException("Player::removeContainer could not find container with specified liquid: " + obj + " of " + content);
 }
 
 bool Player::use(std::string tool) {

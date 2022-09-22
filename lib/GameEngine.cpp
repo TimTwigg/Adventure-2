@@ -1,4 +1,4 @@
-// updated 17 September 2022
+// updated 22 September 2022
 
 #include <string>
 #include <memory>
@@ -446,7 +446,70 @@ void GameEngine::eat() {
 }
 
 void GameEngine::drink() {
+    command = strHelp::reduce(command);
+    if (command.size() < 3) {
+        i->output("Incorrect Command Format: drink [liquid] [source]", configs["colors"]["error"].get<Color>());
+        return;
+    }
 
+    std::string liq = command[1];
+    std::string source = command[2];
+
+    // validate liq is drinkable
+    std::vector<std::string> liquidNames = FileReader::getTitlesFromFile("liquids.json");
+    if (liq == "empty" || std::find(liquidNames.begin(), liquidNames.end(), liq) == liquidNames.end()) {
+        i->output("You can't drink " + liq, configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // validate source
+    if (source == "river") {
+        Location& l = map->getRef();
+        if (l.biome != "River" && std::find(l.miscHere.begin(), l.miscHere.end(), "river") == l.miscHere.end()) {
+            i->output("No rivers here", configs["colors"]["error"].get<Color>());
+            return;
+        }
+        else if (liq != "water") {
+            i->output("There's no river of " + liq + " here", configs["colors"]["error"].get<Color>());
+            return;
+        }
+    }
+    
+    else if (source == "ocean") {
+        Location& l = map->getRef();
+        if (l.biome != "Ocean") {
+            i->output("You're not in the ocean!", configs["colors"]["error"].get<Color>());
+            return;
+        }
+        i->output("That would make you sick", configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    else {
+        // source is a container
+        std::vector<std::string> containers = FileReader::getTitlesFromFile("containers.json");
+        if (std::find(containers.begin(), containers.end(), source) == containers.end()) {
+            i->output("You can't drink " + liq + " from a " + source, configs["colors"]["error"].get<Color>());
+            return;
+        }
+        // check player has container
+        if (!player->inInventory(source, liq)) {
+            i->output("You don't have a " + source + " of " + liq, configs["colors"]["error"].get<Color>());
+            return;
+        }
+
+        std::shared_ptr<Object> con = player->removeContainer(source, liq);
+        Container* c = static_cast<Container*>(con.get());
+        c->reduce();
+        player->addItem(c->operator std::string());
+    }
+
+    json liquids = FileReader::readFile("liquids.json");
+    json theLiq = liquids[liq];
+    player->eat(theLiq["hunger"].get<int>());
+    player->drink(theLiq["thirst"].get<int>());
+    player->heal(theLiq["hp"].get<int>());
+    i->output("You drank " + liq + " from the " + source, configs["colors"]["info"].get<Color>());
 }
 
 void GameEngine::take() {

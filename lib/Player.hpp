@@ -1,4 +1,4 @@
-// Updated: 17 September 2022
+// Updated: 22 September 2022
 
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
@@ -32,10 +32,14 @@ class Player {
         // if it is a resource. If it is not a resource, returns true if the object is in the
         // inventory
         bool inInventory(std::string obj, unsigned int count = 1) const noexcept;
+        // returns true if a container with the correct liquid is in the player's inventory
+        bool inInventory(std::string container, std::string liquid) const noexcept;
         void addItem(OBJCLASS objClass, std::string obj, unsigned int count = 1);
         void addItem(std::string code);
         // removes the item from inventory and returns it
         std::shared_ptr<Object> removeItem(std::string obj, unsigned int count = 1);
+        // removes the appropriate container
+        std::shared_ptr<Object> removeContainer(std::string obj, std::string content = "empty");
         // uses a tool or weapon by removing a hitpoint from it
         // returns false if the tool is broken
         bool use(std::string tool);
