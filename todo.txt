@@ -11,6 +11,7 @@ Debug civ setTrades - testing shows selling trades sometimes gets 5 instead of 6
     - problem is trades are set by randomly choosing a name in the category, trying 10 times to find one
     - which has not been already selected. Might need to change the category as well
 
+Create UML class diagrams
 finish Civilization::setTrades() - add animals, potions, machines etc
 Add player-built buildings/stuff
 chopping trees removes them if not in forest?
