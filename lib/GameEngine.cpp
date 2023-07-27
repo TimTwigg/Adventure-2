@@ -1,10 +1,11 @@
-// updated 22 September 2022
+// updated 27 July 2023
 
 #include <string>
 #include <memory>
 #include <fstream>
 #include <filesystem>
 #include <algorithm>
+#include <sstream>
 #include "GameEngine.hpp"
 #include "Player.hpp"
 #include "Map.hpp"
@@ -645,7 +646,37 @@ void GameEngine::build() {
 }
 
 void GameEngine::recipe() {
+    command = strHelp::reduce(command);
+    if (command.size() < 2) {
+        i->output("Recipe of what?", configs["colors"]["error"].get<Color>());
+        return;
+    }
+    
+    std::string target = command[1];
+    if (!factory.inIndex(target)) {
+        i->output("Could not find item: " + target, configs["colors"]["error"].get<Color>());
+        return;
+    }
 
+    std::string filename = factory.getFileOf(target);
+    json data = FileReader::getFromFile(filename, target);
+    if (data.contains(std::string{"recipe"})) {
+        std::map<std::string, int> recipe = data["recipe"].get<std::map<std::string, int>>();
+        std::vector<std::string> parts;
+        for (const auto& el : recipe) {
+            parts.push_back(std::to_string(el.second) + " " + el.first);
+        }
+        std::stringstream ss;
+        ss << target << ": ";
+        for (int i = 0; i < parts.size()-1; ++i) {
+            ss << parts[i] << ", ";
+        }
+        ss << parts[parts.size()-1];
+        i->output(ss.str(), configs["colors"]["info"].get<Color>());
+    }
+    else {
+        i->output(target + " has no recipe!", configs["colors"]["info"].get<Color>());
+    }
 }
 
 void GameEngine::smoke() {
@@ -713,7 +744,21 @@ void GameEngine::smoke() {
 }
 
 void GameEngine::sleep() {
-
+    double t = player->stat("time");
+    double toSleep;
+    if (t > 5 && t < 20) {
+        i->output("You can't sleep during the day!", configs["colors"]["error"].get<Color>());
+        return;
+    }
+    else if (t < 5) {
+        toSleep = 5 - t;
+    }
+    else {
+        toSleep = 29 - t;
+    }
+    double minutes = std::floor(toSleep * 60);
+    player->passTime(static_cast<int>(minutes));
+    i->output("Slept for " + std::to_string(static_cast<int>(toSleep)) + " hours and " + std::to_string(static_cast<int>((toSleep - std::floor(toSleep)) * 60)) + " minutes.", configs["colors"]["info"].get<Color>());
 }
 
 void GameEngine::wait() {

@@ -86,7 +86,8 @@
         "ht"
     ],
     "sleep": [
-        "sleep"
+        "sleep",
+        "Description: sleep until morning if night."
     ],
     "wait": [
         "wait *hours*"

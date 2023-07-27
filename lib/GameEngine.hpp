@@ -1,4 +1,4 @@
-// updated 13 September 2022
+// updated 27 July 2023
 
 #ifndef GAMEENGINE_HPP
 #define GAMEENGINE_HPP
@@ -7,6 +7,7 @@
 #include <memory>
 #include "Player.hpp"
 #include "Map.hpp"
+#include "Factory.hpp"
 #include "Interface.hpp"
 #include "GameData.hpp"
 #include "RandomGenerator.hpp"
@@ -26,6 +27,7 @@ class GameEngine {
         std::shared_ptr<Player> player;
         std::shared_ptr<Map> map;
         std::shared_ptr<Interface> i;
+        Factory factory;
         json configs;
         // the query input by the player
         std::string query;
