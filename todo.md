@@ -22,6 +22,7 @@
     - GameEngine::craft, ??
     - Player
     - Map
+- get attacked (bottom of GameEngine mainloop)
 
 # IDEAS
 - Refresh ht and hp completely at towns? For a price?

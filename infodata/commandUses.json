@@ -1,105 +1,136 @@
 {
     "go": [
-        "go *direction*"
+        "go *direction*",
+        "Description: Move in a certain direction."
     ],
     "look": [
-        "look *here* OR *binoculars*"
+        "look [here] [*direction*]",
+        "Description: Look at a tile, either the current one or an adjacent one."
     ],
     "eat": [
-        "eat *food-item*"
+        "eat *food-item*",
+        "Description: Eat something."
     ],
     "drink": [
-        "drink *liquid* *source*"
+        "drink *liquid* *source*",
+        "Description: Drink liquid from a source."
     ],
     "trade": [
-        "trade *settlement-type*"
+        "trade *settlement-type*",
+        "Description: Trade with a settlement of some kind."
     ],
     "attack": [
-        "attack *target* *weapon*"
+        "attack *target* *weapon*",
+        "Description: Attack an entity."
     ],
     "raid": [
-        "raid *target* *weapon*"
+        "raid *target* *weapon*",
+        "Description: Attack a settlement of some kind."
     ],
     "i": [
         "i OR i *object*",
-        "Lists your inventory, or if used with an object name checks if you have that object in your inven"
+        "Description: Lists your inventory, or if used with an object name checks if you have that object in your inventory"
     ],
     "inventory": [
-        "inventory"
+        "inventory",
+        "Description: Lists your inventory, or if used with an object name checks if you have that object in your inventory"
     ],
     "me": [
-        "me"
+        "me",
+        "Description: See your player stats."
     ],
     "take": [
         "take *object-name*",
-        "There is no limit on what you can pick up, but moving requires your load to be within your limit"
+        "There is no limit on what you can pick up, but moving requires your load to be within your limit",
+        "Description: Take an object lying in an area."
     ],
     "drop": [
-        "drop *object-name*"
+        "drop *object-name*",
+        "Description: Drop something from your inventory."
     ],
     "craft": [
-        "craft *object*"
+        "craft *object*",
+        "Description: Craft an object with resources from your inventory."
     ],
     "build": [
-        "build"
+        "build",
+        "Description: Not Implemented."
     ],
     "recipe": [
-        "recipe *object-name*"
+        "recipe *object-name*",
+        "Description: Check the recipe for an item."
     ],
     "cook": [
-        "cook *object-name* *heat-source*"
+        "cook *object-name* *heat-source*",
+        "Description: Cook something."
     ],
     "chop": [
-        "chop trees *tool*"
+        "chop trees *tool*",
+        "Description: Chop wood."
     ],
     "mine": [
-        "mine *type* *tool*"
+        "mine *type* *tool*",
+        "Description: Mine metal or gold."
     ],
     "dig": [
-        "dig *tool*"
+        "dig *tool*",
+        "Description: Dig in the ground."
     ],
     "fill": [
-        "fill *container* *liquid* *source*"
+        "fill *container* *liquid* *source*",
+        "Description: Fill a container with liquid."
     ],
     "exit": [
-        "exit"
+        "exit",
+        "Description: Exit the game."
     ],
     "help": [
-        "help"
+        "help",
+        "Description: Display the help screen."
     ],
     "time": [
-        "time"
+        "time",
+        "Description: Check the current time."
     ],
     "save": [
-        "save"
+        "save",
+        "Description: Save the game."
     ],
     "clear": [
-        "clear"
+        "clear",
+        "Description: Clear the screen."
     ],
     "config": [
-        "config"
+        "config",
+        "Description: Display the config screen and options."
     ],
     "hp": [
-        "hp"
+        "hp",
+        "Description: Check your current health."
     ],
     "ht": [
-        "ht"
+        "ht",
+        "Description: Check your current hunger and thirst."
     ],
     "sleep": [
         "sleep",
         "Description: sleep until morning if night."
     ],
     "wait": [
-        "wait *hours*"
+        "wait *hours*",
+        "Description: Wait for time to pass."
     ],
     "train": [
-        "train *weapon*"
+        "train *weapon*",
+        "Description: Not Implemented."
     ],
     "loot": [
-        "loot *civilization* *weapon*"
+        "loot *civilization* *weapon*",
+        "Description: Loot a raided settlement of some kind."
     ],
     "smoke": [
         "smoke *item*",
-        "Smoking requires both a smoker and a fuel source"
+        "Smoking requires both a smoker and a fuel source",
+        "Description: Smoke raw food or an item."
     ]
 }
