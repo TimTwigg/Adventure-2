@@ -1,4 +1,4 @@
-// updated 19 June 2022
+// updated 28 July 2023
 
 #include <string>
 #include <memory>
@@ -24,7 +24,8 @@ Launcher::Launcher(std::shared_ptr<Interface> i) : i{i} {
             {"error", "RED_LIGHT"},
             {"output", "WHITE"},
             {"art", "WHITE"},
-            {"info", "BLUE_LIGHT"}
+            {"info", "BLUE_LIGHT"},
+            {"headers", "BLUE_DARK"}
         }}
     };
 }
@@ -38,7 +39,7 @@ void Launcher::menu() {
     while (true) {
         i->clearScreen();
         i->output(ART::MENUSCROLL);
-        std::string answer = i->askSelect("Menu", {"New Game", "Load Game", "Config", "Quit"});
+        std::string answer = i->askSelect("Menu", {"New Game", "Load Game", "Delete Save", "Config", "Quit"});
         if (answer == "New Game") {
             newGame();
             break;
@@ -46,6 +47,7 @@ void Launcher::menu() {
         else if (answer == "Load Game") {
             if (loadGame()) break;
         }
+        else if (answer == "Delete Save") deleteSave();
         else if (answer == "Config") config();
         else if (answer == "Quit") exit(0);
     }
@@ -97,6 +99,14 @@ void Launcher::newGame() {
     data.skillset = SET::to_skillset(skillset);
     data.configs["diff"] = diff_ratio;
     data.isNew = true;
+}
+
+void Launcher::deleteSave() {
+    std::vector<std::string> saves = FileReader::getSaveFileNames();
+    saves.push_back("Back");
+    std::string filename = i->askSelect("Choose Save", saves);
+    if (filename == "Back") return;
+    fs::remove_all("saves\\" + filename);
 }
 
 void Launcher::config() {

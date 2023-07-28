@@ -1,4 +1,4 @@
-// updated 13 June 2022
+// updated 28 July 2023
 
 #ifndef LAUNCHER_HPP
 #define LAUNCHER_HPP
@@ -18,6 +18,7 @@ class Launcher {
         void menu();
         bool loadGame();
         void newGame();
+        void deleteSave();
         void config();
     
         std::shared_ptr<Interface> i;

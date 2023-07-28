@@ -1,8 +1,7 @@
-// Updated 27 July 2023
+// Updated 28 July 2023
 
 #include <string>
 #include <map>
-#include <memory>
 #include "Factory.hpp"
 #include "Object.hpp"
 #include "Thing.hpp"
@@ -66,28 +65,28 @@ std::string Factory::getFileOf(std::string item) {
     }
 }
 
-std::shared_ptr<Thing> Factory::make(std::string item) {
+Thing* Factory::make(std::string item) {
     FactoryType ft = getTypeOf(item);
 
     switch (ft) {
         case FactoryType::Animal:
-            return std::shared_ptr<Thing>(new Animal(item));
+            return new Animal(item);
         case FactoryType::Civ:
-            return std::shared_ptr<Thing>(new Civilization(item));
+            return new Civilization(item);
         case FactoryType::Container:
-            return std::shared_ptr<Thing>(new Container(item));
+            return new Container(item);
         case FactoryType::CraftableResource:
-            return std::shared_ptr<Thing>(new CResource(item));
+            return new CResource(item);
         case FactoryType::Enemy:
-            return std::shared_ptr<Thing>(new Enemy(item));
+            return new Enemy(item);
         case FactoryType::Machine:
-            return std::shared_ptr<Thing>(new Machine(item));
+            return new Machine(item);
         case FactoryType::Resource:
-            return std::shared_ptr<Thing>(new Resource(item));
+            return new Resource(item);
         case FactoryType::Tool:
-            return std::shared_ptr<Thing>(new Tool(item));
+            return new Tool(item);
         case FactoryType::Weapon:
-            return std::shared_ptr<Thing>(new Weapon(item));
+            return new Weapon(item);
         case FactoryType::None:
             return nullptr;
     }

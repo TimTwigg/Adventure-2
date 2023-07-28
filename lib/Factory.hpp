@@ -1,11 +1,10 @@
-// Updated 27 July 2023
+// Updated 28 July 2023
 
 #ifndef FACTORY_HPP
 #define FACTORY_HPP
 
 #include <map>
 #include <string>
-#include <memory>
 #include <vector>
 #include "Object.hpp"
 #include "Thing.hpp"
@@ -45,7 +44,7 @@ class Factory {
         bool inIndex(std::string item);
         FactoryType getTypeOf(std::string item);
         std::string getFileOf(std::string item);
-        std::shared_ptr<Thing> make(std::string item);
+        Thing* make(std::string item);
     
     private:
         std::map<std::string, FactoryType> index;

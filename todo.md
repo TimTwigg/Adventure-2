@@ -17,7 +17,7 @@
 - crafting things like ammo crafts more than 1
 - Add machine use commands (smoke uses smoker already, need to add command for furnace)
 - finish object_info.json - fill in blanks marked by "@@@"
-- Add more detailed descriptions to commandUses.json
+- finish detailed descriptions in commandUses.json (marked by "Not Implemented")
 - integrate Factory
     - GameEngine::craft, ??
     - Player
@@ -36,6 +36,7 @@
 - Log user commands?
 - Able to sleep anywhere or must it be safe? What about bed? Do you heal overnight?
 - Create "Make Item" function that creates the shared ptr. Maybe in Map? Then Player::addItem would take that object as param
+- Trading with civs: when items are all bought, replenish/replace?
 
 # MAINLOOP QUESTION
 Game Engine in C++ but prompt querying in python so I can use prompt_toolkit to get auto-completions and so on? If so, call python from C++ mainloop, or call C++ functions from python mainloop?

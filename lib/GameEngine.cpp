@@ -1,4 +1,4 @@
-// updated 27 July 2023
+// updated 28 July 2023
 
 #include <string>
 #include <memory>
@@ -6,6 +6,7 @@
 #include <filesystem>
 #include <algorithm>
 #include <sstream>
+#include <utility>
 #include "GameEngine.hpp"
 #include "Player.hpp"
 #include "Map.hpp"
@@ -15,6 +16,7 @@
 #include "Weapon.hpp"
 #include "Container.hpp"
 #include "Machine.hpp"
+#include "Civilization.hpp"
 //#include "Animal.hpp"
 //#include "Enemy.hpp"
 #include "Interface.hpp"
@@ -60,10 +62,9 @@ void GameEngine::run() {
         }
 
         query = i->askInput(configs["prompt"].get<std::string>(), configs["colors"]["prompt"].get<Color>(), configs["colors"]["input"].get<Color>());
-        if (query.size() > 0) {
-            strHelp::lower(query);
-            command = strHelp::split(query);
-        }
+        if (query.size() == 0) continue;
+        strHelp::lower(query);
+        command = strHelp::split(query);
 
         // look
         if (command[0] == "look" || query == "l") look();
@@ -524,7 +525,7 @@ void GameEngine::take() {
     Object* obj = nullptr;
     for (std::shared_ptr<Thing>& t : l.thingsHere) {
         if (t->getName() == target) {
-            obj = dynamic_cast<Object*>(t.get());
+            obj = static_cast<Object*>(t.get());
             break;
         }
     }
@@ -575,7 +576,208 @@ void GameEngine::loot() {
 }
 
 void GameEngine::trade() {
+    command = strHelp::reduce(command);
+    if (command.size() < 2) {
+        i->output("Trade with whom?", configs["colors"]["error"].get<Color>());
+        return;
+    }
 
+    // validate target
+    std::string target = command[1];
+    if (!factory.inIndex(target) || factory.getTypeOf(target) != FactoryType::Civ) {
+        i->output("Can't trade with " + target, configs["colors"]["error"].get<Color>());
+        return;
+    }
+    
+    // check if the civ type is actually present
+    Location& l = map->getRef();
+    Civilization* civ = nullptr;
+    for (std::shared_ptr<Thing>& t : l.thingsHere) {
+        if (t->getName() == target) {
+            civ = static_cast<Civilization*>(t.get());
+            break;
+        }
+    }
+    if (civ == nullptr) {
+        i->output("No " + target + " here to trade with.", configs["colors"]["error"].get<Color>());
+        return;
+    }
+    
+    // trades object is alias for map<pair, pair> where the key is <type, name> and the value is <quantity, price>
+
+    // get the trades
+    trades buying = civ->getBuyingTrades();
+    trades selling = civ->getSellingTrades();
+    std::stringstream ss_buy;
+    std::stringstream ss_sell;
+    for (const auto& item : buying) {
+        ss_buy << "  " << item.second.first << " " << item.first.second << ": " << item.second.second << " coins" << std::endl;
+    }
+    for (const auto& item : selling) {
+        ss_sell << "  " << item.second.first << " " << item.first.second << ": " << item.second.second << " coins" << std::endl;
+    }
+
+    // output the trade screen
+    i->clearScreen();
+    i->output(ART::TRADE, configs["colors"]["art"].get<Color>());
+    i->output("Buying:", configs["colors"]["headers"].get<Color>());
+    i->output(ss_buy.str(), configs["colors"]["output"].get<Color>());
+    i->output("Selling:", configs["colors"]["headers"].get<Color>());
+    i->output(ss_sell.str(), configs["colors"]["output"].get<Color>());
+    i->output("You have " + std::to_string(static_cast<int>(player->stat("wealth"))) + " coins.\n", configs["colors"]["info"].get<Color>());
+    i->output(player->listInventory() + "\n", configs["colors"]["info"].get<Color>());
+    i->output("Use 'buy/sell item [quantity]' to trade, 'refresh' to refresh the trade screen, and 'back/exit' to stop trading.\n", configs["colors"]["output"].get<Color>());
+    
+    // trade loop
+    while (true) {
+        // get the trades
+        trades buying = civ->getBuyingTrades();
+        trades selling = civ->getSellingTrades();
+
+        // query
+        std::string tquery = i->askInput("[$]", configs["colors"]["prompt"].get<Color>(), configs["colors"]["input"].get<Color>());
+        strHelp::lower(tquery);
+        command = strHelp::split(tquery);
+        if (command.size() == 0 || command[0] == "back" || command[0] == "exit") break;
+        else if (command[0] == "refresh") {
+            std::stringstream ss_buy;
+            std::stringstream ss_sell;
+            for (const auto& item : buying) {
+                ss_buy << "  " << item.second.first << " " << item.first.second << ": " << item.second.second << " coins" << std::endl;
+            }
+            for (const auto& item : selling) {
+                ss_sell << "  " << item.second.first << " " << item.first.second << ": " << item.second.second << " coins" << std::endl;
+            }
+
+            // output the trade screen
+            i->clearScreen();
+            i->output(ART::TRADE, configs["colors"]["art"].get<Color>());
+            i->output("Buying:", configs["colors"]["headers"].get<Color>());
+            i->output(ss_buy.str(), configs["colors"]["output"].get<Color>());
+            i->output("Selling:", configs["colors"]["headers"].get<Color>());
+            i->output(ss_sell.str(), configs["colors"]["output"].get<Color>());
+            i->output("You have " + std::to_string(static_cast<int>(player->stat("wealth"))) + " coins.\n", configs["colors"]["info"].get<Color>());
+            i->output(player->listInventory() + "\n", configs["colors"]["info"].get<Color>());
+            i->output("Use 'buy/sell item [quantity]' to trade, 'refresh' to refresh the trade screen, and 'back/exit' to stop trading.\n", configs["colors"]["output"].get<Color>());
+        }
+
+        else if (command[0] == "buy") {
+            if (command.size() < 2) {
+                i->output("Buy what?", configs["colors"]["error"].get<Color>());
+                continue;
+            }
+            // validate the item
+            int quantity = 0;
+            int cost = 0;
+            std::pair<std::string, std::string> key;
+            for (const auto& item : selling) {
+                if (item.first.second == command[1]) {
+                    quantity = item.second.first;
+                    cost = item.second.second;
+                    key = item.first;
+                    break;
+                }
+            }
+            if (quantity == 0) {
+                i->output("This " + target + " is not selling any " + command[1], configs["colors"]["error"].get<Color>());
+                continue;
+            }
+            // validate quantity
+            int num = 1;
+            if (command.size() > 2 && strHelp::isNumber(command[2])) {
+                num = std::stoi(command[2]);
+                if (num > quantity) num = quantity;
+            }
+            // validate that the player has enough coins
+            if (cost * num > player->stat("wealth")) {
+                i->output("You can't afford to buy " + std::to_string(num) + " " + command[1], configs["colors"]["error"].get<Color>());
+                continue;
+            }
+            
+            // make the trade
+            try {
+                civ->sell(key.first, key.second, num);
+            } catch (AdventureException) {
+                i->output("This " + target + " is not selling any " + command[1], configs["colors"]["error"].get<Color>());
+                continue;
+            }
+            player->removeWealth(cost * num);
+            Thing* thng = factory.make(key.second);
+            Object* obj = static_cast<Object*>(thng);
+            if (num > 1) {
+                if (obj->getType() == OBJCLASS::RESOURCE || obj->getType() == OBJCLASS::CRESOURCE) {
+                    Resource* r = static_cast<Resource*>(obj);
+                    r->add(num-1);
+                    player->addItem(r);
+                }
+                else {
+                    player->addItem(obj);
+                    for (int i = 0; i < num-1; ++i) {
+                        thng = factory.make(key.second);
+                        obj = static_cast<Object*>(thng);
+                        player->addItem(obj);
+                    }
+                }
+            }
+            else player->addItem(obj);
+            i->output("Bought " + std::to_string(num) + " " + key.second + ".\n", configs["colors"]["output"].get<Color>());
+        }
+
+        else if (command[0] == "sell") {
+            if (command.size() < 2) {
+                i->output("Sell what?", configs["colors"]["error"].get<Color>());
+                continue;
+            }
+
+            // validate the item
+            int quantity = 0;
+            int cost = 0;
+            std::pair<std::string, std::string> key;
+            for (const auto& item : buying) {
+                if (item.first.second == command[1]) {
+                    quantity = item.second.first;
+                    cost = item.second.second;
+                    key = item.first;
+                    break;
+                }
+            }
+            if (quantity == 0) {
+                i->output("This " + target + " is not buying any " + command[1], configs["colors"]["error"].get<Color>());
+                continue;
+            }
+            // validate quantity
+            int num = 1;
+            if (command.size() > 2 && strHelp::isNumber(command[2])) {
+                num = std::stoi(command[2]);
+                if (num > quantity) num = quantity;
+            }
+            // check that the player has the item
+            if (!player->inInventory(command[1], num)) {
+                i->output("You don't have " + std::to_string(num) + " " + command[1] + " to sell!", configs["colors"]["error"].get<Color>());
+                continue;
+            }
+            
+            // make the trade
+            try {
+                civ->buy(key.first, key.second, num);
+            } catch (AdventureException) {
+                i->output("This " + target + " is not buying any " + command[1], configs["colors"]["error"].get<Color>());
+                continue;
+            }
+            std::shared_ptr<Object> obj = player->removeItem(command[1], num);
+            if (obj->getType() != OBJCLASS::RESOURCE && obj->getType() != OBJCLASS::CRESOURCE) {
+                for (int i = 0; i < num-1; ++i) {
+                    player->removeItem(command[1]);
+                }
+            }
+            player->addWealth(cost * num);
+            i->output("Sold " + std::to_string(num) + " " + key.second + ".\n", configs["colors"]["output"].get<Color>());
+        }
+
+        else {
+            i->output("Hmmmmm", configs["colors"]["error"].get<Color>());
+        }
+    }
 }
 
 void GameEngine::craft() {
@@ -880,15 +1082,19 @@ void GameEngine::config() {
         }
 
         else if (option == "Colors") {
-            std::map<std::string, std::string> options = configs["colors"].get<std::map<std::string, std::string>>();
-            std::vector<std::string> v;
-            std::for_each(options.begin(), options.end(), [&](const auto& item){v.push_back(item.first + ": " + item.second);});
-            std::string answer = i->askSelect("Color Option", v);
+            while (true) {
+                std::map<std::string, std::string> options = configs["colors"].get<std::map<std::string, std::string>>();
+                std::vector<std::string> v;
+                std::for_each(options.begin(), options.end(), [&](const auto& item){v.push_back(item.first + ": " + item.second);});
+                v.push_back("Back");
+                std::string answer = i->askSelect("Color Option", v);
+                if (answer == "Back") break;
 
-            std::string key = answer.substr(0, std::find(answer.begin(), answer.end(), ':')-answer.begin());
-            std::string color = i->askSelect(key, {"WHITE", "BLUE_DARK", "BLUE_LIGHT", "CYAN", "GREEN_DARK", "GREEN_LIGHT",
-                "RED_DARK", "RED_LIGHT", "YELLOW", "PURPLE", "GRAY"}, configs["colors"][key].get<std::string>());
-            configs["colors"][key] = color;
+                std::string key = answer.substr(0, std::find(answer.begin(), answer.end(), ':')-answer.begin());
+                std::string color = i->askSelect(key, {"WHITE", "BLUE_DARK", "BLUE_LIGHT", "CYAN", "GREEN_DARK", "GREEN_LIGHT",
+                    "RED_DARK", "RED_LIGHT", "YELLOW", "PURPLE", "GRAY"}, configs["colors"][key].get<std::string>());
+                configs["colors"][key] = color;
+            }
         }
 
         else if (option == "Back") break;

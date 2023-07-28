@@ -1,4 +1,4 @@
-// updated 5 August 2022
+// updated 28 July 2023
 
 #ifndef CIVILIZATION_HPP
 #define CIVILIZATION_HPP
@@ -25,9 +25,9 @@ class Civilization : public Thing {
         trades getSellingTrades() const noexcept;
         trades getBuyingTrades() const noexcept;
         // buy item from player
-        void buy(std::string type, const std::string& name);
+        void buy(std::string type, const std::string& name, int quantity = 1);
         // sell item to player
-        void sell(std::string type, const std::string& name);
+        void sell(std::string type, const std::string& name, int quantity = 1);
         std::map<std::pair<std::string, std::string>, int> getLoot();
         unsigned int getXP() const noexcept;
         unsigned int getWealth() const noexcept;

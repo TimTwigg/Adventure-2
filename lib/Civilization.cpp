@@ -1,4 +1,4 @@
-// updated 5 August 2022
+// updated 28 July 2023
 
 #include <string>
 #include <map>
@@ -170,20 +170,20 @@ std::map<std::pair<std::string, std::string>, std::pair<unsigned int, unsigned i
     return buying;
 }
 
-void Civilization::sell(std::string type, const std::string& name) {
+void Civilization::sell(std::string type, const std::string& name, int quantity) {
     std::pair<std::string, std::string> key = std::make_pair(type, name);
     if (selling.find(key) == selling.end()) throw AdventureException("Civilization::sell not selling (" + type + ", " + name + ")");
     auto value = selling[key];
-    value.first = value.first - 1;
+    value.first = value.first - quantity;
     if (value.first < 1) selling.erase(key);
     else selling[key] = value;
 }
 
-void Civilization::buy(std::string type, const std::string& name) {
+void Civilization::buy(std::string type, const std::string& name, int quantity) {
     std::pair<std::string, std::string> key = std::make_pair(type, name);
     if (buying.find(key) == buying.end()) throw AdventureException("Civilization::buy not buying (" + type + ", " + name + ")");
     auto value = buying[key];
-    value.first = value.first - 1;
+    value.first = value.first - quantity;
     if (value.first < 1) buying.erase(key);
     else buying[key] = value;
 }

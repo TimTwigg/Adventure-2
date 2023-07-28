@@ -1,4 +1,4 @@
-// Updated: 22 September 2022
+// Updated: 28 July 2023
 
 #include <string>
 #include <fstream>
@@ -181,6 +181,7 @@ SkillSets Player::getSkillset() const noexcept {
 
 bool Player::inInventory(std::string obj, unsigned int count) const noexcept {
     if (count == 0) return true;
+    int found = 0;
     for (auto it = inventory.begin(); it != inventory.end(); ++it) {
         Object* o = it->get();
         if (o->getName() == obj) {
@@ -188,10 +189,10 @@ bool Player::inInventory(std::string obj, unsigned int count) const noexcept {
                 Resource* r = static_cast<Resource*>(o);
                 return r->getCount() >= count;
             }
-            return true;
+            found += 1;
         }
     }
-    return false;
+    return found >= count;
 }
 
 bool Player::inInventory(std::string container, std::string liquid) const noexcept {
@@ -208,7 +209,7 @@ bool Player::inInventory(std::string container, std::string liquid) const noexce
 }
 
 void Player::addItem(OBJCLASS objClass, std::string obj, unsigned int count) {
-    if (objClass == OBJCLASS::RESOURCE) {
+    if (objClass == OBJCLASS::RESOURCE || objClass == OBJCLASS::CRESOURCE) {
         for (auto it = inventory.begin(); it != inventory.end(); ++it) {
             Object* o = it->get();
             if (o->getName() == obj) {
@@ -252,6 +253,23 @@ void Player::addItem(std::string code) {
     else if (code.substr(0, 6) == "WEAPON") inventory.push_back(std::shared_ptr<Object>(Weapon::fromString(code)));
     else if (code.substr(0, 7) == "MACHINE") inventory.push_back(std::shared_ptr<Object>(Machine::fromString(code)));
     else throw AdventureException("Player::addItem Unrecognized inventory string: " + code);
+}
+
+void Player::addItem(Object* item) {
+    OBJCLASS objClass = item->getType();
+    if (objClass == OBJCLASS::RESOURCE || objClass == OBJCLASS::CRESOURCE) {
+        for (auto it = inventory.begin(); it != inventory.end(); ++it) {
+            Object* o = it->get();
+            if (o->getName() == item->getName()) {
+                Resource* r = static_cast<Resource*>(o);
+                Resource* i = static_cast<Resource*>(item);
+                r->add(i->getCount());
+                delete item;
+                return;
+            }
+        }
+    }
+    inventory.push_back(std::shared_ptr<Object>(item));
 }
 
 std::shared_ptr<Object> Player::removeItem(std::string obj, unsigned int count) {
