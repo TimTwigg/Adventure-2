@@ -1,4 +1,4 @@
-// Updated: 28 July 2023
+// Updated: 4 August 2023
 
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
@@ -35,6 +35,8 @@ class Player {
         void addItem(OBJCLASS objClass, std::string obj, unsigned int count = 1);
         void addItem(std::string code);
         void addItem(Object* item);
+        // access const info on an item in the inventory
+        const Object* accessItem(std::string item) const;
         // removes the item from inventory and returns it
         // if a resource, remove multiple simultaneously
         // if not a resource, only 1 is removed
@@ -53,8 +55,11 @@ class Player {
         void addWealth(unsigned int amount) noexcept;
         void removeWealth(unsigned int amount);
 
+        // damage the player
         void damage(double dmg);
+        // heal the player
         void heal(double hp) noexcept;
+        // the player's attack damage
         double attackDmg(double weaponDmgModifier);
         double fistDmg();
 
@@ -67,6 +72,8 @@ class Player {
         double weight() const noexcept;
 
         void passTime(int minutes) noexcept;
+
+        bool isDead() const noexcept;
 
     private:
         json data;

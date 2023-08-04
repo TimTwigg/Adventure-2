@@ -1,4 +1,4 @@
-// updated 28 July 2023
+// updated 4 August 2023
 
 #ifndef CIVILIZATION_HPP
 #define CIVILIZATION_HPP
@@ -31,7 +31,7 @@ class Civilization : public Thing {
         std::map<std::pair<std::string, std::string>, int> getLoot();
         unsigned int getXP() const noexcept;
         unsigned int getWealth() const noexcept;
-        unsigned int attack() noexcept;
+        double attack() noexcept;
         bool raid(double dmg);
         bool isLooted() const noexcept;
         bool isRaided() const noexcept;

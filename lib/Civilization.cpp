@@ -1,4 +1,4 @@
-// updated 28 July 2023
+// updated 4 August 2023
 
 #include <string>
 #include <map>
@@ -210,7 +210,7 @@ unsigned int Civilization::getWealth() const noexcept {
     else return 0;
 }
 
-unsigned int Civilization::attack() noexcept {
+double Civilization::attack() noexcept {
     return Formula::civilizationDamage(damage, gen);
 }
 

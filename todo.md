@@ -23,6 +23,8 @@
     - Player
     - Map
 - get attacked (bottom of GameEngine mainloop)
+- raiding a civ makes it hostile?
+- balance hunger and thirst. needs to be semi-realistic but not be too nitty-gritty to deal with for player
 
 # IDEAS
 - Refresh ht and hp completely at towns? For a price?
@@ -37,6 +39,7 @@
 - Able to sleep anywhere or must it be safe? What about bed? Do you heal overnight?
 - Create "Make Item" function that creates the shared ptr. Maybe in Map? Then Player::addItem would take that object as param
 - Trading with civs: when items are all bought, replenish/replace?
+- item to increase certain stats, eg carry capacity
 
 # MAINLOOP QUESTION
 Game Engine in C++ but prompt querying in python so I can use prompt_toolkit to get auto-completions and so on? If so, call python from C++ mainloop, or call C++ functions from python mainloop?

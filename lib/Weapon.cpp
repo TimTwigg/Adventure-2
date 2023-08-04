@@ -1,4 +1,4 @@
-// updated 17 June 2022
+// updated 4 August 2023
 
 #include <map>
 #include <string>
@@ -23,6 +23,7 @@ Weapon::Weapon(std::string name) {
     uses = data["hitpoints"].get<int>();
     category = data["type"].get<std::string>();
     dmg = (category == "melee") ? data["m-damage"].get<double>() : data["r-damage"].get<double>();
+    ammo = (category == "ranged") ? data["ammo"].get<std::string>() : "None";
 }
 
 Weapon::operator std::string() const noexcept {
@@ -39,6 +40,14 @@ int Weapon::getUses() const noexcept {
 
 double Weapon::getDamage() const noexcept {
     return dmg;
+}
+
+std::string Weapon::weaponType() const noexcept {
+    return category;
+}
+
+std::string Weapon::ammoType() const noexcept {
+    return ammo;
 }
 
 void Weapon::use() {

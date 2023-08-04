@@ -1,4 +1,4 @@
-// updated 16 June 2022
+// updated 4 August 2023
 
 #ifndef WEAPON_HPP
 #define WEAPON_HPP
@@ -17,6 +17,8 @@ class Weapon : public Object {
         std::map<std::string, unsigned int> getRecipe() const noexcept;
         int getUses() const noexcept;
         double getDamage() const noexcept;
+        std::string weaponType() const noexcept;
+        std::string ammoType() const noexcept;
         void use();
     
     private:
@@ -24,6 +26,7 @@ class Weapon : public Object {
         int uses;
         double dmg;
         std::string category;
+        std::string ammo;
 };
 
 #endif

@@ -1,4 +1,4 @@
-// updated 27 July 2023
+// updated 4 August 2023
 
 #ifndef GAMEENGINE_HPP
 #define GAMEENGINE_HPP
@@ -75,6 +75,7 @@ class GameEngine {
         void command_help();
         void object_help();
         void config();
+        void endGame();
 };
 
 #endif

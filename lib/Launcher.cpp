@@ -13,6 +13,7 @@
 #include "FileReader.hpp"
 #include "StringHelpers.hpp"
 #include "SkillSets.hpp"
+#include "Player.hpp"
 namespace fs = std::filesystem;
 
 Launcher::Launcher(std::shared_ptr<Interface> i) : i{i} {
@@ -58,6 +59,15 @@ bool Launcher::loadGame() {
     saves.push_back("Back");
     std::string filename = i->askSelect("Choose Save", saves);
     if (filename == "Back") return false;
+    
+    Player* p = Player::load("saves\\" + filename);
+    bool isDead = p->isDead();
+    delete p;
+    if (isDead) {
+        i->output("Can't load save: Adventurer is dead.", Color::RED_LIGHT);
+        return loadGame();
+    }
+
     data.filename = "saves\\" + filename;
     data.isNew = false;
     return true;

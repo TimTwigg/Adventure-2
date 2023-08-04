@@ -1,4 +1,4 @@
-// updated 28 July 2023
+// updated 4 August 2023
 
 #include <string>
 #include <memory>
@@ -184,7 +184,7 @@ void GameEngine::run() {
         // get attacked if appropriate
 
     }
-    i->output("Goodbye", Color::BLUE_LIGHT);
+    endGame();
 }
 
 std::string GameEngine::chooseArticle(const std::string& s) {
@@ -287,7 +287,7 @@ void GameEngine::hp() {
 }
 
 void GameEngine::attack() {
-
+    // TODO
 }
 
 void GameEngine::mine() {
@@ -568,11 +568,91 @@ void GameEngine::drop() {
 }
 
 void GameEngine::raid() {
+    command = strHelp::reduce(command);
+    if (command.size() < 3) {
+        i->output("Incorrect Command Format: raid [target] [weapon]", configs["colors"]["error"].get<Color>());
+        return;
+    }
 
+    // validate target
+    std::string target = command[1];
+    if (!factory.inIndex(target) || factory.getTypeOf(target) != FactoryType::Civ) {
+        i->output("Can't raid a " + target, configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // check if the civ type is actually present
+    Location& l = map->getRef();
+    Civilization* civ = nullptr;
+    for (std::shared_ptr<Thing>& t : l.thingsHere) {
+        if (t->getName() == target) {
+            civ = static_cast<Civilization*>(t.get());
+            break;
+        }
+    }
+    if (civ == nullptr) {
+        i->output("No " + target + " here to raid.", configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // check that the civ is not already raided
+    if (civ->isRaided()) {
+        i->output(target + " has already been raided.", configs["colors"]["output"].get<Color>());
+        return;
+    }
+
+    // validate weapon
+    std::string weapon = command[2];
+    if (!factory.inIndex(weapon) || factory.getTypeOf(weapon) != FactoryType::Weapon) {
+        i->output("Can't raid a " + target + " with a " + weapon, configs["colors"]["error"].get<Color>());
+        return;
+    }
+    else if (!player->inInventory(weapon)) {
+        i->output("You don't have a " + weapon + " to raid with.", configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // check for ammo if ranged
+    const Weapon* w = static_cast<const Weapon*>(player->accessItem(weapon));
+    bool isRanged = w->weaponType() == "ranged";
+    if (isRanged) {
+        if (!player->inInventory(w->ammoType())) {
+            i->output("You don't have any " + w->ammoType(), configs["colors"]["error"].get<Color>());
+            return;
+        }
+
+        // remove ammo
+        player->removeItem(w->ammoType());
+    }
+
+    // use weapon
+    player->use(weapon);
+
+    // damage
+    double dmg = player->attackDmg(w->getDamage());
+    bool res = civ->raid(dmg);
+    i->output("You raided the " + target + " for " + std::to_string(static_cast<int>(dmg)) + " damage!", configs["colors"]["output"].get<Color>());
+    if (res) {
+        i->output("The " + target + " has been destroyed.", configs["colors"]["output"].get<Color>());
+    }
+    else if (!isRanged || (gen.getRandBool() && gen.getRandBool())) {
+        // counter attack
+        dmg = civ->attack();
+        i->output("The " + target + " counter-attacked! You take " + std::to_string(static_cast<int>(dmg)) + " damage!", configs["colors"]["output"].get<Color>());
+        player->damage(dmg);
+        if (player->isDead()) {
+            i->output("Oh No! You Died :(", configs["colors"]["error"].get<Color>());
+            endGame();
+        }
+    }
+
+    // time and energy
+    player->passTime(10);
+    player->reduceHT(3, 1);
 }
 
 void GameEngine::loot() {
-    
+    // TODO
 }
 
 void GameEngine::trade() {
@@ -638,7 +718,10 @@ void GameEngine::trade() {
         std::string tquery = i->askInput("[$]", configs["colors"]["prompt"].get<Color>(), configs["colors"]["input"].get<Color>());
         strHelp::lower(tquery);
         command = strHelp::split(tquery);
-        if (command.size() == 0 || command[0] == "back" || command[0] == "exit") break;
+        if (command.size() == 0 || command[0] == "back" || command[0] == "exit") {
+            i->output("");
+            break;
+        }
         else if (command[0] == "refresh") {
             std::stringstream ss_buy;
             std::stringstream ss_sell;
@@ -794,9 +877,9 @@ void GameEngine::craft() {
         return;
     }
 
-    // check that they have a crafting-bench unless that's what they're crafting
+    // check that they have a crafting-bench
     std::string target = command[2];
-    if (!player->inInventory("crafting-bench") && target != "crafting-bench") {
+    if (!player->inInventory("crafting-bench") && target != "crafting-bench" && target != "hammer") {
         i->output("You need a crafting-bench to craft!", configs["colors"]["error"].get<Color>());
         return;
     }
@@ -844,7 +927,7 @@ void GameEngine::craft() {
 }
 
 void GameEngine::build() {
-
+    // TODO
 }
 
 void GameEngine::recipe() {
@@ -987,11 +1070,11 @@ void GameEngine::time() {
 }
 
 void GameEngine::fill() {
-
+    // TODO
 }
 
 void GameEngine::train() {
-
+    // TODO
 }
 
 void GameEngine::save() {
@@ -1100,4 +1183,11 @@ void GameEngine::config() {
         else if (option == "Back") break;
     }
     i->clearScreen();
+}
+
+void GameEngine::endGame() {
+    i->output("Thanks for playing, see you next time!", configs["colors"]["headers"].get<Color>());
+    i->output(ART::LONGSWORD, configs["colors"]["art"].get<Color>());
+    save();
+    exit(0);
 }

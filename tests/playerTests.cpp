@@ -1,4 +1,4 @@
-// updated 4 August 2022
+// updated 4 August 2023
 
 #include <gtest/gtest.h>
 #include <vector>
@@ -113,8 +113,6 @@ TEST(PlayerTests, healthManagers) {
 
     p.damage(total_hp - 1);
     ASSERT_EQ(p.stat("health"), 1);
-
-    ASSERT_THROW(p.damage(1), AdventureException);
 }
 
 TEST(PlayerTests, addXP) {

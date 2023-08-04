@@ -1,4 +1,4 @@
-// Updated: 28 July 2023
+// Updated: 4 August 2023
 
 #include <string>
 #include <fstream>
@@ -272,6 +272,16 @@ void Player::addItem(Object* item) {
     inventory.push_back(std::shared_ptr<Object>(item));
 }
 
+const Object* Player::accessItem(std::string item) const {
+    for (auto it = inventory.begin(); it != inventory.end(); ++it) {
+        Object* o = it->get();
+        if (o->getName() == item) {
+            return o;
+        }
+    }
+    return nullptr;
+}
+
 std::shared_ptr<Object> Player::removeItem(std::string obj, unsigned int count) {
     for (auto it = inventory.begin(); it != inventory.end(); ++it) {
         Object* o = it->get();
@@ -423,7 +433,6 @@ void Player::removeWealth(unsigned int amount) {
 
 void Player::damage(double dmg) {
     data["health"] = data["health"].get<double>() - dmg;
-    if (data["health"].get<int>() < 1) throw AdventureException("Oh No! You Died.");
 }
 
 void Player::heal(double hp) noexcept {
@@ -483,4 +492,8 @@ void Player::passTime(int minutes) noexcept {
         data["days"] = data["days"].get<int>() + 1;
     }
     data["time"] = t;
+}
+
+bool Player::isDead() const noexcept {
+    return data["health"].get<double>() < 0;
 }
