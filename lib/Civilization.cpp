@@ -1,4 +1,4 @@
-// updated 4 August 2023
+// updated 5 August 2023
 
 #include <string>
 #include <map>
@@ -84,7 +84,7 @@ void Civilization::setTrades(json data) {
                         if (buying.find(std::make_pair(category, name)) == buying.end()) break;
                         name = keys[gen.getRandInt(0, keys.size()-1)];
                     }
-                    int price = bank[name] * (gen.getRandInt(6, 15) / 10);
+                    int price = bank[name] * (gen.getRandInt(6, 15) / 10.0);
                     if (price < 1) price = 1;
                     buying[std::make_pair(category, name)] = std::make_pair(gen.getRandInt(1, 10), price);
                 }
@@ -103,7 +103,7 @@ void Civilization::setTrades(json data) {
                         if (selling.find(std::make_pair(category, name)) == selling.end()) break;
                         name = keys[gen.getRandInt(0, keys.size()-1)];
                     }
-                    int price = bank[name] * (gen.getRandInt(7, 22) / 10);
+                    int price = bank[name] * (gen.getRandInt(7, 22) / 10.0);
                     if (price < 1) price = 1;
                     selling[std::make_pair(category, name)] = std::make_pair(gen.getRandInt(1, 10), price);
                 }
@@ -157,8 +157,8 @@ Civilization* Civilization::load(json data) {
 }
 
 std::string Civilization::printString() const noexcept {
-    if (looted) return "Looted " + name;
-    else if (raided) return "Raided " + name;
+    if (looted) return "looted " + name;
+    else if (raided) return "raided " + name;
     else return name;
 }
 

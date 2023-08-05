@@ -32,7 +32,7 @@
         "value" : 8,
         "target" : ["misc.wood"],
         "recipe" : {"wood" : 1, "stone" : 1},
-        "weight" : 20
+        "weight" : 14
     },
     "metal-axe" : {
         "hitpoints" : 20,

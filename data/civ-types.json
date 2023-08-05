@@ -5,9 +5,9 @@
         "count" : 2,
         "items" : [],
         "loot" : 5,
-        "xp" : 10,
+        "xp" : 100,
         "defense" : 400,
-        "counter-attack" : 150
+        "counter-attack" : 100
     },
     "village" : {
         "buying" : ["resources", "tools"],
@@ -15,7 +15,7 @@
         "count" : 4,
         "items" : ["resources"],
         "loot" : 25,
-        "xp" : 25,
+        "xp" : 250,
         "defense" : 1000,
         "counter-attack" : 300
     },
@@ -25,7 +25,7 @@
         "count" : 6,
         "items" : ["resources", "tools"],
         "loot" : 75,
-        "xp" : 50,
+        "xp" : 400,
         "defense" : 2000,
         "counter-attack" : 500
     },
@@ -35,7 +35,7 @@
         "count" : 15,
         "items" : ["resources", "tools", "weapons", "potions"],
         "loot" : 250,
-        "xp" : 150,
+        "xp" : 750,
         "defense" : 4000,
         "counter-attack" : 750
     },
@@ -45,7 +45,7 @@
         "count" : 5,
         "items" : ["potions", "containers"],
         "loot" : 50,
-        "xp" : 50,
+        "xp" : 350,
         "defense" : 2000,
         "counter-attack" : 400
     },
@@ -65,7 +65,7 @@
         "count" : 4,
         "items" : ["weapons", "wealth"],
         "loot" : 200,
-        "xp" : 250,
+        "xp" : 1000,
         "defense" : 4000,
         "counter-attack" : 1000
     }

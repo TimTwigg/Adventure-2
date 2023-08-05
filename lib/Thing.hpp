@@ -1,4 +1,4 @@
-// updated 5 August 2022
+// updated 5 August 2023
 // base class to join all objects and entities
 
 #ifndef THING_HPP
@@ -15,6 +15,7 @@ class Thing {
         virtual operator std::string() const noexcept = 0;
         // string for printing
         virtual std::string printString() const noexcept;
+        virtual ~Thing() = default;
     
     protected:
         std::string name;

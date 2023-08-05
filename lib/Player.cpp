@@ -1,4 +1,4 @@
-// Updated: 4 August 2023
+// Updated: 5 August 2023
 
 #include <string>
 #include <fstream>
@@ -130,7 +130,10 @@ void Player::level_up() {
     else ratio = DEFAULTS::level_ratio_uncapped;
 
     // upgrade stats
-    data["health"] = static_cast<unsigned int>(data["health"].get<unsigned int>() * ratio);
+    int hp = data["max_health"].get<unsigned int>();
+    int hpIncrease = static_cast<int>(hp * ratio) - hp;
+    data["health"] = static_cast<unsigned int>(data["health"].get<unsigned int>() + hpIncrease);
+    data["max_health"] = static_cast<unsigned int>(data["max_health"].get<unsigned int>() * ratio);
     data["base_damage"] = static_cast<unsigned int>(data["base_damage"].get<unsigned int>() * ratio);
     data["fist_base_damage"] = static_cast<unsigned int>(data["fist_base_damage"].get<unsigned int>() * ratio);
 

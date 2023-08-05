@@ -25,6 +25,9 @@
 - get attacked (bottom of GameEngine mainloop)
 - raiding a civ makes it hostile?
 - balance hunger and thirst. needs to be semi-realistic but not be too nitty-gritty to deal with for player
+- low hunger and thirst has consequences
+- change xp required to level up to scale with level
+- change crafting syntax to remove having to type category. Use Factory instead.
 
 # IDEAS
 - Refresh ht and hp completely at towns? For a price?

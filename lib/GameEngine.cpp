@@ -1,4 +1,4 @@
-// updated 4 August 2023
+// updated 5 August 2023
 
 #include <string>
 #include <memory>
@@ -334,11 +334,12 @@ void GameEngine::mine() {
     if (!unbroken) i->output("You broke your " + tool, configs["colors"]["output"].get<Color>());
     Location& l = map->getRef();
     if (target == "stone deposit") l.addThing(std::shared_ptr<Thing>(new Resource("stone")));
-    else if (target == "metal deposit") l.addThing(std::shared_ptr<Thing>(new Resource("metal")));
-    else if (target == "gold deposit") l.addThing(std::shared_ptr<Thing>(new Resource("gold")));
+    else if (target == "metal deposit") l.addThing(std::shared_ptr<Thing>(new Resource("metal-ore")));
+    else if (target == "gold deposit") l.addThing(std::shared_ptr<Thing>(new Resource("gold-ore")));
 
     player->passTime(60);
     player->reduceHT(3, 1);
+    player->addXP(5);
 }
 
 void GameEngine::chop() {
@@ -376,6 +377,7 @@ void GameEngine::chop() {
 
     player->passTime(60);
     player->reduceHT(3, 1);
+    player->addXP(5);
 }
 
 void GameEngine::dig() {
@@ -413,6 +415,7 @@ void GameEngine::dig() {
 
     player->passTime(60);
     player->reduceHT(3, 1);
+    player->addXP(5);
 }
 
 void GameEngine::eat() {
@@ -597,7 +600,7 @@ void GameEngine::raid() {
 
     // check that the civ is not already raided
     if (civ->isRaided()) {
-        i->output(target + " has already been raided.", configs["colors"]["output"].get<Color>());
+        i->output(target + " has already been raided.", configs["colors"]["error"].get<Color>());
         return;
     }
 
@@ -634,6 +637,7 @@ void GameEngine::raid() {
     i->output("You raided the " + target + " for " + std::to_string(static_cast<int>(dmg)) + " damage!", configs["colors"]["output"].get<Color>());
     if (res) {
         i->output("The " + target + " has been destroyed.", configs["colors"]["output"].get<Color>());
+        player->addXP(civ->getXP());
     }
     else if (!isRanged || (gen.getRandBool() && gen.getRandBool())) {
         // counter attack
@@ -649,10 +653,90 @@ void GameEngine::raid() {
     // time and energy
     player->passTime(10);
     player->reduceHT(3, 1);
+    player->addXP(10);
 }
 
 void GameEngine::loot() {
-    // TODO
+    command = strHelp::reduce(command);
+    // validate target
+    std::string target = command[1];
+    if (!factory.inIndex(target) || factory.getTypeOf(target) != FactoryType::Civ) {
+        i->output("Can't loot a " + target, configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // check if the civ type is actually present
+    Location& l = map->getRef();
+    Civilization* civ = nullptr;
+    for (std::shared_ptr<Thing>& t : l.thingsHere) {
+        if (t->getName() == target) {
+            civ = static_cast<Civilization*>(t.get());
+            break;
+        }
+    }
+    if (civ == nullptr) {
+        i->output("No " + target + " here to loot.", configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // check that the civ is already raided but not looted
+    if (!civ->isRaided()) {
+        i->output(target + " has not been raided yet.", configs["colors"]["error"].get<Color>());
+        return;
+    }
+    else if (civ->isLooted()) {
+        i->output(target + " has already been looted.", configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // add loot items to map
+    std::map<std::pair<std::string, std::string>, int> loot = civ->getLoot();
+    std::string output;
+    if (loot.size() > 0) {
+        std::vector<std::string> itemStrings;
+        std::for_each(loot.begin(), loot.end(), [&](const std::pair<std::pair<std::string, std::string>, int>& item){
+            if (item.second > 1 && (item.first.first == "resources" || item.first.first == "cresources")) {
+                Thing* t = factory.make(item.first.second);
+                Resource* r = static_cast<Resource*>(t);
+                r->add(item.second-1);
+                itemStrings.push_back(r->printString());
+                l.addThing(std::shared_ptr<Thing>(r));
+            }
+            else {
+                for (int i = 0; i < item.second; ++i) {
+                    Thing* t = factory.make(item.first.second);
+                    itemStrings.push_back(t->printString());
+                    l.addThing(std::shared_ptr<Thing>(t));
+                }
+            }
+        });
+
+        // output
+        std::string article;
+        if (itemStrings[0][itemStrings[0].size()-1] == 's') article = "";
+        else if (strHelp::isVowel(itemStrings[0][0])) article = "an ";
+        else article = "a ";
+
+        if (itemStrings.size() == 1) output = "You found " + article + itemStrings[0] + ".";
+        else {
+            std::string list = itemStrings[0];
+            std::for_each(itemStrings.begin()+1, itemStrings.end()-1, [&](const std::string& s){
+                if (s[s.size()-1] == 's') list = list + ", " + s;
+                else if (strHelp::isVowel(s[0])) list = list + ", an " + s;
+                else list = list + ", a " + s;
+            });
+            const std::string& thing = itemStrings[itemStrings.size()-1];
+            if (thing[thing.size()-1] == 's') list = list + ", and " + thing;
+            else list = list + ", and a " + thing;
+            output = "You found " + article + list + ".";
+        }
+    }
+    else output = "You found nothing.";
+
+    i->output(output, configs["colors"]["output"].get<Color>());
+    player->passTime(120);
+    player->reduceHT(5, 2);
+    player->addXP(5);
 }
 
 void GameEngine::trade() {
@@ -924,6 +1008,7 @@ void GameEngine::craft() {
 
     player->passTime(30);
     player->reduceHT(2, 1);
+    player->addXP(1);
 }
 
 void GameEngine::build() {
@@ -1006,6 +1091,7 @@ void GameEngine::smoke() {
             player->removeItem(target, fuelNeeded*DEFAULTS::smoker_items_per_wood);
             player->passTime(DEFAULTS::smoker_wood_burn_time*fuelNeeded);
             player->reduceHT(fuelNeeded, fuelNeeded);
+            player->addXP(3*fuelNeeded);
             i->output("Smoked " + std::to_string(fuelNeeded*DEFAULTS::smoker_items_per_wood) + " " + target, configs["colors"]["info"].get<Color>());
         }
         else {
@@ -1015,6 +1101,7 @@ void GameEngine::smoke() {
             player->removeItem(target, count);
             player->passTime(DEFAULTS::smoker_wood_burn_time*fuelNeeded);
             player->reduceHT(fuelNeeded, fuelNeeded);
+            player->addXP(3*fuelNeeded);
             i->output("Smoked " + std::to_string(count) + " " + target, configs["colors"]["info"].get<Color>());
         }
     }
@@ -1024,8 +1111,9 @@ void GameEngine::smoke() {
         player->removeItem(target);
         player->passTime(DEFAULTS::smoker_wood_burn_time);
         player->reduceHT(1, 1);
+        player->addXP(3);
         i->output("Smoked " + target, configs["colors"]["info"].get<Color>());
-    }    
+    }
 }
 
 void GameEngine::sleep() {
