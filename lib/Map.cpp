@@ -1,4 +1,4 @@
-// updated 14 September 2022
+// updated 9 August 2023
 
 #include <map>
 #include <vector>
@@ -106,6 +106,17 @@ json Location::save() const {
     return j;
 }
 
+std::shared_ptr<Thing> Location::accessThing(std::string name) {
+    std::shared_ptr<Thing> p = nullptr;
+    for (std::shared_ptr<Thing>& t : thingsHere) {
+        if (t->getName() == name) {
+            p = t;
+            break;
+        }
+    }
+    return p;
+}
+
 void Location::addThing(std::shared_ptr<Thing> thing) {
     if (dynamic_cast<Object*>(thing.get()) != nullptr) {
         Object* obj = static_cast<Object*>(thing.get());
@@ -127,6 +138,14 @@ void Location::addThing(std::shared_ptr<Thing> thing) {
         else thingsHere.push_back(thing);
     }
     else thingsHere.push_back(thing);
+}
+
+void Location::removeThing(std::string thing) {
+    std::vector<std::shared_ptr<Thing>>::iterator it;
+    for (it = thingsHere.begin(); it != thingsHere.end(); ++it) {
+        if (it->get()->getName() == thing) break;
+    }
+    thingsHere.erase(it);
 }
 
 Map::Map(const std::string& savepath) : savepath{savepath}, gen{RandomGenerator()}, xy{std::make_pair(0, 0)} {

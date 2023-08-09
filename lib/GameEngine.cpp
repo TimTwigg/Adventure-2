@@ -17,6 +17,7 @@
 #include "Container.hpp"
 #include "Machine.hpp"
 #include "Civilization.hpp"
+#include "Entity.hpp"
 //#include "Animal.hpp"
 //#include "Enemy.hpp"
 #include "Interface.hpp"
@@ -287,7 +288,83 @@ void GameEngine::hp() {
 }
 
 void GameEngine::attack() {
-    // TODO
+    command = strHelp::reduce(command);
+    if (command.size() < 3) {
+        i->output("Incorrect command format: attack [target] [weapon]", configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // validate target
+    std::string target = command[1];
+    FactoryType ftype = factory.getTypeOf(target);
+    if (ftype != FactoryType::Animal && ftype != FactoryType::Enemy) {
+        i->output("You can't attack a " + target, configs["colors"]["error"].get<Color>());
+        return;
+    }
+    Location& l = map->getRef();
+    std::shared_ptr<Thing> t = l.accessThing(target);
+    if (t == nullptr) {
+        i->output("No " + target + " here to attack.", configs["colors"]["error"].get<Color>());
+        return;
+    }
+    Entity* e = static_cast<Entity*>(t.get());
+
+    // validate weapon
+    std::string weapon = command[2];
+    if (factory.getTypeOf(weapon) != FactoryType::Weapon) {
+        i->output("Can't attack a " + target + " with a " + weapon, configs["colors"]["error"].get<Color>());
+        return;
+    }
+    else if (!player->inInventory(weapon)) {
+        i->output("You don't have a " + weapon + " to attack with.", configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // check for ammo if ranged
+    const Weapon* w = static_cast<const Weapon*>(player->accessItem(weapon));
+    bool isRanged = w->weaponType() == "ranged";
+    if (isRanged) {
+        if (!player->inInventory(w->ammoType())) {
+            i->output("You don't have any " + w->ammoType(), configs["colors"]["error"].get<Color>());
+            return;
+        }
+
+        // remove ammo
+        player->removeItem(w->ammoType());
+    }
+
+    // use weapon
+    player->use(weapon);
+
+    // damage
+    double dmg = player->attackDmg(w->getDamage());
+    bool res = e->attack(dmg);
+    i->output("You attacked the " + target + " for " + std::to_string(static_cast<int>(dmg)) + " damage!", configs["colors"]["output"].get<Color>());
+    if (res) {
+        // killed the target
+        i->output("You killed the " + target, configs["colors"]["output"].get<Color>());
+        player->addXP(e->getXP());
+        // add the drops
+        std::vector<std::shared_ptr<Object>> drops = e->getDrops();
+        for (auto& o : drops) l.addThing(o);
+        // remove the target
+        l.removeThing(e->getName());
+    }
+    else if (!isRanged || (gen.getRandBool() && gen.getRandBool())) {
+        // counter attack
+        dmg = e->attack();
+        i->output("The " + target + " counter-attacked! You take " + std::to_string(static_cast<int>(dmg)) + " damage!", configs["colors"]["output"].get<Color>());
+        player->damage(dmg);
+        if (player->isDead()) {
+            i->output("Oh No! You Died :(", configs["colors"]["error"].get<Color>());
+            endGame();
+        }
+    }
+
+    // time and energy
+    player->passTime(5);
+    player->reduceHT(3, 1);
+    player->addXP(5);
 }
 
 void GameEngine::mine() {

@@ -28,6 +28,8 @@
 - low hunger and thirst has consequences
 - change xp required to level up to scale with level
 - change crafting syntax to remove having to type category. Use Factory instead.
+- make name matches more malleable by checking both singular and plural?
+- how does a player heal?
 
 # IDEAS
 - Refresh ht and hp completely at towns? For a price?

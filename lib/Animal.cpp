@@ -1,4 +1,4 @@
-// updated 17 June 2022
+// updated 9 August 2023
 
 #include <string>
 #include <vector>
@@ -33,7 +33,7 @@ Animal::Animal(std::string name) {
     }
 }
 
-unsigned int Animal::attack() noexcept {
+double Animal::attack() noexcept {
     return Formula::animalDamage(damage, gen);
 }
 

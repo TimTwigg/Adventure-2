@@ -1,4 +1,4 @@
-// updated 5 August 2022
+// updated 9 August 2023
 
 #ifndef ENTITY_HPP
 #define ENTITY_HPP
@@ -33,7 +33,7 @@ class Entity : public Thing {
         ENT getType() const noexcept;
         float getHP() const noexcept;
         unsigned int getXP() const noexcept;
-        virtual unsigned int attack() noexcept = 0;
+        virtual double attack() noexcept = 0;
         virtual bool attack(double dmg) noexcept = 0;
         virtual std::vector<std::shared_ptr<Object>> getDrops() noexcept = 0;
     

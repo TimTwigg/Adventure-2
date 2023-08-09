@@ -1,4 +1,4 @@
-// updated 5 August 2022
+// updated 9 August 2023
 
 #ifndef MAP_HPP
 #define MAP_HPP
@@ -29,7 +29,9 @@ struct Location {
     Location(RandomGenerator& gen);
     Location(const std::string& biome, json here);
     json save() const;
+    std::shared_ptr<Thing> accessThing(std::string name);
     void addThing(std::shared_ptr<Thing> thing);
+    void removeThing(std::string thing);
 };
 
 class Map {

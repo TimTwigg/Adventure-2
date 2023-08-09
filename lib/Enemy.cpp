@@ -1,4 +1,4 @@
-// updated 17 June 2022
+// updated 9 August 2023
 
 #include <string>
 #include <vector>
@@ -37,7 +37,7 @@ Enemy::Enemy(std::string name) {
     }
 }
 
-unsigned int Enemy::attack() noexcept {
+double Enemy::attack() noexcept {
     return Formula::enemyDamage(damage, gen);
 }
 

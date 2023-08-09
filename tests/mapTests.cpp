@@ -1,4 +1,4 @@
-// updated 16 June 2022
+// updated 9 August 2023
 
 #include <gtest/gtest.h>
 #include <vector>
@@ -6,6 +6,7 @@
 #include "RandomGenerator.hpp"
 #include "Map.hpp"
 #include "AdventureException.hpp"
+#include "Animal.hpp"
 
 TEST(locationTests, constructor) {
     RandomGenerator g;
@@ -16,6 +17,20 @@ TEST(locationTests, constructor) {
     ASSERT_EQ(l.biome, l2.biome);
     ASSERT_EQ(l.miscHere.size(), l2.miscHere.size());
     ASSERT_EQ(l.thingsHere.size(), l2.thingsHere.size());
+}
+
+TEST(locationTests, addRemoveThing) {
+    RandomGenerator g;
+    Location l{"plains", {}};
+    ASSERT_EQ(l.thingsHere.size(), 0);
+    l.addThing(std::shared_ptr<Thing>(new Animal("snake")));
+    ASSERT_EQ(l.thingsHere.size(), 1);
+    ASSERT_NO_THROW(std::shared_ptr<Thing> t = l.accessThing("snake"));
+    std::shared_ptr<Thing> t = l.accessThing("snake");
+    ASSERT_EQ(l.thingsHere.size(), 1);
+    ASSERT_EQ(t->getName(), "snake");
+    ASSERT_NO_THROW(l.removeThing(t->getName()));
+    ASSERT_EQ(l.thingsHere.size(), 0);
 }
 
 TEST(mapTests, constructor) {
