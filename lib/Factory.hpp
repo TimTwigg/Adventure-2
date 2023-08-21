@@ -1,4 +1,4 @@
-// Updated 28 July 2023
+// Updated 15 August 2023
 
 #ifndef FACTORY_HPP
 #define FACTORY_HPP
@@ -15,6 +15,7 @@ enum class FactoryType {
     Container,
     CraftableResource,
     Enemy,
+    Liquid,
     Machine,
     Resource,
     Tool,
@@ -28,6 +29,7 @@ const std::map<std::string, FactoryType> FactoryTypeMapping = {
     {"containers", FactoryType::Container},
     {"craftableResources", FactoryType::CraftableResource},
     {"enemies", FactoryType::Enemy},
+    {"liquids", FactoryType::Liquid},
     {"machines", FactoryType::Machine},
     {"resources", FactoryType::Resource},
     {"tools", FactoryType::Tool},
@@ -35,7 +37,7 @@ const std::map<std::string, FactoryType> FactoryTypeMapping = {
 };
 
 const std::vector<std::string> FactoryFiles = {
-    "animals", "civ-types", "containers", "craftableResources", "enemies", "machines", "resources", "tools", "weapons"
+    "animals", "civ-types", "containers", "craftableResources", "enemies", "liquids", "machines", "resources", "tools", "weapons"
 };
 
 class Factory {

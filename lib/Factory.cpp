@@ -1,4 +1,4 @@
-// Updated 28 July 2023
+// Updated 15 August 2023
 
 #include <string>
 #include <map>
@@ -11,6 +11,7 @@
 #include "Civilization.hpp"
 #include "Container.hpp"
 #include "Enemy.hpp"
+#include "Liquid.hpp"
 #include "Resource.hpp"
 #include "CResource.hpp"
 #include "Tool.hpp"
@@ -52,6 +53,8 @@ std::string Factory::getFileOf(std::string item) {
             return "craftableResources.json";
         case FactoryType::Enemy:
             return "enemies.json";
+        case FactoryType::Liquid:
+            return "liquids.json";
         case FactoryType::Machine:
             return "machines.json";
         case FactoryType::Resource:
@@ -79,6 +82,8 @@ Thing* Factory::make(std::string item) {
             return new CResource(item);
         case FactoryType::Enemy:
             return new Enemy(item);
+        case FactoryType::Liquid:
+            return new Liquid(item);
         case FactoryType::Machine:
             return new Machine(item);
         case FactoryType::Resource:

@@ -1,4 +1,4 @@
-// updated 22 September 2022
+// updated 21 August 2023
 
 #ifndef CONTAINER_HPP
 #define CONTAINER_HPP
@@ -24,12 +24,15 @@ class Container : public Object {
         Liquid getContent() const noexcept;
         void reduce();
         void empty() noexcept;
+        void fill(std::string liquid);
         std::string getContentName() const noexcept;
+        bool isEmpty() const noexcept;
 
     private:
         std::map<std::string, unsigned int> recipe;
         Liquid content;
         unsigned int amount;
+        unsigned int capacity;
 };
 
 #endif

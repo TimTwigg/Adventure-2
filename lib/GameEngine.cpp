@@ -1,4 +1,4 @@
-// updated 5 August 2023
+// updated 21 August 2023
 
 #include <string>
 #include <memory>
@@ -321,7 +321,7 @@ void GameEngine::attack() {
     }
 
     // check for ammo if ranged
-    const Weapon* w = static_cast<const Weapon*>(player->accessItem(weapon));
+    const Weapon* w = static_cast<const Weapon*>(player->readItem(weapon));
     bool isRanged = w->weaponType() == "ranged";
     if (isRanged) {
         if (!player->inInventory(w->ammoType())) {
@@ -693,7 +693,7 @@ void GameEngine::raid() {
     }
 
     // check for ammo if ranged
-    const Weapon* w = static_cast<const Weapon*>(player->accessItem(weapon));
+    const Weapon* w = static_cast<const Weapon*>(player->readItem(weapon));
     bool isRanged = w->weaponType() == "ranged";
     if (isRanged) {
         if (!player->inInventory(w->ammoType())) {
@@ -1235,7 +1235,84 @@ void GameEngine::time() {
 }
 
 void GameEngine::fill() {
-    // TODO
+    command = strHelp::reduce(command);
+    if (command.size() < 4) {
+        i->output("Incorrect command format: fill [container] [liquid] [source]", configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // validate the container
+    std::string container = command[1];
+    if (factory.getTypeOf(container) != FactoryType::Container) {
+        i->output("You can't fill a " + container, configs["colors"]["error"].get<Color>());
+        return;
+    }
+    if (!player->inInventory(container)) {
+        i->output("You don't have a " + container, configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // validate the liquid
+    std::string liquid = command[2];
+    if (factory.getTypeOf(liquid) != FactoryType::Liquid) {
+        i->output("You can't fill a " + container + " with " + liquid, configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // validate the source
+    std::string source = command[3];
+    if (liquid == "water") {
+        Location loc = map->get();
+        // ocean
+        if (source == "ocean" && loc.biome == "Ocean") {
+            i->output("You can't drink from the ocean!", configs["colors"]["error"].get<Color>());
+            return;
+        }
+        // river(s)
+        else if (source == "river") {
+            if (loc.biome != "River" && std::find(loc.miscHere.begin(), loc.miscHere.end(), "river") == loc.miscHere.end()) {
+                i->output("There's no river to fill up from here.", configs["colors"]["error"].get<Color>());
+                return;
+            }
+        }
+        else {
+            i->output("You can't fill up with water from a " + source, configs["colors"]["error"].get<Color>());
+            return;
+        }
+    }
+    // the requested liquid is not water.
+    // other liquids are not accessible in the wild
+    else {
+        i->output("No " + liquid + " to fill up with here.", configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // find container
+    std::vector<Object*> objects = player->getAll(container);
+    std::vector<Container*> containers;
+    std::for_each(objects.begin(), objects.end(), [&](Object* o){containers.push_back(static_cast<Container*>(o));});
+    Container* cont = nullptr;
+    for (auto c : containers) {
+        if (c->getName() == container && c->isEmpty()) {
+            cont = c;
+            break;
+        }
+    }
+    if (cont == nullptr) {
+        for (auto c : containers) {
+            if (c->getName() == container && c->getContentName() == liquid) {
+                cont = c;
+                break;
+            }
+        }
+    }
+    if (cont == nullptr) {
+        i->output("All of your " + container + "s are full with other liquids!", configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    cont->fill(liquid);
+    i->output("You filled your " + container + " with " + liquid, configs["colors"]["output"].get<Color>());
 }
 
 void GameEngine::train() {

@@ -1,4 +1,4 @@
-// updated 22 September 2022
+// updated 21 August 2023
 
 #include <string>
 #include <sstream>
@@ -21,8 +21,9 @@ Container::Container(std::string name) {
     this->weight = data["weight"].get<double>();
     this->type = OBJCLASS::CONTAINER;
     recipe = data["recipe"].get<std::map<std::string, unsigned int>>();
-    amount = data["amount"].get<unsigned int>();
+    capacity = data["amount"].get<unsigned int>();
     content = Liquid();
+    amount = 0;
 }
 
 Container::Container(std::string name, Liquid contents) : Container{name} {
@@ -64,6 +65,11 @@ void Container::empty() noexcept {
     content = Liquid();
 }
 
+void Container::fill(std::string liquid) {
+    amount = capacity;
+    content = Liquid(liquid);
+}
+
 Container* Container::fromString(const std::string& code) {
     std::stringstream ss{code};
     std::vector<std::string> v;
@@ -84,4 +90,8 @@ Container* Container::fromString(const std::string& code) {
 
 std::string Container::getContentName() const noexcept {
     return content.getName();
+}
+
+bool Container::isEmpty() const noexcept {
+    return content.getName() == "empty";
 }

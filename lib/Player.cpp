@@ -1,4 +1,4 @@
-// Updated: 5 August 2023
+// Updated: 15 August 2023
 
 #include <string>
 #include <fstream>
@@ -275,7 +275,7 @@ void Player::addItem(Object* item) {
     inventory.push_back(std::shared_ptr<Object>(item));
 }
 
-const Object* Player::accessItem(std::string item) const {
+const Object* Player::readItem(std::string item) const {
     for (auto it = inventory.begin(); it != inventory.end(); ++it) {
         Object* o = it->get();
         if (o->getName() == item) {
@@ -283,6 +283,27 @@ const Object* Player::accessItem(std::string item) const {
         }
     }
     return nullptr;
+}
+
+Object* Player::accessItem(std::string item) {
+    for (auto it = inventory.begin(); it != inventory.end(); ++it) {
+        Object* o = it->get();
+        if (o->getName() == item) {
+            return o;
+        }
+    }
+    return nullptr;
+}
+
+std::vector<Object*> Player::getAll(std::string item) {
+    std::vector<Object*> v;
+    for (auto it : inventory) {
+        Object* o = it.get();
+        if (o->getName() == item) {
+            v.push_back(o);
+        }
+    }
+    return v;
 }
 
 std::shared_ptr<Object> Player::removeItem(std::string obj, unsigned int count) {

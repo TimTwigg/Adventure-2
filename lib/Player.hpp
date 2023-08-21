@@ -1,4 +1,4 @@
-// Updated: 4 August 2023
+// Updated: 15 August 2023
 
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
@@ -36,7 +36,9 @@ class Player {
         void addItem(std::string code);
         void addItem(Object* item);
         // access const info on an item in the inventory
-        const Object* accessItem(std::string item) const;
+        const Object* readItem(std::string item) const;
+        Object* accessItem(std::string item);
+        std::vector<Object*> getAll(std::string item);
         // removes the item from inventory and returns it
         // if a resource, remove multiple simultaneously
         // if not a resource, only 1 is removed
