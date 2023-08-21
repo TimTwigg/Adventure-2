@@ -1,4 +1,4 @@
-// Updated: 17 September 2022
+// Updated: 21 August 2023
 
 #ifndef STATDEFAULTS_HPP
 #define STATDEFAULTS_HPP
@@ -24,6 +24,8 @@ namespace DEFAULTS {
     const unsigned int travel_time = 240;
     const unsigned int smoker_items_per_wood = 4;
     const unsigned int smoker_wood_burn_time = 60;
+    const unsigned int furnace_items_per_wood = 2;
+    const unsigned int furnace_wood_burn_time = 45;
 }
 
 #endif

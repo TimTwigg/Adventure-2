@@ -1,4 +1,4 @@
-// updated 4 August 2023
+// updated 21 August 2023
 
 #ifndef GAMEENGINE_HPP
 #define GAMEENGINE_HPP
@@ -65,6 +65,7 @@ class GameEngine {
         void build();
         void recipe();
         void smoke();
+        void smelt();
         void sleep();
         void wait();
         void time();

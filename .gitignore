@@ -31,9 +31,6 @@
 *.out
 *.app
 
-# Build and Run files
-*.bat
-
 # Build directory
 build/
 

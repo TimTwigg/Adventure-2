@@ -132,5 +132,10 @@
         "smoke *item*",
         "Smoking requires both a smoker and a fuel source",
         "Description: Smoke raw food or an item."
+    ],
+    "smelt": [
+        "smelt *item*",
+        "Smelting requires both a furnace and a fuel source",
+        "Description: Smelt ore or materials."
     ]
 }

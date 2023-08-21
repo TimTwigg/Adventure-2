@@ -1,12 +1,9 @@
 # TODO
 - Add enemies to map biome generation
 - peaceful setting
-- Write GameEngine
-- Test GameEngine
 - look around? (list all directions)
 - Binoculars allow to look two blocks across instead of one
 - Replace Liquid class with enum class in Container.hpp
-- Container enable set amount
 - Debug civ setTrades - testing shows selling trades sometimes gets 5 instead of 6 on a town
     - problem is trades are set by randomly choosing a name in the category, trying 10 times to find one
     - which has not been already selected. Might need to change the category as well
@@ -15,11 +12,9 @@
 - Add player-built buildings/stuff
 - chopping trees removes them if not in forest?
 - crafting things like ammo crafts more than 1
-- Add machine use commands (smoke uses smoker already, need to add command for furnace)
 - finish object_info.json - fill in blanks marked by "@@@"
 - finish detailed descriptions in commandUses.json (marked by "Not Implemented")
 - integrate Factory
-    - GameEngine::craft, ??
     - Player
     - Map
 - get attacked (bottom of GameEngine mainloop)
@@ -27,9 +22,9 @@
 - balance hunger and thirst. needs to be semi-realistic but not be too nitty-gritty to deal with for player
 - low hunger and thirst has consequences
 - change xp required to level up to scale with level
-- change crafting syntax to remove having to type category. Use Factory instead.
 - make name matches more malleable by checking both singular and plural?
 - how does a player heal?
+- add backpack-type items to increase carry capacity
 
 # IDEAS
 - Refresh ht and hp completely at towns? For a price?

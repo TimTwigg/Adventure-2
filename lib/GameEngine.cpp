@@ -11,7 +11,6 @@
 #include "Player.hpp"
 #include "Map.hpp"
 #include "Resource.hpp"
-#include "CResource.hpp"
 #include "Tool.hpp"
 #include "Weapon.hpp"
 #include "Container.hpp"
@@ -129,6 +128,8 @@ void GameEngine::run() {
 
         // smoke
         else if (command[0] == "smoke") smoke();
+
+        else if (command[0] == "smelt") smelt();
 
         // sleep
         else if (query == "sleep") sleep();
@@ -1026,39 +1027,38 @@ void GameEngine::trade() {
 
 void GameEngine::craft() {
     command = strHelp::reduce(command);
-    if (command.size() < 3) {
-        i->output("Incorrect command format: craft [type] [to-craft]", configs["colors"]["error"].get<Color>());
+    if (command.size() < 2) {
+        i->output("Incorrect command format: craft [to-craft]", configs["colors"]["error"].get<Color>());
         return;
     }
 
     // validate type
-    std::string type = command[1];
-    if (type != "object" && type != "tool" && type != "weapon" && type != "container" && type != "machine") {
+    std::string target = command[1];
+    FactoryType type = factory.getTypeOf(target);
+    if (type != FactoryType::Container && type != FactoryType::CraftableResource && type != FactoryType::Machine && type != FactoryType::Tool && type != FactoryType::Weapon) {
         i->output("Type must be object/tool/weapon/container/machine", configs["colors"]["error"].get<Color>());
         return;
     }
 
     // check that they have a crafting-bench
-    std::string target = command[2];
+    
     if (!player->inInventory("crafting-bench") && target != "crafting-bench" && target != "hammer") {
         i->output("You need a crafting-bench to craft!", configs["colors"]["error"].get<Color>());
         return;
     }
     // check that they have a hammer if crafting a machine
-    if (type == "machine" && !player->inInventory("hammer")) {
+    if (type == FactoryType::Machine && !player->inInventory("hammer")) {
         i->output("You need a hammer to craft a machine!", configs["colors"]["error"].get<Color>());
         return;
     }
     // validate target
-    std::string file;
-    if (type == "object") file = "craftableResources.json";
-    else file = type + "s.json";
+    std::string file = factory.getFileOf(target);
     json data;
     try {
         data = FileReader::getFromFile(file, target);
     }
     catch (AdventureException e) {
-        i->output("No such " + type + ": " + target, configs["colors"]["error"].get<Color>());
+        i->output("No such object: " + target, configs["colors"]["error"].get<Color>());
         return;
     }
 
@@ -1077,11 +1077,11 @@ void GameEngine::craft() {
     }
 
     // add crafted item
-    if (type == "object") player->addItem(OBJCLASS::CRESOURCE, target);
-    else if (type == "weapon") player->addItem(OBJCLASS::WEAPON, target);
-    else if (type == "tool") player->addItem(OBJCLASS::TOOL, target);
-    else if (type == "container") player->addItem(OBJCLASS::CONTAINER, target);
-    else if (type == "machine") player->addItem(OBJCLASS::MACHINE, target);
+    if (type == FactoryType::CraftableResource) player->addItem(OBJCLASS::CRESOURCE, target);
+    else if (type == FactoryType::Weapon) player->addItem(OBJCLASS::WEAPON, target);
+    else if (type == FactoryType::Tool) player->addItem(OBJCLASS::TOOL, target);
+    else if (type == FactoryType::Container) player->addItem(OBJCLASS::CONTAINER, target);
+    else if (type == FactoryType::Machine) player->addItem(OBJCLASS::MACHINE, target);
 
     player->passTime(30);
     player->reduceHT(2, 1);
@@ -1130,6 +1130,12 @@ void GameEngine::smoke() {
     command = strHelp::reduce(command);
     if (command.size() < 2) {
         i->output("Smoke what?", configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // check that they have a smoker
+    if (!player->inInventory("smoker")) {
+        i->output("You don't have a smoker!", configs["colors"]["error"].get<Color>());
         return;
     }
 
@@ -1190,6 +1196,79 @@ void GameEngine::smoke() {
         player->reduceHT(1, 1);
         player->addXP(3);
         i->output("Smoked " + target, configs["colors"]["info"].get<Color>());
+    }
+}
+
+void GameEngine::smelt() {
+    command = strHelp::reduce(command);
+    if (command.size() < 2) {
+        i->output("Smelt what?", configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // check that they have a furnace
+    if (!player->inInventory("furnace")) {
+        i->output("You don't have a furnace!", configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // check that they have fuel
+    if (!player->inInventory("wood")) {
+        i->output("You need fuel to use the furnace", configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // validate target
+    std::string target = command[1];
+    if (!player->inInventory(target)) {
+        i->output("You don't have a " + target + " to smelt", configs["colors"]["error"].get<Color>());
+        return;
+    }
+    // validate that target is smeltable
+    std::string output;
+    try {
+        output = FileReader::getFromFile("furnace.json", target).get<std::string>();
+    }
+    catch (AdventureException e) {
+        i->output("You can't smelt a " + target, configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // smoke multiple items at once
+    if (command.size() > 2 && command[2] == "all") {
+        int count = player->itemCount(target);
+        int fuelNeeded = std::ceil(static_cast<float>(count) / DEFAULTS::furnace_items_per_wood);
+        if (!player->inInventory("wood", fuelNeeded)) {
+            // not enough fuel for all
+            i->output("Not enough wood", configs["colors"]["error"].get<Color>());
+            fuelNeeded = player->itemCount("wood");
+            player->addItem(OBJCLASS::RESOURCE, output, fuelNeeded*DEFAULTS::furnace_items_per_wood);
+            player->removeItem("wood", fuelNeeded);
+            player->removeItem(target, fuelNeeded*DEFAULTS::furnace_items_per_wood);
+            player->passTime(DEFAULTS::furnace_wood_burn_time*fuelNeeded);
+            player->reduceHT(fuelNeeded, fuelNeeded);
+            player->addXP(3*fuelNeeded);
+            i->output("Smelted " + std::to_string(fuelNeeded*DEFAULTS::furnace_items_per_wood) + " " + target, configs["colors"]["info"].get<Color>());
+        }
+        else {
+            // enough fuel
+            player->addItem(OBJCLASS::RESOURCE, output, count);
+            player->removeItem("wood", fuelNeeded);
+            player->removeItem(target, count);
+            player->passTime(DEFAULTS::furnace_wood_burn_time*fuelNeeded);
+            player->reduceHT(fuelNeeded, fuelNeeded);
+            player->addXP(3*fuelNeeded);
+            i->output("Smelted " + std::to_string(count) + " " + target, configs["colors"]["info"].get<Color>());
+        }
+    }
+    else {
+        player->addItem(OBJCLASS::RESOURCE, output);
+        player->removeItem("wood");
+        player->removeItem(target);
+        player->passTime(DEFAULTS::furnace_wood_burn_time);
+        player->reduceHT(1, 1);
+        player->addXP(3);
+        i->output("Smelted " + target, configs["colors"]["info"].get<Color>());
     }
 }
 

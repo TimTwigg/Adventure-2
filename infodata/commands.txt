@@ -22,6 +22,7 @@ raid
 recipe
 save
 sleep
+smelt
 smoke
 take
 time
