@@ -1,4 +1,4 @@
-// updated 6 April 2022
+// updated 25 August 2023
 
 #ifndef LIQUID_HPP
 #define LIQUID_HPP
@@ -7,6 +7,9 @@
 #include "Object.hpp"
 
 class Liquid : public Object {
+    public:
+        static Liquid* fromString(const std::string& code);
+
     public:
         explicit Liquid(std::string name = "empty");
         operator std::string() const noexcept override;

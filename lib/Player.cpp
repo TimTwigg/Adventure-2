@@ -1,4 +1,4 @@
-// Updated: 15 August 2023
+// Updated: 5 September 2023
 
 #include <string>
 #include <fstream>
@@ -16,8 +16,11 @@
 #include "Tool.hpp"
 #include "Weapon.hpp"
 #include "Machine.hpp"
+#include "Storage.hpp"
 #include "Formulae.hpp"
 #include "StringHelpers.hpp"
+#include "Factory.hpp"
+#include "FileReader.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
 namespace fs = std::filesystem;
@@ -79,14 +82,9 @@ Player* Player::load(const std::string& path) {
     i.close();
     player->data = filedata[0];
 
-    std::for_each(filedata[1].begin(), filedata[1].end(), [&](std::string s){
-        if (s.substr(0, 8) == "RESOURCE") player->inventory.push_back(std::shared_ptr<Object>(Resource::fromString(s)));
-        else if (s.substr(0, 9) == "CRESOURCE") player->inventory.push_back(std::shared_ptr<Object>(CResource::fromString(s)));
-        else if (s.substr(0, 9) == "CONTAINER") player->inventory.push_back(std::shared_ptr<Object>(Container::fromString(s)));
-        else if (s.substr(0, 4) == "TOOL") player->inventory.push_back(std::shared_ptr<Object>(Tool::fromString(s)));
-        else if (s.substr(0, 6) == "WEAPON") player->inventory.push_back(std::shared_ptr<Object>(Weapon::fromString(s)));
-        else if (s.substr(0, 7) == "MACHINE") player->inventory.push_back(std::shared_ptr<Object>(Machine::fromString(s)));
-        else throw AdventureException("Player::Player(const std::string& savepath) (" + path + ") Unrecognized inventory string: " + s);
+    Factory f;
+    std::for_each(filedata[1].begin(), filedata[1].end(), [&](const std::string& code){
+        player->inventory.push_back(std::shared_ptr<Object>(static_cast<Object*>(f.makeFromCode(code))));
     });
 
     return player;
@@ -105,9 +103,8 @@ void Player::save() const {
     json to_go = json::array();
     to_go.push_back(data);
     to_go.push_back(json::array());
-    for (int i = 0; i < inventory.size(); ++i) {
-        Object* o = inventory[i].get();
-        to_go[1].push_back(o->operator std::string());
+    for (std::shared_ptr<Object> obj : inventory) {
+        to_go[1].push_back(obj->operator std::string());
     }
 
     o << to_go.dump(4) << std::endl;
@@ -241,6 +238,9 @@ void Player::addItem(OBJCLASS objClass, std::string obj, unsigned int count) {
             break;
         case OBJCLASS::MACHINE:
             inventory.push_back(std::shared_ptr<Object>(new Machine(obj)));
+            break;
+        case OBJCLASS::STORAGE:
+            inventory.push_back(std::shared_ptr<Object>(new Storage(obj)));
             break;
         default:
             throw AdventureException("Player::addItem invalid OBJCLASS");
@@ -420,6 +420,14 @@ std::string Player::getMe() const noexcept {
     if (diff_r == 0.5) diff = "Easy";
     else if (diff_r == 1.0) diff = "Medium";
     else diff = "Hard";
+
+    int carryWeight = data["carry_weight"].get<int>();
+    if (inInventory("backpack")) {
+        json data = FileReader::getFromFile("storages.json", "backpack");
+        int cap = data["capacity"].get<int>();
+        carryWeight += cap;
+    }
+
     std::string me =
         "  Class          | " + data["skillset"].get<std::string>() + "\n" +
         "  Level          | " + std::to_string(data["level"].get<int>()) + "\n" +
@@ -431,7 +439,7 @@ std::string Player::getMe() const noexcept {
         "  Thirst         | " + std::to_string(data["thirst"].get<int>()) + " / " + std::to_string(data["max_thirst"].get<int>()) + "\n" +
         "  Base Damage    | " + std::to_string(data["base_damage"].get<int>()) + "\n" +
         "  Fist Damage    | " + std::to_string(data["fist_base_damage"].get<int>()) + "\n" +
-        "  Weight Carried | " + std::to_string(static_cast<int>(weight())) + " / " + std::to_string(data["carry_weight"].get<int>()) + "\n" +
+        "  Weight Carried | " + std::to_string(static_cast<int>(weight())) + " / " + std::to_string(carryWeight) + "\n" +
         "  Inventory      | " + listInventory();
     return me;
 }

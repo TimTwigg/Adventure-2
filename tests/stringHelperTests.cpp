@@ -1,4 +1,4 @@
-// updated 17 June 2022
+// Updated 25 August 2023
 
 #include <gtest/gtest.h>
 #include <string>
@@ -91,4 +91,14 @@ TEST(stringHelperTests, reduce) {
     ASSERT_EQ(out[0], "fill");
     ASSERT_EQ(out[1], "bottle");
     ASSERT_EQ(out[2], "river");
+}
+
+TEST(stringHelperTests, join) {
+    std::vector<std::string> v{{"this", "is", "a", "list"}};
+    std::vector<std::string> empty;
+    std::vector<std::string> one{{"list"}};
+    ASSERT_EQ(sh::join(empty), "");
+    ASSERT_EQ(sh::join(one), "list");
+    ASSERT_EQ(sh::join(v), "this, is, a, list");
+    ASSERT_EQ(sh::join(v, "."), "this. is. a. list");
 }

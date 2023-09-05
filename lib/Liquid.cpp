@@ -1,4 +1,4 @@
-// updated 17 June 2022
+// updated 5 September 2023
 
 #include <string>
 #include "Object.hpp"
@@ -36,4 +36,16 @@ int Liquid::getThirst() const noexcept {
 
 int Liquid::getHP() const noexcept {
     return hp;
+}
+
+Liquid* Liquid::fromString(const std::string& code) {
+    std::stringstream ss{code};
+    std::vector<std::string> v;
+    while (ss.good()) {
+        std::string s;
+        std::getline(ss, s, ',');
+        v.push_back(s);
+    }
+
+    return new Liquid(v[1]);
 }

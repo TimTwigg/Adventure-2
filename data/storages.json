@@ -1,0 +1,9 @@
+{
+    "backpack": {
+        "capacity": 30,
+        "carry": true,
+        "value": 15,
+        "weight": 5,
+        "recipe": { "leather": 2, "cord": 1 }
+    }
+}

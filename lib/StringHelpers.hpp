@@ -1,4 +1,4 @@
-// updated 4 August 2022
+// Updated 25 August 2023
 
 #ifndef STRINGHELPERS_HPP
 #define STRINGHELPERS_HPP
@@ -26,6 +26,8 @@ namespace strHelp {
     std::vector<std::string> reduce(const std::vector<std::string>& v, const std::vector<std::string>& words = strHelp::uWords);
     // check if string is a positive number
     bool isNumber(const std::string& s);
+    // join a vector of strings into one string, separated by the given delimiter
+    std::string join(std::vector<std::string> strings, std::string delim = ",");
 }
 
 #endif

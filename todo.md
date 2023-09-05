@@ -24,7 +24,9 @@
 - change xp required to level up to scale with level
 - make name matches more malleable by checking both singular and plural?
 - how does a player heal?
-- add backpack-type items to increase carry capacity
+- add command to put items in storage units
+    - only able to put stuff into static storages? or backpack as well?
+- add static storage units to storages.json
 
 # IDEAS
 - Refresh ht and hp completely at towns? For a price?
@@ -43,7 +45,7 @@
 
 # MAINLOOP QUESTION
 Game Engine in C++ but prompt querying in python so I can use prompt_toolkit to get auto-completions and so on? If so, call python from C++ mainloop, or call C++ functions from python mainloop?
-Could create a c++ wrapper on c++ GameEngine taking in int argument for function number, and then use python mainloop to call it.
+Could create a c++ wrapper on c++ GameEngine taking in int argument for function number, and then use python mainloop to call it. Or I create my own C++ auto-complete?
 
 # ACTION QUESTIONS
 ## Sleep

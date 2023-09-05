@@ -1,4 +1,4 @@
-// updated 21 August 2023
+// updated 5 September 2023
 
 #include <string>
 #include <memory>
@@ -17,6 +17,7 @@
 #include "Machine.hpp"
 #include "Civilization.hpp"
 #include "Entity.hpp"
+#include "Storage.hpp"
 //#include "Animal.hpp"
 //#include "Enemy.hpp"
 #include "Interface.hpp"
@@ -610,6 +611,14 @@ void GameEngine::take() {
             break;
         }
     }
+    if (obj->getType() == OBJCLASS::STORAGE) {
+        Storage* s = static_cast<Storage*>(obj);
+        if (!s->isCarryable()) {
+            i->output("Can't pick up a " + target, configs["colors"]["error"].get<Color>());
+            return;
+        }
+    }
+
     if (obj == nullptr) i->output("No " + target + " to take here", configs["colors"]["error"].get<Color>());
     else {
         if (obj->getType() == OBJCLASS::RESOURCE || obj->getType() == OBJCLASS::CRESOURCE) {
@@ -1035,13 +1044,12 @@ void GameEngine::craft() {
     // validate type
     std::string target = command[1];
     FactoryType type = factory.getTypeOf(target);
-    if (type != FactoryType::Container && type != FactoryType::CraftableResource && type != FactoryType::Machine && type != FactoryType::Tool && type != FactoryType::Weapon) {
+    if (type != FactoryType::Container && type != FactoryType::CraftableResource && type != FactoryType::Machine && type != FactoryType::Tool && type != FactoryType::Weapon && type != FactoryType::Storage) {
         i->output("Type must be object/tool/weapon/container/machine", configs["colors"]["error"].get<Color>());
         return;
     }
 
     // check that they have a crafting-bench
-    
     if (!player->inInventory("crafting-bench") && target != "crafting-bench" && target != "hammer") {
         i->output("You need a crafting-bench to craft!", configs["colors"]["error"].get<Color>());
         return;
@@ -1082,7 +1090,15 @@ void GameEngine::craft() {
     else if (type == FactoryType::Tool) player->addItem(OBJCLASS::TOOL, target);
     else if (type == FactoryType::Container) player->addItem(OBJCLASS::CONTAINER, target);
     else if (type == FactoryType::Machine) player->addItem(OBJCLASS::MACHINE, target);
+    else if (type == FactoryType::Storage) {
+        if (data["carry"].get<bool>()) player->addItem(OBJCLASS::STORAGE, target);
+        else {
+            Location& l = map->getRef();
+            l.addThing(std::shared_ptr<Thing>(factory.make(target)));
+        }
+    }
 
+    i->output("Crafted " + target, configs["colors"]["output"].get<Color>());
     player->passTime(30);
     player->reduceHT(2, 1);
     player->addXP(1);
