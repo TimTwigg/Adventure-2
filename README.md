@@ -4,7 +4,7 @@ Text Based Sandbox Adventure Game. I began this project to practice C++ design p
 
 ## To Play
 
-<u>Note:</u> The game relies on an Interface class to interact with the user. Currently, this is implemented for Windows only.
+<u>Note:</u> The game relies on an Interface class to interact with the user. Currently, this is implemented for Windows only. The game is basically playable, but is still in development.
 
 Download the repo files. <br/>
 Run `build.bat` to build the executable. <br/>
