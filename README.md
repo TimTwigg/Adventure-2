@@ -22,3 +22,7 @@ A few other classes and function collections exist for utility:
 - Colors, ScreenInstructions, StatDefaults, and TextArt define some constant values.
 - RandomGenerator and GameData are utility classes used in many parts of the program.
 - Formulae, StringHelpers, and FileReader are collections of functions to manage specific types of operations.
+
+## Testing
+
+Unit testing is managed through the GoogleTest framework.
