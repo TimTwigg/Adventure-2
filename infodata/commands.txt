@@ -20,10 +20,12 @@ mine
 me
 raid
 recipe
+retrieve
 save
 sleep
 smelt
 smoke
+store
 take
 time
 train

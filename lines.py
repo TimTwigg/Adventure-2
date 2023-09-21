@@ -1,4 +1,4 @@
-# updated 5 September 2023
+# updated 21 September 2023
 # Counts the number of lines in code files
 
 from pathlib import Path
@@ -19,9 +19,10 @@ def countlines(f_list):
     return count
 
 p = Path()
+count1 = countlines([Path("main.cpp")])
 libP = p / "lib"
 files = [i.resolve() for i in libP.iterdir() if i.name != "json.hpp"]
-count1 = countlines(files)
+count1 += countlines(files)
 print(f"\nCode Files: {count1} lines ({len(files)} files)")
 
 breakdown.append("\nTest Files:")

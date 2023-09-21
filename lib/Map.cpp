@@ -1,4 +1,4 @@
-// updated 9 August 2023
+// updated 21 September 2023
 
 #include <map>
 #include <vector>
@@ -26,10 +26,13 @@ namespace fs = std::filesystem;
 
 Location::Location() {}
 
-Location::Location(RandomGenerator& gen) {
+Location::Location(RandomGenerator& gen, std::vector<std::string> neighbors) {
     json data = FileReader::readFile("biomes.json");
     std::vector<std::string> biomes;
     for (auto [k, _] : data.items()) biomes.push_back(k);
+    // add them twice to increase likelihood of getting consistent biomes
+    biomes.insert(biomes.end(), neighbors.begin(), neighbors.end());
+    biomes.insert(biomes.end(), neighbors.begin(), neighbors.end());
     int index = gen.getRandInt(0, biomes.size()-1);
     biome = biomes[index];
     data = data[biome];
@@ -252,6 +255,20 @@ std::pair<int, int> Map::getCoords(Dir d) {
             coords = std::make_pair(xy.first - 1, xy.second);
             break;
     }
-    if (db.find(coords) == db.end()) db[coords] = Location(gen);
+    if (db.find(coords) == db.end()) db[coords] = Location(gen, getNeighborBiomes(coords.first, coords.second));
     return coords;
+}
+
+std::vector<std::string> Map::getNeighborBiomes(int x, int y) {
+    std::vector<std::string> neighbors;
+
+    const int xShifts[] = { -1, -1, -1,  1, 1, 1,  0, 0 };
+    const int yShifts[] = { -1,  0,  1, -1, 0, 1, -1, 1 };
+
+    for (int i = 0; i < 8; ++i) {
+        std::pair<int, int> coords = std::make_pair(x + xShifts[i], y + yShifts[i]);
+        if (db.find(coords) != db.end()) neighbors.push_back(db[coords].biome);
+    }
+
+    return neighbors;
 }

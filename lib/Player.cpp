@@ -1,4 +1,4 @@
-// Updated: 5 September 2023
+// Updated: 21 September 2023
 
 #include <string>
 #include <fstream>
@@ -112,15 +112,17 @@ void Player::save() const {
 }
 
 void Player::level_up() {
-    if (data["xp"].get<int>() < DEFAULTS::xp_per_level) return;
+    int level = data["level"].get<int>();
+    int xpNeeded = Formula::xpToLevelUp(level);
+    if (data["xp"].get<int>() < xpNeeded) return;
 
-    int excess_xp = data["xp"].get<int>() - DEFAULTS::xp_per_level;
-    data["level"] = data["level"].get<unsigned int>() + 1;
+    int excess_xp = data["xp"].get<int>() - xpNeeded;
+    data["level"] = level + 1;
     data["xp"] = excess_xp;
 
     // get level-based ratio for stat upgrades
     double ratio;
-    unsigned int level = data["level"].get<unsigned int>();
+    ++level;
     if (level < DEFAULTS::level_1) ratio = DEFAULTS::level_ratio_1;
     else if (level < DEFAULTS::level_2) ratio = DEFAULTS::level_ratio_2;
     else if (level < DEFAULTS::level_3) ratio = DEFAULTS::level_ratio_3;

@@ -1,4 +1,4 @@
-// updated 5 September 2023
+// updated 21 September 2023
 
 #include <string>
 #include <memory>
@@ -109,6 +109,12 @@ void GameEngine::run() {
         // drop
         else if (command[0] == "drop") drop();
 
+        // store
+        else if (command[0] == "store") store();
+
+        // retrieve (item from storage)
+        else if (command[0] == "retrieve") retrieve();
+
         // raid
         else if (command[0] == "raid") raid();
 
@@ -130,6 +136,7 @@ void GameEngine::run() {
         // smoke
         else if (command[0] == "smoke") smoke();
 
+        // smelt
         else if (command[0] == "smelt") smelt();
 
         // sleep
@@ -185,6 +192,7 @@ void GameEngine::run() {
         }
 
         // get attacked if appropriate
+        // TODO
 
     }
     endGame();
@@ -655,6 +663,101 @@ void GameEngine::drop() {
         l.addThing(player->removeItem(target, num));
     }
     else i->output("You don't have " + target + " to drop!", configs["colors"]["error"].get<Color>());
+}
+
+void GameEngine::store() {
+    command = strHelp::reduce(command);
+    if (command.size() < 3) {
+        i->output("Incorrect Command Format: store [object] [storage]", configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // validate object
+    std::string obj = command[1];
+    if (!player->inInventory(obj)) {
+        i->output("You don't have a " + obj, configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // validate storage
+    std::string storage = command[2];
+    Storage* s = nullptr;
+    if (factory.getTypeOf(storage) != FactoryType::Storage) {
+        i->output("You can't store a " + obj + " in a " + storage, configs["colors"]["error"].get<Color>());
+        return;
+    }
+    json data = FileReader::getFromFile("storages.json", storage);
+    if (data["carry"].get<bool>()) {
+        if (!player->inInventory(storage)) {
+            i->output("You don't have a " + storage, configs["colors"]["error"].get<Color>());
+            return;
+        }
+        s = static_cast<Storage*>(player->accessItem(storage));
+    }
+    else {
+        Location& l = map->getRef();
+        for (std::shared_ptr<Thing>& t : l.thingsHere) {
+            if (t->getName() == storage) {
+                s = static_cast<Storage*>(t.get());
+                break;
+            }
+        }
+        if (s == nullptr) {
+            i->output("There's no " + storage + " here to store your " + obj, configs["colors"]["error"].get<Color>());
+            return;
+        }
+    }
+
+    s->store(player->removeItem(obj));
+    i->output("Stored " + obj + " in the " + storage, configs["colors"]["output"].get<Color>());
+}
+
+void GameEngine::retrieve() {
+    command = strHelp::reduce(command);
+    if (command.size() < 3) {
+        i->output("Incorrect Command Format: retrieve [object] [storage]", configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    // validate storage
+    std::string storage = command[2];
+    Storage* s = nullptr;
+    if (factory.getTypeOf(storage) != FactoryType::Storage) {
+        i->output("You can't retrieve items from a " + storage, configs["colors"]["error"].get<Color>());
+        return;
+    }
+    json data = FileReader::getFromFile("storages.json", storage);
+    if (data["carry"].get<bool>()) {
+        if (!player->inInventory(storage)) {
+            i->output("You don't have a " + storage, configs["colors"]["error"].get<Color>());
+            return;
+        }
+        s = static_cast<Storage*>(player->accessItem(storage));
+    }
+    else {
+        Location& l = map->getRef();
+        for (std::shared_ptr<Thing>& t : l.thingsHere) {
+            if (t->getName() == storage) {
+                s = static_cast<Storage*>(t.get());
+                break;
+            }
+        }
+        if (s == nullptr) {
+            i->output("There's no " + storage + " here", configs["colors"]["error"].get<Color>());
+            return;
+        }
+    }
+
+    // validate object
+    std::string obj = command[1];
+    if (!s->contains(obj)) {
+        i->output("There's no " + obj + " in the " + storage, configs["colors"]["error"].get<Color>());
+        return;
+    }
+
+    auto o = s->remove(obj);
+    player->addItem(static_cast<Object*>(factory.makeFromCode(o->operator std::string())));
+    i->output("Retrieved the " + obj + " from the " + storage, configs["colors"]["output"].get<Color>());
 }
 
 void GameEngine::raid() {

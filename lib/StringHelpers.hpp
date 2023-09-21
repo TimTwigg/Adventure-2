@@ -1,4 +1,4 @@
-// Updated 25 August 2023
+// Updated 21 September 2023
 
 #ifndef STRINGHELPERS_HPP
 #define STRINGHELPERS_HPP
@@ -9,7 +9,7 @@
 namespace strHelp {
     // unimportant words list
     const std::vector<std::string> uWords = {
-        "the", "is", "a", "an", "from", "out", "of", "with", "this"
+        "the", "is", "a", "an", "from", "out", "of", "with", "this", "in", "my"
     };
 
     // remove whitespace

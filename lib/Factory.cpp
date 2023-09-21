@@ -1,4 +1,4 @@
-// Updated 5 September 2023
+// Updated 21 September 2023
 
 #include <string>
 #include <map>
@@ -113,5 +113,5 @@ Thing* Factory::makeFromCode(std::string code) {
     else if (code.substr(0, 6) == "ANIMAL") return Animal::fromString(code);
     else if (code.substr(0, 5) == "ENEMY") return Enemy::fromString(code);
     else if (code.substr(0, 6) == "LIQUID") return Liquid::fromString(code);
-    else throw AdventureException("Factory::makeFromCode Did not recognize code.");
+    else throw AdventureException("Factory::makeFromCode Did not recognize code: " + code);
 }

@@ -5,5 +5,12 @@
         "value": 15,
         "weight": 5,
         "recipe": { "leather": 2, "cord": 1 }
+    },
+    "chest": {
+        "capacity": 100,
+        "carry": false,
+        "value": 25,
+        "weight": 44,
+        "recipe": { "wood": 6, "metal": 1 }
     }
 }

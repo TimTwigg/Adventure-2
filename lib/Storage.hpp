@@ -1,4 +1,4 @@
-// Updated 5 September 2023
+// Updated 21 September 2023
 
 #ifndef STORAGE_HPP
 #define STORAGE_HPP
@@ -16,6 +16,7 @@ class Storage : public Object {
     public:
         explicit Storage(std::string name);
         operator std::string() const noexcept override;
+        std::string printString() const noexcept override;
         bool isCarryable() const noexcept;
         std::map<std::string, unsigned int> getRecipe() const noexcept;
         // store items in the storage unit
@@ -24,6 +25,7 @@ class Storage : public Object {
         std::shared_ptr<Object> remove(std::string item, int count = 1);
         int getWeight() const noexcept override;
         int getCapacity() const noexcept;
+        bool contains(std::string item);
 
     private:
         std::vector<std::string> stringifyContents() const noexcept;

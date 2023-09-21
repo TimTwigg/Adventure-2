@@ -1,7 +1,8 @@
-// updated 4 August 2023
+// updated 21 September 2023
 
 #include "Formulae.hpp"
 #include "RandomGenerator.hpp"
+#include "StatDefaults.hpp"
 
 double Formula::animalDamage(double baseDamage, RandomGenerator& gen, int diff_ratio) {
     double modifier = gen.getRandInt(5, 15) / 10.0;
@@ -25,4 +26,8 @@ double Formula::civilizationDamage(double baseDamage, RandomGenerator& gen, int 
     double modifier = gen.getRandInt(8, 18) / 10.0;
     int bonus = gen.getRandInt(2, 6) * 5;
     return baseDamage * modifier * diff_ratio + bonus;
+}
+
+int Formula::xpToLevelUp(int currentLevel) {
+    return (currentLevel + 1) * DEFAULTS::xp_per_level;
 }

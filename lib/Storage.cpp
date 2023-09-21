@@ -1,4 +1,4 @@
-// Updated 5 September 2023
+// Updated 21 September 2023
 
 #include <string>
 #include <map>
@@ -30,6 +30,13 @@ Storage::Storage(std::string name) {
 
 Storage::operator std::string() const noexcept {
     return "STORAGE, " + name + "; " + strHelp::join(stringifyContents(), ";");
+}
+
+std::string Storage::printString() const noexcept {
+    if (contents.size() < 1) return "empty " + name;
+    std::vector<std::string> contentStrings;
+    for (auto o : contents) contentStrings.push_back(o->printString());
+    return name + "(" + strHelp::join(contentStrings) + ")";
 }
 
 bool Storage::isCarryable() const noexcept {
@@ -125,6 +132,13 @@ int Storage::getWeight() const noexcept {
 
 int Storage::getCapacity() const noexcept {
     return capacity;
+}
+
+bool Storage::contains(std::string item) {
+    for (auto it : contents) {
+        if (it->getName() == item) return true;
+    }
+    return false;
 }
 
 Storage* Storage::fromString(const std::string& code) {

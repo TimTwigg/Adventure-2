@@ -48,6 +48,14 @@
         "drop *object-name*",
         "Description: Drop something from your inventory."
     ],
+    "store": [
+        "store *object-name* *storage*",
+        "Description: Store something in a storage container."
+    ],
+    "retrieve": [
+        "retrieve *object-name* *storage*",
+        "Description: Retrieve an item from a storage container."
+    ],
     "craft": [
         "craft *object*",
         "Description: Craft an object with resources from your inventory."
