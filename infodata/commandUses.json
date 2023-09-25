@@ -4,7 +4,7 @@
         "Description: Move in a certain direction."
     ],
     "look": [
-        "look [here] [*direction*]",
+        "look [here|around|north|east|south|west]",
         "Description: Look at a tile, either the current one or an adjacent one."
     ],
     "eat": [

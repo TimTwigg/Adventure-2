@@ -1,4 +1,4 @@
-// updated 5 August 2023
+// updated 25 September 2023
 
 #include <string>
 #include <map>
@@ -111,8 +111,13 @@ void Civilization::setTrades(json data) {
 
             // loot items
             trades = loots.size();
+            std::cout << trades << std::endl;
             if (trades > 0) {
                 std::string category = loots[gen.getRandInt(0, trades-1)];
+                if (category == "wealth") {
+                    loot[std::make_pair(category, category)] = gen.getRandInt(1, 6) * value;
+                    continue;
+                }
                 // TODO: REMOVE THIS IF STATEMENT ONCE ANIMALS, POTIONS, ETC HAVE BEEN ADDED ABOVE
                 if (keybank.find(category) != keybank.end()) {
                     std::vector<std::string> keys = keybank[category];
@@ -211,6 +216,7 @@ unsigned int Civilization::getWealth() const noexcept {
 }
 
 double Civilization::attack() noexcept {
+    if (damage == 0) return 0;
     return Formula::civilizationDamage(damage, gen);
 }
 

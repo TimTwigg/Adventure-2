@@ -1,4 +1,4 @@
-// updated 21 September 2023
+// updated 25 September 2023
 
 #include <string>
 #include <memory>
@@ -238,7 +238,9 @@ void GameEngine::printLocation(Location l, bool farOff) {
         std::string list = here[0];
         std::string article;
         if (list[list.size()-1] == 's') article = "are";
-        else article = "is";
+        else {
+            article = "is " + chooseArticle(here[0]);
+        }
 
         std::for_each(here.begin()+1, here.end()-1, [&](const std::string& s){
             if (s[s.size()-1] == 's') list = list + ", " + s;
@@ -257,6 +259,17 @@ void GameEngine::look() {
     else if (command[1] == "east") printLocation(map->get(Dir::EAST), true);
     else if (command[1] == "south") printLocation(map->get(Dir::SOUTH), true);
     else if (command[1] == "west") printLocation(map->get(Dir::WEST), true);
+    else if (command[1] == "around") {
+        printLocation(map->get());
+        i->output("To the North: ", configs["colors"]["output"].get<Color>(), false);
+        printLocation(map->get(Dir::NORTH), true);
+        i->output("To the East: ", configs["colors"]["output"].get<Color>(), false);
+        printLocation(map->get(Dir::EAST), true);
+        i->output("To the South: ", configs["colors"]["output"].get<Color>(), false);
+        printLocation(map->get(Dir::SOUTH), true);
+        i->output("To the West: ", configs["colors"]["output"].get<Color>(), false);
+        printLocation(map->get(Dir::WEST), true);
+    }
     else i->output("Could not recognize command, try 'look [north | east | south | west]'", configs["colors"]["error"].get<Color>());
 }
 
@@ -832,11 +845,13 @@ void GameEngine::raid() {
     else if (!isRanged || (gen.getRandBool() && gen.getRandBool())) {
         // counter attack
         dmg = civ->attack();
-        i->output("The " + target + " counter-attacked! You take " + std::to_string(static_cast<int>(dmg)) + " damage!", configs["colors"]["output"].get<Color>());
-        player->damage(dmg);
-        if (player->isDead()) {
-            i->output("Oh No! You Died :(", configs["colors"]["error"].get<Color>());
-            endGame();
+        if (dmg > 0) {
+            i->output("The " + target + " counter-attacked! You take " + std::to_string(static_cast<int>(dmg)) + " damage!", configs["colors"]["output"].get<Color>());
+            player->damage(dmg);
+            if (player->isDead()) {
+                i->output("Oh No! You Died :(", configs["colors"]["error"].get<Color>());
+                endGame();
+            }
         }
     }
 
@@ -885,7 +900,11 @@ void GameEngine::loot() {
     if (loot.size() > 0) {
         std::vector<std::string> itemStrings;
         std::for_each(loot.begin(), loot.end(), [&](const std::pair<std::pair<std::string, std::string>, int>& item){
-            if (item.second > 1 && (item.first.first == "resources" || item.first.first == "cresources")) {
+            if (item.first.first == "wealth") {
+                itemStrings.push_back("treasure hoard");
+                player->addWealth(item.second);
+            }
+            else if (item.second > 1 && (item.first.first == "resources" || item.first.first == "cresources")) {
                 Thing* t = factory.make(item.first.second);
                 Resource* r = static_cast<Resource*>(t);
                 r->add(item.second-1);
@@ -907,7 +926,7 @@ void GameEngine::loot() {
         else if (strHelp::isVowel(itemStrings[0][0])) article = "an ";
         else article = "a ";
 
-        if (itemStrings.size() == 1) output = "You found " + article + itemStrings[0] + ".";
+        if (itemStrings.size() == 1) output = "You found a few coins, and " + article + itemStrings[0] + ".";
         else {
             std::string list = itemStrings[0];
             std::for_each(itemStrings.begin()+1, itemStrings.end()-1, [&](const std::string& s){
@@ -918,11 +937,12 @@ void GameEngine::loot() {
             const std::string& thing = itemStrings[itemStrings.size()-1];
             if (thing[thing.size()-1] == 's') list = list + ", and " + thing;
             else list = list + ", and a " + thing;
-            output = "You found " + article + list + ".";
+            output = "You found a few coins, " + article + list + ".";
         }
     }
-    else output = "You found nothing.";
+    else output = "You found nothing except a few coins.";
 
+    player->addWealth(civ->getWealth());
     i->output(output, configs["colors"]["output"].get<Color>());
     player->passTime(120);
     player->reduceHT(5, 2);
@@ -1147,6 +1167,10 @@ void GameEngine::craft() {
     // validate type
     std::string target = command[1];
     FactoryType type = factory.getTypeOf(target);
+    if (type == FactoryType::None) {
+        i->output("What is " + chooseArticle(target) + " " + target + "?", configs["colors"]["error"].get<Color>());
+        return;
+    }
     if (type != FactoryType::Container && type != FactoryType::CraftableResource && type != FactoryType::Machine && type != FactoryType::Tool && type != FactoryType::Weapon && type != FactoryType::Storage) {
         i->output("Type must be object/tool/weapon/container/machine", configs["colors"]["error"].get<Color>());
         return;

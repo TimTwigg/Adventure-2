@@ -52,7 +52,7 @@
     "shipwreck" : {
         "buying" : [],
         "selling" : [],
-        "count" : 1,
+        "count" : 2,
         "items" : ["wealth", "containers"],
         "loot" : 15,
         "xp" : 15,

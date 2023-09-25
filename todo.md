@@ -1,7 +1,6 @@
 # TODO
 - Add enemies to map biome generation
 - peaceful setting
-- look around? (list all directions)
 - Binoculars allow to look two blocks across instead of one
 - Replace Liquid class with enum class in Container.hpp?
 - Debug civ setTrades - testing shows selling trades sometimes gets 5 instead of 6 on a town
