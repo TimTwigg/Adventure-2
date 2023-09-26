@@ -4,8 +4,8 @@
         "Description: Move in a certain direction."
     ],
     "look": [
-        "look [here|around|north|east|south|west]",
-        "Description: Look at a tile, either the current one or an adjacent one."
+        "look [here|around|north|east|south|west] [binoculars]",
+        "Description: Look at a tile, either the current one or an adjacent one. Using binoculars allows you to look two tiles over in a certain direction."
     ],
     "eat": [
         "eat *food-item*",

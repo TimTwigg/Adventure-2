@@ -1,7 +1,7 @@
 {
     "wood-spear" : {
         "type" : "melee",
-        "m-damage" : 0.75,
+        "m-damage" : 1,
         "r-damage" : 0,
         "hitpoints" : 10,
         "value" : 3,
@@ -10,7 +10,7 @@
     },
     "stone-spear" : {
         "type" : "melee",
-        "m-damage" : 1,
+        "m-damage" : 1.25,
         "r-damage" : 0,
         "hitpoints" : 15,
         "value" : 6,
@@ -28,7 +28,7 @@
     },
     "wood-sword" : {
         "type" : "melee",
-        "m-damage" : 0.75,
+        "m-damage" : 1.25,
         "r-damage" : 0,
         "hitpoints" : 15,
         "value" : 7,
@@ -37,7 +37,7 @@
     },
     "stone-sword" : {
         "type" : "melee",
-        "m-damage" : 1,
+        "m-damage" : 1.5,
         "r-damage" : 0,
         "hitpoints" : 20,
         "value" : 9,
@@ -60,7 +60,7 @@
         "r-damage" : 2,
         "hitpoints" : 20,
         "value" : 10,
-        "recipe" : {"wood" : 1, "string" : 1},
+        "recipe" : {"wood" : 1, "cord" : 1},
         "weight" : 8
     },
     "dart-gun" : {

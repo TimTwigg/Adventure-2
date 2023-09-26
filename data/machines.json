@@ -3,7 +3,7 @@
         "requires" : ["wood"],
         "value" : 20,
         "weight": 40,
-        "recipe" : {"stone" : 3, "metal" : 1}
+        "recipe" : {"stone" : 4}
     },
     "smoker" : {
         "requires" : ["wood"],

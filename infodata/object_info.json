@@ -374,7 +374,7 @@
         "Category: MACHINE",
         "Value: 20",
         "Weight: 40",
-        "Acquire: craft from 3 stone and 1 metal",
+        "Acquire: craft from 4 stone",
         "Requires fuel"
     ],
     "smoker": [
@@ -560,7 +560,7 @@
         "Category: WEAPON",
         "Value: 10",
         "Weight: 8",
-        "Acquire: craft from 1 wood and 1 string",
+        "Acquire: craft from 1 wood and 1 cord",
         "Uses: 20",
         "Melee damage ratio: 0",
         "Ranged damage ratio: 2",

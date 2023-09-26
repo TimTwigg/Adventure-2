@@ -1,4 +1,4 @@
-// updated 25 September 2023
+// updated 26 September 2023
 
 #include <string>
 #include <memory>
@@ -255,10 +255,50 @@ void GameEngine::printLocation(Location l, bool farOff) {
 
 void GameEngine::look() {
     if (command.size() == 1 || command[1] == "here") printLocation(map->get());
-    else if (command[1] == "north") printLocation(map->get(Dir::NORTH), true);
-    else if (command[1] == "east") printLocation(map->get(Dir::EAST), true);
-    else if (command[1] == "south") printLocation(map->get(Dir::SOUTH), true);
-    else if (command[1] == "west") printLocation(map->get(Dir::WEST), true);
+    else if (command[1] == "north") {
+        printLocation(map->get(Dir::NORTH), true);
+        if (command.size() == 3 && command[2] == "binoculars") {
+            if (!player->inInventory("binoculars")) {
+                i->output("You don't have any binoculars!", configs["colors"]["error"].get<Color>());
+                return;
+            }
+            i->output("To the far North: ", configs["colors"]["output"].get<Color>(), false);
+            printLocation(map->get(Dir::NORTH, 2), true);
+        }
+    }
+    else if (command[1] == "east") {
+        printLocation(map->get(Dir::EAST), true);
+        if (command.size() == 3 && command[2] == "binoculars") {
+            if (!player->inInventory("binoculars")) {
+                i->output("You don't have any binoculars!", configs["colors"]["error"].get<Color>());
+                return;
+            }
+            i->output("To the far East: ", configs["colors"]["output"].get<Color>(), false);
+            printLocation(map->get(Dir::EAST, 2), true);
+        }
+    }
+    else if (command[1] == "south") {
+        printLocation(map->get(Dir::SOUTH), true);
+        if (command.size() == 3 && command[2] == "binoculars") {
+            if (!player->inInventory("binoculars")) {
+                i->output("You don't have any binoculars!", configs["colors"]["error"].get<Color>());
+                return;
+            }
+            i->output("To the far South: ", configs["colors"]["output"].get<Color>(), false);
+            printLocation(map->get(Dir::SOUTH, 2), true);
+        }
+    }
+    else if (command[1] == "west") {
+        printLocation(map->get(Dir::WEST), true);
+        if (command.size() == 3 && command[2] == "binoculars") {
+            if (!player->inInventory("binoculars")) {
+                i->output("You don't have any binoculars!", configs["colors"]["error"].get<Color>());
+                return;
+            }
+            i->output("To the far West: ", configs["colors"]["output"].get<Color>(), false);
+            printLocation(map->get(Dir::WEST, 2), true);
+        }
+    }
     else if (command[1] == "around") {
         printLocation(map->get());
         i->output("To the North: ", configs["colors"]["output"].get<Color>(), false);
@@ -270,7 +310,7 @@ void GameEngine::look() {
         i->output("To the West: ", configs["colors"]["output"].get<Color>(), false);
         printLocation(map->get(Dir::WEST), true);
     }
-    else i->output("Could not recognize command, try 'look [north | east | south | west]'", configs["colors"]["error"].get<Color>());
+    else i->output("Could not recognize command, try 'look [here | north | east | south | west | around]'", configs["colors"]["error"].get<Color>());
 }
 
 void GameEngine::inventory() {
@@ -334,33 +374,42 @@ void GameEngine::attack() {
 
     // validate weapon
     std::string weapon = command[2];
-    if (factory.getTypeOf(weapon) != FactoryType::Weapon) {
-        i->output("Can't attack a " + target + " with a " + weapon, configs["colors"]["error"].get<Color>());
-        return;
+    bool isRanged;
+    double dmg;
+    if (weapon == "fist") {
+        dmg = player->fistDmg();
+        isRanged = false;
     }
-    else if (!player->inInventory(weapon)) {
-        i->output("You don't have a " + weapon + " to attack with.", configs["colors"]["error"].get<Color>());
-        return;
-    }
-
-    // check for ammo if ranged
-    const Weapon* w = static_cast<const Weapon*>(player->readItem(weapon));
-    bool isRanged = w->weaponType() == "ranged";
-    if (isRanged) {
-        if (!player->inInventory(w->ammoType())) {
-            i->output("You don't have any " + w->ammoType(), configs["colors"]["error"].get<Color>());
+    else {
+        if (factory.getTypeOf(weapon) != FactoryType::Weapon) {
+            i->output("Can't attack a " + target + " with a " + weapon, configs["colors"]["error"].get<Color>());
             return;
         }
+        else if (!player->inInventory(weapon)) {
+            i->output("You don't have a " + weapon + " to attack with.", configs["colors"]["error"].get<Color>());
+            return;
+        }
+    
+        // check for ammo if ranged
+        const Weapon* w = static_cast<const Weapon*>(player->readItem(weapon));
+        bool isRanged = w->weaponType() == "ranged";
+        if (isRanged) {
+            if (!player->inInventory(w->ammoType())) {
+                i->output("You don't have any " + w->ammoType(), configs["colors"]["error"].get<Color>());
+                return;
+            }
 
-        // remove ammo
-        player->removeItem(w->ammoType());
+            // remove ammo
+            player->removeItem(w->ammoType());
+        }
+
+        // use weapon
+        player->use(weapon);
+
+        // dmg
+        dmg = player->attackDmg(w->getDamage());
     }
-
-    // use weapon
-    player->use(weapon);
-
-    // damage
-    double dmg = player->attackDmg(w->getDamage());
+    
     bool res = e->attack(dmg);
     i->output("You attacked the " + target + " for " + std::to_string(static_cast<int>(dmg)) + " damage!", configs["colors"]["output"].get<Color>());
     if (res) {
@@ -632,13 +681,6 @@ void GameEngine::take() {
             break;
         }
     }
-    if (obj->getType() == OBJCLASS::STORAGE) {
-        Storage* s = static_cast<Storage*>(obj);
-        if (!s->isCarryable()) {
-            i->output("Can't pick up a " + target, configs["colors"]["error"].get<Color>());
-            return;
-        }
-    }
 
     if (obj == nullptr) i->output("No " + target + " to take here", configs["colors"]["error"].get<Color>());
     else {
@@ -656,7 +698,14 @@ void GameEngine::take() {
             }
         }
         else {
-            player->addItem(obj->getType(), obj->getName());
+            if (obj->getType() == OBJCLASS::STORAGE) {
+                Storage* s = static_cast<Storage*>(obj);
+                if (!s->isCarryable()) {
+                    i->output("Can't pick up a " + target, configs["colors"]["error"].get<Color>());
+                    return;
+                }
+            }
+            player->addItem(static_cast<Object*>(factory.makeFromCode(obj->operator std::string())));
             l.thingsHere.erase(std::find_if(l.thingsHere.begin(), l.thingsHere.end(), [&](std::shared_ptr<Thing> i){return i->getName() == obj->getName();}));
         }
     }

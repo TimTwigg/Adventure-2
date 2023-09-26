@@ -1,11 +1,9 @@
 # TODO
 - Add enemies to map biome generation
 - peaceful setting
-- Binoculars allow to look two blocks across instead of one
 - Replace Liquid class with enum class in Container.hpp?
 - Debug civ setTrades - testing shows selling trades sometimes gets 5 instead of 6 on a town
-    - problem is trades are set by randomly choosing a name in the category, trying 10 times to find one
-    - which has not been already selected. Might need to change the category as well
+    - problem is trades are set by randomly choosing a name in the category, trying 10 times to find one which has not been already selected. Might need to change the category as well
 - finish Civilization::setTrades() - add animals, potions, machines etc
 - Add player-built buildings/stuff
 - chopping trees removes them if not in forest?
@@ -19,6 +17,7 @@
 - make name matches more malleable by checking both singular and plural?
 - how does a player heal?
 - only able to put stuff into static storages? or backpack as well?
+- review Civ loot selection
 
 # IDEAS
 - Refresh ht and hp completely at towns? For a price?
@@ -47,3 +46,5 @@ Could create a c++ wrapper on c++ GameEngine taking in int argument for function
 
 # TEST
 - check and rework damage formulae
+- test raiding high-level civs
+    - manually set damage to super high to insta raid

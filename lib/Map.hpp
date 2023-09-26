@@ -1,4 +1,4 @@
-// updated 21 September 2023
+// updated 26 September 2023
 
 #ifndef MAP_HPP
 #define MAP_HPP
@@ -46,7 +46,7 @@ class Map {
         Location get() const noexcept;
         Location& getRef() noexcept;
         Location get(int x, int y) const;
-        Location get(Dir d);
+        Location get(Dir d, int distance = 1);
         Location go(Dir d);
         std::string getPath() const noexcept;
         void setPath(std::string newPath) noexcept;
@@ -64,6 +64,7 @@ class Map {
         // get the appropriate coordinates from current location and direction
         // sets the location in those coords if not set
         std::pair<int, int> getCoords(Dir d);
+        std::pair<int, int> getCoords(Dir d, std::pair<int, int> start);
 };
 
 #endif

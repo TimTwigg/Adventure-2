@@ -1,4 +1,4 @@
-// updated 25 September 2023
+// updated 26 September 2023
 
 #include <string>
 #include <map>
@@ -111,23 +111,23 @@ void Civilization::setTrades(json data) {
 
             // loot items
             trades = loots.size();
-            std::cout << trades << std::endl;
             if (trades > 0) {
                 std::string category = loots[gen.getRandInt(0, trades-1)];
                 if (category == "wealth") {
                     loot[std::make_pair(category, category)] = gen.getRandInt(1, 6) * value;
-                    continue;
                 }
-                // TODO: REMOVE THIS IF STATEMENT ONCE ANIMALS, POTIONS, ETC HAVE BEEN ADDED ABOVE
-                if (keybank.find(category) != keybank.end()) {
-                    std::vector<std::string> keys = keybank[category];
-                    std::string name = keys[gen.getRandInt(0, keys.size()-1)];
-                    for (int j = 0; j < 10; ++j) {
-                        if (loot.find(std::make_pair(category, name)) == loot.end()) break;
-                        name = keys[gen.getRandInt(0, keys.size()-1)];
+                else {
+                    // TODO: REMOVE THIS IF STATEMENT ONCE ANIMALS, POTIONS, ETC HAVE BEEN ADDED ABOVE
+                    if (keybank.find(category) != keybank.end()) {
+                        std::vector<std::string> keys = keybank[category];
+                        std::string name = keys[gen.getRandInt(0, keys.size()-1)];
+                        for (int j = 0; j < 10; ++j) {
+                            if (loot.find(std::make_pair(category, name)) == loot.end()) break;
+                            name = keys[gen.getRandInt(0, keys.size()-1)];
+                        }
+                        int num = gen.getRandInt(0, count);
+                        if (num > 0 && gen.getRandBool()) loot[std::make_pair(category, name)] = num;
                     }
-                    int num = gen.getRandInt(0, count);
-                    if (num > 0 && gen.getRandBool()) loot[std::make_pair(category, name)] = num;
                 }
             }
         }   

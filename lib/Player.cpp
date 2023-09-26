@@ -1,4 +1,4 @@
-// Updated: 21 September 2023
+// Updated: 26 September 2023
 
 #include <string>
 #include <fstream>
@@ -59,7 +59,6 @@ Player::Player(SkillSets skillset, const std::string& path, float diff_ratio) : 
     data["consumption_ratio"] = skset["consumption_ratio"].get<double>();
     data["chopping_ratio"] = skset["chopping_ratio"].get<double>();
     data["mining_ratio"] = skset["mining_ratio"].get<double>();
-    data["carry_ratio"] = skset["carry_ratio"].get<double>();
     data["wealth"] = 0;
     data["ratios"] = skset;
     data["diff_ratio"] = diff_ratio;
@@ -138,19 +137,29 @@ void Player::level_up() {
 
     // level all stats if appropriate
     if (level % DEFAULTS::stat_level_interval == 0) level_stats();
+
+    // if more than one level's worth of xp was gained
+    level = data["level"].get<int>();
+    xpNeeded = Formula::xpToLevelUp(level);
+    if (data["xp"].get<int>() >= xpNeeded) level_up();
 }
 
 void Player::level_stats() {
-    json skset = SET::getSet(data["skillset"].get<SkillSets>());
-    std::map<std::string, double> bonuses;
-    for (auto& pair : skset.items()) {
-        if (pair.value() > 1) bonuses.emplace(pair.key(), DEFAULTS::stat_level_bonus);
-        else bonuses.emplace(pair.key(), DEFAULTS::stat_level_no_bonus);
-    }
+    double mod;
 
-    for (auto& pair : bonuses) {
-        data[pair.first] = data[pair.first].get<double>() * pair.second;
-    }
+    // carry weight
+    if (data["ratios"]["carry_ratio"].get<double>() > 1) mod = DEFAULTS::stat_level_bonus;
+    else mod = DEFAULTS::stat_level_no_bonus;
+    data["carry_weight"] = static_cast<int>(data["carry_weight"].get<int>() * mod);
+
+    // difficulty ratio
+    data["diff_ratio"] = data["diff_ratio"].get<double>() * DEFAULTS::stat_level_no_bonus;
+
+    // hunger and thirst
+    if (data["ratios"]["hunger_ratio"].get<double>() > 1) mod = DEFAULTS::stat_level_bonus;
+    else mod = DEFAULTS::stat_level_no_bonus;
+    data["max_hunger"] = data["max_hunger"].get<int>() * mod;
+    data["max_thirst"] = data["max_thirst"].get<int>() * mod;
 }
 
 double Player::stat(const std::string& stat_name) const {
@@ -479,7 +488,7 @@ double Player::attackDmg(double weaponDmgModifier) {
 }
 
 double Player::fistDmg() {
-    return Formula::playerDamage(stat("fist_damage"), gen, stat("diff_ratio"));
+    return Formula::playerDamage(stat("fist_base_damage"), gen, stat("diff_ratio"));
 }
 
 void Player::addXP(int xp) noexcept {

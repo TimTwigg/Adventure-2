@@ -1,4 +1,4 @@
-// updated 21 September 2023
+// updated 26 September 2023
 
 #include <map>
 #include <vector>
@@ -30,8 +30,6 @@ Location::Location(RandomGenerator& gen, std::vector<std::string> neighbors) {
     json data = FileReader::readFile("biomes.json");
     std::vector<std::string> biomes;
     for (auto [k, _] : data.items()) biomes.push_back(k);
-    // add them twice to increase likelihood of getting consistent biomes
-    biomes.insert(biomes.end(), neighbors.begin(), neighbors.end());
     biomes.insert(biomes.end(), neighbors.begin(), neighbors.end());
     int index = gen.getRandInt(0, biomes.size()-1);
     biome = biomes[index];
@@ -174,8 +172,9 @@ Location Map::get(int x, int y) const {
     return db.at(std::make_pair(x, y));
 }
 
-Location Map::get(Dir d) {
-    std::pair<int, int> coords = getCoords(d);
+Location Map::get(Dir d, int distance) {
+    std::pair<int, int> coords = xy;
+    for (int i = 0; i < distance; ++i) coords = getCoords(d, coords);
     return db.at(coords);
 }
 
@@ -240,19 +239,23 @@ Map* Map::load(const std::string& path) {
 }
 
 std::pair<int, int> Map::getCoords(Dir d) {
+    return getCoords(d, xy);
+}
+
+std::pair<int, int> Map::getCoords(Dir d, std::pair<int, int> start) {
     std::pair<int, int> coords;
     switch (d) {
         case Dir::NORTH:
-            coords = std::make_pair(xy.first, xy.second + 1);
+            coords = std::make_pair(start.first, start.second + 1);
             break;
         case Dir::EAST:
-            coords = std::make_pair(xy.first + 1, xy.second);
+            coords = std::make_pair(start.first + 1, start.second);
             break;
         case Dir::SOUTH:
-            coords = std::make_pair(xy.first, xy.second - 1);
+            coords = std::make_pair(start.first, start.second - 1);
             break;
         case Dir::WEST:
-            coords = std::make_pair(xy.first - 1, xy.second);
+            coords = std::make_pair(start.first - 1, start.second);
             break;
     }
     if (db.find(coords) == db.end()) db[coords] = Location(gen, getNeighborBiomes(coords.first, coords.second));
