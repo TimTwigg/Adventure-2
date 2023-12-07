@@ -1,6 +1,6 @@
 # Adventure 2
  
-Adventure-2 is a text-based sandbox adventure game. I began this project to practice C++ design principles, as well as get experience working on a larger project than those I had been exposed to in my courses at UCI. This is the second iteration of this premise by me, the first being written in Python (although it was never as complex as Adventure-2, nor was it actually finished).
+Adventure-2 is a text-based sandbox adventure game. I began this project to practice C++ design principles, as well as get experience working on a larger project than those I had been exposed to in my courses at UCI. This is the second iteration of this premise by me, the first being written in Python (although it was never as complex as Adventure-2, nor was it actually finished). 
 
 ## To Play
 
