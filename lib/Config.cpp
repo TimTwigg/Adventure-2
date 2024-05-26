@@ -7,7 +7,7 @@
 #include "FileReader.hpp"
 #include "StringHelpers.hpp"
 
-Config::Config(std::string configFile = "config.ini") {
+Config::Config(std::string configFile) {
     std::vector<std::string> lines = FileReader::readFileByLine(configFile);
     std::for_each(lines.begin(), lines.end(), [&](std::string line) {
         char firstChar = line[0];
@@ -17,21 +17,27 @@ Config::Config(std::string configFile = "config.ini") {
 }
 
 std::string Config::getStringOption(std::string key) const noexcept {
+    std::string result = "";
     std::for_each(configValues.begin(), configValues.end(), [&](ConfigValue cv) {
-        if (cv.key == key) return cv.strValue;
+        if (cv.key == key) result = cv.strValue;
     });
+    return result;
 }
 
 int Config::getIntOption(std::string key) const noexcept {
+    int result = 0;
     std::for_each(configValues.begin(), configValues.end(), [&](ConfigValue cv) {
-        if (cv.key == key) return cv.intValue;
+        if (cv.key == key) result = cv.intValue;
     });
+    return result;
 }
 
 ConfigValue Config::getConfigValue(std::string key) const noexcept {
+    ConfigValue result;
     std::for_each(configValues.begin(), configValues.end(), [&](ConfigValue cv) {
-        if (cv.key == key) return cv;
+        if (cv.key == key) result = cv;
     });
+    return result;
 }
 
 ConfigValue Config::parseLine(std::string line) {
