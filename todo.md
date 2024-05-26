@@ -35,6 +35,10 @@
 - Create "Make Item" function that creates the shared ptr. Maybe in Map? Then Player::addItem would take that object as param
 - Trading with civs: when items are all bought, replenish/replace?
 - item to increase certain stats, eg carry capacity
+- time
+    - growth
+    - change
+    - events
 
 # MAINLOOP QUESTION
 Game Engine in C++ but prompt querying in python so I can use prompt_toolkit to get auto-completions and so on? If so, call python from C++ mainloop, or call C++ functions from python mainloop?

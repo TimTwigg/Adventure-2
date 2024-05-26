@@ -1,4 +1,4 @@
-// updated 25 May 2024
+// updated 26 May 2024
 
 #include <string>
 #include <memory>
@@ -23,7 +23,7 @@
 #include "Interface.hpp"
 #include "FileReader.hpp"
 #include "StringHelpers.hpp"
-#include "StatDefaults.hpp"
+#include "Defaults.hpp"
 #include "TextArt.hpp"
 #include "AdventureException.hpp"
 namespace fs = std::filesystem;

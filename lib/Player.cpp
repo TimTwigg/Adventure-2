@@ -1,4 +1,4 @@
-// Updated: 26 September 2023
+// Updated: 26 May 2024
 
 #include <string>
 #include <fstream>
@@ -8,7 +8,7 @@
 #include <filesystem>
 #include "Player.hpp"
 #include "SkillSets.hpp"
-#include "StatDefaults.hpp"
+#include "Defaults.hpp"
 #include "AdventureException.hpp"
 #include "Container.hpp"
 #include "Resource.hpp"

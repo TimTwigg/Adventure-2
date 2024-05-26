@@ -1,7 +1,7 @@
-// Updated: 26 September 2023
+// Updated: 26 May 2024
 
-#ifndef STATDEFAULTS_HPP
-#define STATDEFAULTS_HPP
+#ifndef DEFAULTS_HPP
+#define DEFAULTS_HPP
 
 namespace DEFAULTS {
     const unsigned int health = 100;

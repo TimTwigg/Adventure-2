@@ -1,8 +1,8 @@
-// updated 21 September 2023
+// updated 26 May 2024
 
 #include "Formulae.hpp"
 #include "RandomGenerator.hpp"
-#include "StatDefaults.hpp"
+#include "Defaults.hpp"
 
 double Formula::animalDamage(double baseDamage, RandomGenerator& gen, int diff_ratio) {
     double modifier = gen.getRandInt(5, 15) / 10.0;
