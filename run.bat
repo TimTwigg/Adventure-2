@@ -2,6 +2,7 @@
 
 IF "%~1" == "" GOTO MAIN
 IF "%~1" == "test" GOTO TEST
+IF "%~1" == "tests" GOTO TEST
 
 :MAIN
 build\bin\Adventure.exe
