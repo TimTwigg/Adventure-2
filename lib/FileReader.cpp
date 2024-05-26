@@ -1,4 +1,4 @@
-// updated 7 August 2022
+// updated 26 May 2024
 
 #include <fstream>
 #include <string>
@@ -139,4 +139,30 @@ std::string FileReader::getInfoData(std::string filename) {
     in.close();
     out << std::endl;
     return out.str();
+}
+
+std::vector<std::string> FileReader::readFileByLine(std::string filename) {
+    strHelp::strip(filename);
+    if (filename.size() < 1) throw AdventureException("FileReader: filename required");
+
+    if (cache.find(filename) != cache.end()) {
+        return cache[filename];
+    }
+
+    std::ifstream in;
+    in.open(filename);
+    if (!in) {
+        throw AdventureException("FileReader: File not Found: " + filename);
+    }
+
+    std::vector<std::string> out;
+    std::string line;
+    while (in) {
+        line.clear();
+        std::getline(in, line);
+        out.push_back(line);
+    }
+    in.close();
+    
+    return out;
 }

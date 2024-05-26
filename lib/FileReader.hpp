@@ -1,4 +1,4 @@
-// updated 7 August 2022
+// updated 26 May 2024
 
 #ifndef FILEREADER_HPP
 #define FILEREADER_HPP
@@ -19,6 +19,7 @@ namespace FileReader {
     std::vector<std::string> getSaveFileNames();
     json getConfigs(std::string path);
     std::string getInfoData(std::string filename);
+    std::vector<std::string> readFileByLine(std::string filename);
 }
 
 #endif

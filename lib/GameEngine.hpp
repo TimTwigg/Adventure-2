@@ -1,4 +1,4 @@
-// updated 21 September 2023
+// updated 26 May 2024
 
 #ifndef GAMEENGINE_HPP
 #define GAMEENGINE_HPP
@@ -11,6 +11,7 @@
 #include "Interface.hpp"
 #include "GameData.hpp"
 #include "RandomGenerator.hpp"
+#include "Config.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
 
@@ -28,12 +29,15 @@ class GameEngine {
         std::shared_ptr<Map> map;
         std::shared_ptr<Interface> i;
         Factory factory;
+        // player save specific config values
         json configs;
         // the query input by the player
         std::string query;
         // the words of the query split on whitespace
         std::vector<std::string> command;
         RandomGenerator gen;
+        // game scope config values
+        Config gameConfig;
 
         // helper functions
 

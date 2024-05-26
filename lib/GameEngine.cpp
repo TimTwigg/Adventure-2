@@ -26,6 +26,7 @@
 #include "Defaults.hpp"
 #include "TextArt.hpp"
 #include "AdventureException.hpp"
+#include "Config.hpp"
 namespace fs = std::filesystem;
 
 const std::vector<std::string> GameEngine::error_msgs = {
@@ -53,11 +54,13 @@ void GameEngine::run() {
     int counter = 0;
     i->clearScreen();
 
+    int autoSaveInterval = gameConfig.getIntOption("AutoSaveInterval");
+
     // mainloop
     while (true) {
         // autosave
         ++counter;
-        if (counter >= 10) {
+        if (counter >= autoSaveInterval) {
             counter = 0;
             if (configs["autosave"].get<bool>()) save();
         }
