@@ -1,4 +1,4 @@
-// updated 9 August 2023
+// updated 25 May 2025
 
 #ifndef ENTITY_HPP
 #define ENTITY_HPP
@@ -22,6 +22,8 @@ namespace {
                 return "ANIMAL";
             case ENT::ENEMY:
                 return "ENEMY";
+            default:
+                return "UNKNOWN";
         }
     }
 }

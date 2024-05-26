@@ -1,4 +1,4 @@
-// Updated 21 September 2023
+// Updated 25 May 2024
 
 #include <string>
 #include <map>
@@ -67,6 +67,7 @@ std::string Factory::getFileOf(std::string item) {
         case FactoryType::Weapon:
             return "weapons.json";
         case FactoryType::None:
+        default:
             throw AdventureException("Item not found: " + item);
     }
 }
@@ -98,6 +99,7 @@ Thing* Factory::make(std::string item) {
         case FactoryType::Weapon:
             return new Weapon(item);
         case FactoryType::None:
+        default:
             return nullptr;
     }
 }

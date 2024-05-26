@@ -8,7 +8,7 @@ build\bin\Adventure.exe
 goto END
 
 :TEST
-build\bin\test.exe
+build\bin\Tests.exe
 goto END
 
 :END
