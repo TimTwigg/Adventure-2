@@ -1,6 +1,8 @@
 # TODO
 - Add enemies to map biome generation
 - peaceful setting
+    - added to configs, will come into play when enemies are introduced.
+    - what are the key differences between the levels?
 - Replace Liquid class with enum class in Container.hpp?
 - Debug civ setTrades - testing shows selling trades sometimes gets 5 instead of 6 on a town
     - problem is trades are set by randomly choosing a name in the category, trying 10 times to find one which has not been already selected. Might need to change the category as well

@@ -1,4 +1,4 @@
-// updated 28 July 2023
+// updated 25 May 2024
 
 #include <string>
 #include <memory>
@@ -93,6 +93,7 @@ void Launcher::newGame() {
     std::vector<std::string> skillsets = FileReader::getTitlesFromFile("skillsets.json");
     std::string skillset = i->askSelect("Skill Set", skillsets);
     std::string diff = i->askSelect("Difficulty", {"Easy", "Medium", "Hard"});
+    std::string danger = i->askSelect("Danger", {"Peaceful", "Normal", "Hostile"});
     std::string autosave = i->askSelect("Autosave", {"Yes", "No"});
 
     // difficulty setting
@@ -108,6 +109,7 @@ void Launcher::newGame() {
     // input the settings
     data.skillset = SET::to_skillset(skillset);
     data.configs["diff"] = diff_ratio;
+    data.configs["danger"] = danger;
     data.isNew = true;
 }
 

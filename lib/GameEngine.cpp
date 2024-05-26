@@ -1,4 +1,4 @@
-// updated 26 September 2023
+// updated 25 May 2024
 
 #include <string>
 #include <memory>
@@ -1645,7 +1645,7 @@ void GameEngine::object_help() {
 void GameEngine::config() {
     i->output(ART::CONFIG, configs["colors"]["art"].get<Color>());
     while (true) {
-        std::string option = i->askSelect("Config Options", {"Prompt", "Rename Save", "Autosave", "Difficulty Rating", "Colors", "Back"});
+        std::string option = i->askSelect("Config Options", {"Prompt", "Rename Save", "Autosave", "Difficulty Rating", "Danger Rating", "Colors", "Back"});
 
         if (option == "Prompt") {
             std::string prompt = i->askSelect("Prompt Style", {ART::DEFAULTPROMPT, ART::ARROW, "Custom"});
@@ -1675,6 +1675,10 @@ void GameEngine::config() {
             if (answer == "Easy") configs["diff"] = 0.5;
             else if (answer == "Medium") configs["diff"] = 1.0;
             else if (answer == "Hard") configs["diff"] = 1.5;
+        }
+
+        else if (option == "Danger Rating") {
+            configs["danger"] = i->askSelect("Danger Setting", {"Peaceful", "Normal", "Hostile"}, configs["danger"].get<std::string>());
         }
 
         else if (option == "Colors") {
