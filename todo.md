@@ -20,9 +20,6 @@
 - Write tests
     - formulaTests
     - configTests
-- infodata validation program
-    - make sure that all objects have a description, etc
-- revise windowsInterface askSelect to mirror prompt_toolkit behavior after selection is made
 - revise location description indefinite article logic
 - potion recipes?
 

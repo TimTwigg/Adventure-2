@@ -1,4 +1,4 @@
-// Updated: 26 May 2024
+// Updated: 27 May 2024
 
 #include <string>
 #include <iostream>
@@ -91,6 +91,15 @@ std::string WindowsInterface::askSelect(const std::string& prompt, const std::ve
                 current = 0;
                 selected = true;
                 break;
+        }
+        if (selected) {
+            for (int i = 0; i <= size; ++i) {
+                write(ansiIndex[Screen::CURSOR_UP]);
+                write(ansiIndex[Screen::CLEAR_LINE]);
+            }
+            output(prompt, colorIndex[Part::PROMPT], false);
+            output(" " + options[current], colorIndex[Part::ANSWER]);
+            break;
         }
         for (int i = 0; i < size; ++i) {
             write(ansiIndex[Screen::CURSOR_UP]);

@@ -1,4 +1,4 @@
-// updated 25 May 2024
+// updated 27 May 2024
 
 #include <string>
 #include <memory>
@@ -76,7 +76,7 @@ bool Launcher::loadGame() {
 void Launcher::newGame() {
     i->clearScreen();
     i->output(ART::NEWGAME);
-    std::string filename = i->askInput("Save Name: ");
+    std::string filename = i->askInput("Save Name:");
     strHelp::strip(filename);
     if (filename.size() < 1) {
         // use datetime as default save name
