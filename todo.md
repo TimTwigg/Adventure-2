@@ -1,8 +1,4 @@
 # TODO
-- Add enemies to map biome generation
-- peaceful setting
-    - added to configs, will come into play when enemies are introduced.
-    - what are the key differences between the levels?
 - Replace Liquid class with enum class in Container.hpp?
 - Debug civ setTrades - testing shows selling trades sometimes gets 5 instead of 6 on a town
     - problem is trades are set by randomly choosing a name in the category, trying 10 times to find one which has not been already selected. Might need to change the category as well
@@ -23,7 +19,12 @@
 - Actually use mining/chopping/etc ratios
 - Write tests
     - formulaTests
-    - factoryTests
+    - configTests
+- infodata validation program
+    - make sure that all objects have a description, etc
+- revise windowsInterface askSelect to mirror prompt_toolkit behavior after selection is made
+- revise location description indefinite article logic
+- Figure out error that occasionally crashes some of the map tests
 
 # IDEAS
 - Refresh ht and hp completely at towns? For a price?
@@ -43,6 +44,7 @@
     - growth
     - change
     - events
+- automation with npc builders, miners, workers, etc?
 
 # MAINLOOP QUESTION
 Game Engine in C++ but prompt querying in python so I can use prompt_toolkit to get auto-completions and so on? If so, call python from C++ mainloop, or call C++ functions from python mainloop?

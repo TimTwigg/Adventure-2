@@ -42,7 +42,7 @@ TEST(weaponTests, use) {
     ASSERT_THROW(w.use(), AdventureException);
 }
 
-TEST(waeponTests, fromString) {
+TEST(weaponTests, fromString) {
     Weapon* w = Weapon::fromString("WEAPON, stone-sword, 1");
     ASSERT_EQ(w->getUses(), 1);
     delete w;

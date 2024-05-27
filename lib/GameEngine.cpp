@@ -329,10 +329,10 @@ void GameEngine::go() {
         return;
     }
 
-    if (command[1] == "north") printLocation(map->go(Dir::NORTH));
-    else if (command[1] == "east") printLocation(map->go(Dir::EAST));
-    else if (command[1] == "south") printLocation(map->go(Dir::SOUTH));
-    else if (command[1] == "west") printLocation(map->go(Dir::WEST));
+    if (command[1] == "north") printLocation(map->go(Dir::NORTH, configs["danger"].get<DangerLevel>(), player->stat("level")));
+    else if (command[1] == "east") printLocation(map->go(Dir::EAST, configs["danger"].get<DangerLevel>(), player->stat("level")));
+    else if (command[1] == "south") printLocation(map->go(Dir::SOUTH, configs["danger"].get<DangerLevel>(), player->stat("level")));
+    else if (command[1] == "west") printLocation(map->go(Dir::WEST, configs["danger"].get<DangerLevel>(), player->stat("level")));
     else {
         i->output("Could not recognize command, try 'go [north | east | south | west]'", configs["colors"]["error"].get<Color>());
         return;

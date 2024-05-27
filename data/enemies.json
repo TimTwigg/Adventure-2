@@ -1,24 +1,38 @@
 {
-    "bandit" : {
-        "health" : 250,
-        "damage" : 150,
-        "drops" : {
-            "weapons.stone-sword" : 1,
-            "weapons.bow" : 1,
-            "resources.arrow" : 5            
+    "bandit": {
+        "health": 250,
+        "damage": 100,
+        "drops": {
+            "stone-sword": 1,
+            "bow": 1,
+            "arrow": 3,
+            "wealth": 25
         },
-        "xp" : 40,
-        "loot" : 25
+        "xp": 40,
+        "minimumLevel": 4,
+        "minimumDanger": "Normal"
     },
-    "orc" : {
-        "health" : 750,
-        "damage" : 250,
-        "drops" : {
-            "weapons.metal-spear" : 1,
-            "resources.orc-flesh" : 2,
-            "weapons.metal-sword" : 1
+    "orc": {
+        "health": 750,
+        "damage": 200,
+        "drops": {
+            "metal-spear": 1,
+            "metal-sword": 1,
+            "wealth": 100
         },
-        "xp" : 75,
-        "loot" : 100
+        "xp": 75,
+        "minimumLevel": 10,
+        "minimumDanger": "Normal"
+    },
+    "pirate": {
+        "health": 400,
+        "damage": 150,
+        "drops": {
+            "metal-sword": 1,
+            "wealth": 150
+        },
+        "xp": 55,
+        "minimumLevel": 5,
+        "minimumDanger": "Normal"
     }
 }

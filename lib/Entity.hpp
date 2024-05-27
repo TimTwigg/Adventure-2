@@ -1,4 +1,4 @@
-// updated 25 May 2025
+// updated 26 May 2024
 
 #ifndef ENTITY_HPP
 #define ENTITY_HPP
@@ -45,7 +45,7 @@ class Entity : public Thing {
         float hp;
         unsigned int damage;
         unsigned int xp;
-        std::vector<std::shared_ptr<Object>> drops;
+        std::map<std::string, int> drops;
         RandomGenerator gen;
 };
 

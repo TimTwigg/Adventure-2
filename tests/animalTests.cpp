@@ -1,4 +1,4 @@
-// updated 2 June 2022
+// updated 24 May 2024
 
 #include <gtest/gtest.h>
 #include "Animal.hpp"
@@ -35,4 +35,19 @@ TEST(animalTests, attackDMG) {
 TEST(animalTests, getDrops) {
     Animal a{"shark"};
     const std::vector<std::shared_ptr<Object>>& drops = a.getDrops();
+}
+
+TEST(animalTests, fromString) {
+    Animal a{"shark"};
+    std::string s = a.operator std::string();
+    Animal* b = Animal::fromString(s);
+    ASSERT_EQ(a.getName(), b->getName());
+    ASSERT_EQ(a.getHP(), b->getHP());
+    delete b;
+
+    s = "ANIMAL, cow, 50";
+    b = Animal::fromString(s);
+    ASSERT_EQ(b->getName(), "cow");
+    ASSERT_EQ(b->getHP(), 50);
+    delete b;
 }

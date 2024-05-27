@@ -7,6 +7,7 @@
 double Formula::animalDamage(double baseDamage, RandomGenerator& gen, int diff_ratio) {
     double modifier = gen.getRandInt(5, 15) / 10.0;
     int bonus = gen.getRandInt(1, 6) * 5;
+    if (baseDamage == 0) return gen.getRandInt(0, 1);
     return baseDamage * modifier * diff_ratio + bonus;
 }
 

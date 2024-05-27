@@ -1,4 +1,4 @@
-// updated 26 September 2023
+// updated 26 May 2024
 
 #ifndef MAP_HPP
 #define MAP_HPP
@@ -10,6 +10,7 @@
 #include <memory>
 #include "RandomGenerator.hpp"
 #include "Thing.hpp"
+#include "Enemy.hpp"
 #include "json.hpp"
 using json = nlohmann::json;
 
@@ -26,7 +27,9 @@ struct Location {
     std::vector<std::shared_ptr<Thing>> thingsHere;
 
     Location();
-    Location(RandomGenerator& gen, std::vector<std::string> neighbors = {});
+    // Create a new location
+    Location(RandomGenerator& gen, std::vector<std::string> neighbors = {}, DangerLevel danger = DangerLevel::NORMAL, int level = 1);
+    // Load a location from a json object
     Location(const std::string& biome, json here);
     json save() const;
     std::shared_ptr<Thing> accessThing(std::string name);
@@ -47,7 +50,7 @@ class Map {
         Location& getRef() noexcept;
         Location get(int x, int y) const;
         Location get(Dir d, int distance = 1);
-        Location go(Dir d);
+        Location go(Dir d, DangerLevel danger = DangerLevel::NORMAL, int level = 1);
         std::string getPath() const noexcept;
         void setPath(std::string newPath) noexcept;
         void save() const;
@@ -63,8 +66,9 @@ class Map {
 
         // get the appropriate coordinates from current location and direction
         // sets the location in those coords if not set
-        std::pair<int, int> getCoords(Dir d);
-        std::pair<int, int> getCoords(Dir d, std::pair<int, int> start);
+        std::pair<int, int> getCoords(Dir d, DangerLevel danger = DangerLevel::NORMAL, int level = 1);
+        // unwrapped version of getCoords that takes a starting point
+        std::pair<int, int> getCoords(Dir d, std::pair<int, int> start, DangerLevel danger = DangerLevel::NORMAL, int level = 1);
 };
 
 #endif

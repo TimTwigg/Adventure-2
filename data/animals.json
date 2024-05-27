@@ -5,8 +5,8 @@
         "xp": 5,
         "value": 6,
         "drops": {
-            "resources.raw-chicken": 1,
-            "resources.feather": 2
+            "raw-chicken": 1,
+            "feather": 2
         },
         "interactions": {
             "actions.lay-egg": 1
@@ -18,8 +18,8 @@
         "xp": 10,
         "value": 10,
         "drops": {
-            "resources.raw-beef": 3,
-            "resources.wet-leather": 2
+            "raw-beef": 3,
+            "wet-leather": 2
         },
         "interactions": {
             "actions.milk": 1
@@ -31,8 +31,8 @@
         "xp": 10,
         "value": 9,
         "drops": {
-            "resources.raw-pork": 2,
-            "resources.pig-bladder": 1
+            "raw-pork": 2,
+            "pig-bladder": 1
         },
         "interactions": {}
     },
@@ -42,8 +42,8 @@
         "xp": 15,
         "value": 14,
         "drops": {
-            "resources.raw-horse": 3,
-            "resources.wet-leather": 3
+            "raw-horse": 3,
+            "wet-leather": 3
         },
         "interactions": {
             "actions.ride-horse": 1
@@ -55,8 +55,8 @@
         "xp": 5,
         "value": 5,
         "drops": {
-            "resources.raw-fish": 1,
-            "resources.fish-bone": 1
+            "raw-fish": 1,
+            "fish-bone": 1
         },
         "interactions": {}
     },
@@ -66,8 +66,8 @@
         "xp": 5,
         "value": 5,
         "drops": {
-            "resources.raw-bird": 1,
-            "resources.feather": 2
+            "raw-bird": 1,
+            "feather": 2
         },
         "interactions": {}
     },
@@ -77,8 +77,8 @@
         "xp": 30,
         "value": 35,
         "drops": {
-            "resources.raw-shark": 2,
-            "resources.shark-tooth": 5
+            "raw-shark": 2,
+            "shark-tooth": 5
         },
         "interactions": {}
     },
@@ -88,8 +88,8 @@
         "xp": 20,
         "value": 20,
         "drops": {
-            "resources.raw-snake": 1,
-            "resources.snake-tooth": 2
+            "raw-snake": 1,
+            "snake-tooth": 2
         },
         "interactions": {
             "actions.charm-snake": 1
@@ -101,8 +101,8 @@
         "xp": 10,
         "value": 10,
         "drops": {
-            "resources.raw-mutton": 2,
-            "resources.wool": 1
+            "raw-mutton": 2,
+            "wool": 1
         },
         "interactions": {
             "actions.shear-sheep": 1
@@ -114,9 +114,9 @@
         "xp": 15,
         "value": 9,
         "drops": {
-            "resources.raw-venison": 2,
-            "resources.horn": 2,
-            "resources.sinew": 2
+            "raw-venison": 2,
+            "horn": 2,
+            "sinew": 2
         },
         "interactions": {}
     },
@@ -126,8 +126,8 @@
         "xp": 15,
         "value": 10,
         "drops": {
-            "resources.raw-goat": 2,
-            "resources.horn": 1
+            "raw-goat": 2,
+            "horn": 1
         },
         "interactions": {
             "actions.milk": 1
@@ -139,9 +139,9 @@
         "xp": 30,
         "value": 35,
         "drops": {
-            "resources.raw-lion": 2,
-            "resources.lion-fur": 1,
-            "resources.lion-tooth": 3
+            "raw-lion": 2,
+            "lion-fur": 1,
+            "lion-tooth": 3
         },
         "interactions": {}
     },
@@ -151,9 +151,9 @@
         "xp": 30,
         "value": 35,
         "drops": {
-            "resources.raw-jaguar": 2,
-            "resources.jaguar-skin": 1,
-            "resources.jaguar-tooth": 3
+            "raw-jaguar": 2,
+            "jaguar-skin": 1,
+            "jaguar-tooth": 3
         },
         "interactions": {}
     }

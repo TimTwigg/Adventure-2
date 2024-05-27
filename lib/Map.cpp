@@ -1,4 +1,4 @@
-// updated 26 September 2023
+// updated 26 May 2024
 
 #include <map>
 #include <vector>
@@ -26,7 +26,7 @@ namespace fs = std::filesystem;
 
 Location::Location() {}
 
-Location::Location(RandomGenerator& gen, std::vector<std::string> neighbors) {
+Location::Location(RandomGenerator& gen, std::vector<std::string> neighbors, DangerLevel danger, int level) {
     json data = FileReader::readFile("biomes.json");
     std::vector<std::string> biomes;
     for (auto [k, _] : data.items()) biomes.push_back(k);
@@ -68,11 +68,10 @@ Location::Location(RandomGenerator& gen, std::vector<std::string> neighbors) {
     std::vector<std::string> enemies = data["enemies"].get<std::vector<std::string>>();
     if (enemies.size() > 0) {
         for (const std::string& e : enemies) {
-            // TODO: uncomment to add enemies into the game.
-            // Should they only start appearing at a certain level? Some other marker?
-            /////////////////////////
-            //if (gen.getRandBool() && gen.getRandBool()) thingsHere.push_back(std::shared_ptr<Thing>(new Enemy(e)));
-            /////////////////////////
+            Enemy* enemy = new Enemy(e);
+            if (enemy->getMinimumDanger() >= danger && enemy->getMinimumLevel() >= level 
+                && (gen.getRandBool() || danger == DangerLevel::HOSTILE)) 
+                    thingsHere.push_back(std::shared_ptr<Thing>(new Enemy(e)));
         }
     }
 }
@@ -178,8 +177,8 @@ Location Map::get(Dir d, int distance) {
     return db.at(coords);
 }
 
-Location Map::go(Dir d) {
-    std::pair<int, int> coords = getCoords(d);
+Location Map::go(Dir d, DangerLevel danger, int level) {
+    std::pair<int, int> coords = getCoords(d, danger, level);
     xy = coords;
     return db.at(xy);
 }
@@ -238,11 +237,11 @@ Map* Map::load(const std::string& path) {
     return m;
 }
 
-std::pair<int, int> Map::getCoords(Dir d) {
-    return getCoords(d, xy);
+std::pair<int, int> Map::getCoords(Dir d, DangerLevel danger, int level) {
+    return getCoords(d, xy, danger, level);
 }
 
-std::pair<int, int> Map::getCoords(Dir d, std::pair<int, int> start) {
+std::pair<int, int> Map::getCoords(Dir d, std::pair<int, int> start, DangerLevel danger, int level) {
     std::pair<int, int> coords;
     switch (d) {
         case Dir::NORTH:
@@ -258,7 +257,7 @@ std::pair<int, int> Map::getCoords(Dir d, std::pair<int, int> start) {
             coords = std::make_pair(start.first - 1, start.second);
             break;
     }
-    if (db.find(coords) == db.end()) db[coords] = Location(gen, getNeighborBiomes(coords.first, coords.second));
+    if (db.find(coords) == db.end()) db[coords] = Location(gen, getNeighborBiomes(coords.first, coords.second), danger, level);
     return coords;
 }
 

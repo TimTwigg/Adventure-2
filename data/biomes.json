@@ -1,90 +1,163 @@
 {
-    "Forest" : {
-        "trees" : true,
-        "stone" : false,
-        "metal" : false,
-        "gold" : false,
-        "animals" : ["bird", "chicken", "snake", "deer"],
-        "river" : 0.75,
-        "people" : 0.75,
-        "civ-types" : ["hut", "village", "town"],
-        "enemies" : []
+    "Forest": {
+        "trees": true,
+        "stone": false,
+        "metal": false,
+        "gold": false,
+        "animals": [
+            "bird",
+            "chicken",
+            "snake",
+            "deer"
+        ],
+        "river": 0.75,
+        "people": 0.75,
+        "civ-types": [
+            "hut",
+            "village",
+            "town"
+        ],
+        "enemies": [
+            "bandit",
+            "orc"
+        ]
     },
-    "Mountain" : {
-        "trees" : false,
-        "stone" : true,
-        "metal" : true,
-        "gold" : true,
-        "animals" : ["bird", "goat", "snake"],
-        "river" : 0.25,
-        "people" : 0.25,
-        "civ-types" : ["hut", "village"],
-        "enemies" : ["orc"]
+    "Mountain": {
+        "trees": false,
+        "stone": true,
+        "metal": true,
+        "gold": true,
+        "animals": [
+            "bird",
+            "goat",
+            "snake"
+        ],
+        "river": 0.25,
+        "people": 0.25,
+        "civ-types": [
+            "hut",
+            "village"
+        ],
+        "enemies": [
+            "bandit",
+            "orc"
+        ]
     },
-    "Plain" : {
-        "trees" : false,
-        "stone" : false,
-        "metal" : false,
-        "gold" : false,
-        "animals" : ["cow", "sheep", "chicken", "bird", "goat", "pig", "horse", "lion"],
-        "river" : 0.75,
-        "people" : 0.75,
-        "civ-types" : ["village", "town", "city"],
-        "enemies" : ["bandit"]
+    "Plain": {
+        "trees": false,
+        "stone": false,
+        "metal": false,
+        "gold": false,
+        "animals": [
+            "cow",
+            "sheep",
+            "chicken",
+            "bird",
+            "goat",
+            "pig",
+            "horse",
+            "lion"
+        ],
+        "river": 0.75,
+        "people": 0.75,
+        "civ-types": [
+            "village",
+            "town",
+            "city"
+        ],
+        "enemies": [
+            "bandit"
+        ]
     },
-    "Desert" : {
-        "trees" : false,
-        "stone" : false,
-        "metal" : false,
-        "gold" : false,
-        "animals" : ["snake"],
-        "river" : 0.1,
-        "people" : 0.1,
-        "civ-types" : ["village", "temple"],
-        "enemies" : []
+    "Desert": {
+        "trees": false,
+        "stone": false,
+        "metal": false,
+        "gold": false,
+        "animals": [
+            "snake"
+        ],
+        "river": 0.1,
+        "people": 0.1,
+        "civ-types": [
+            "village",
+            "temple"
+        ],
+        "enemies": [
+            "bandit"
+        ]
     },
-    "Jungle" : {
-        "trees" : false,
-        "stone" : false,
-        "metal" : false,
-        "gold" : false,
-        "animals" : ["bird", "chicken", "snake", "pig", "jaguar"],
-        "river" : 0.75,
-        "people" : 0,
-        "civ-types" : ["town", "temple"],
-        "enemies" : ["orcs"]
+    "Jungle": {
+        "trees": false,
+        "stone": false,
+        "metal": false,
+        "gold": false,
+        "animals": [
+            "bird",
+            "chicken",
+            "snake",
+            "pig",
+            "jaguar"
+        ],
+        "river": 0.75,
+        "people": 0,
+        "civ-types": [
+            "town",
+            "temple"
+        ],
+        "enemies": [
+            "orcs"
+        ]
     },
-    "Island" : {
-        "trees" : true,
-        "stone" : true,
-        "metal" : true,
-        "gold" : false,
-        "animals" : ["chicken", "bird"],
-        "river" : 0.75,
-        "people" : 0,
-        "civ-types" : ["shipwreck"],
-        "enemies" : []
+    "Island": {
+        "trees": true,
+        "stone": true,
+        "metal": true,
+        "gold": false,
+        "animals": [
+            "chicken",
+            "bird"
+        ],
+        "river": 0.75,
+        "people": 0,
+        "civ-types": [
+            "shipwreck"
+        ],
+        "enemies": []
     },
-    "Ocean" : {
-        "trees" : false,
-        "stone" : false,
-        "metal" : false,
-        "gold" : false,
-        "animals" : ["shark", "fish", "bird"],
-        "river" : 0,
-        "people" : 0,
-        "civ-types" : ["shipwreck"],
-        "enemies" : []
+    "Ocean": {
+        "trees": false,
+        "stone": false,
+        "metal": false,
+        "gold": false,
+        "animals": [
+            "shark",
+            "fish",
+            "bird"
+        ],
+        "river": 0,
+        "people": 0,
+        "civ-types": [
+            "shipwreck"
+        ],
+        "enemies": [
+            "pirate"
+        ]
     },
-    "River" : {
-        "trees" : false,
-        "stone" : false,
-        "metal" : false,
-        "gold" : false,
-        "animals" : ["fish"],
-        "river" : 0,
-        "people" : 0,
-        "civ-types" : [],
-        "enemies" : []
+    "River": {
+        "trees": false,
+        "stone": false,
+        "metal": false,
+        "gold": false,
+        "animals": [
+            "fish"
+        ],
+        "river": 0,
+        "people": 0,
+        "civ-types": [],
+        "enemies": [
+            "bandit",
+            "pirate"
+        ]
     }
 }

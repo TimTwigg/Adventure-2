@@ -1,4 +1,4 @@
-// updated 9 August 2023
+// updated 24 May 2024
 
 #include <string>
 #include <vector>
@@ -28,9 +28,7 @@ Animal::Animal(std::string name) {
     this->hp = maxHP;
     this->damage = data["damage"].get<int>();
     this->xp = data["xp"].get<int>();
-    for (const std::pair<std::string, int>& item : data["drops"].get<std::map<std::string, int>>()) {
-        this->drops.push_back(std::shared_ptr<Object>(new Resource(item.first.substr(10), item.second)));
-    }
+    this->drops = data["drops"].get<std::map<std::string, int>>();
 }
 
 double Animal::attack() noexcept {
@@ -48,18 +46,8 @@ bool Animal::attack(double dmg) noexcept {
 
 std::vector<std::shared_ptr<Object>> Animal::getDrops() noexcept {
     std::vector<std::shared_ptr<Object>> v;
-    for (const auto& obj : drops) {
-        OBJCLASS type = obj->getType();
-        if (gen.getRandBool()) {
-            if (type == OBJCLASS::RESOURCE) {
-                Resource* r = static_cast<Resource*>(obj.get());
-                int num = gen.getRandInt(1, r->getCount());
-                v.push_back(std::shared_ptr<Object>(new Resource(r->getName(), num)));
-            }
-            else {
-                v.push_back(std::shared_ptr<Object>(obj));
-            }
-        }
+    for (const std::pair<std::string, int>& item : this->drops) {
+        if (gen.getRandBool()) v.push_back(std::shared_ptr<Object>(new Resource(item.first, gen.getRandInt(1, item.second))));
     }
     return v;
 }
