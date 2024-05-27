@@ -48,7 +48,8 @@ for dir in data_dirs :
 print(f"Data Files: {count3} lines ({fcount} files)")
 
 breakdown.append("\nConfiguration Files:")
-config_files = [i for i in Path().rglob("CMakeLists.txt") if len(i.parts) == 0 or i.parts[0] not in ["build"]]
+config_files = [i for i in Path().rglob("CMakeLists.txt") if len(i.parts) == 0 or i.parts[0] not in ["build"]] \
+    + [Path("config.ini")]
 count4 = countlines(config_files, True)
 print(f"Configuration Files: {count4} lines ({len(config_files)} files)")
 
