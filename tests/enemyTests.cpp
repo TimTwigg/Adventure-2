@@ -1,4 +1,4 @@
-// updated 24 May 2024
+// updated 27 May 2024
 
 #include <gtest/gtest.h>
 #include "Enemy.hpp"
@@ -7,6 +7,7 @@
 TEST(enemyTests, constructor) {
     Enemy a{"bandit"};
     Enemy b{" BandIT "};
+    ASSERT_THROW(Enemy c{"orcs"}, AdventureException);
     ASSERT_THROW(Enemy c{""}, AdventureException);
 }
 

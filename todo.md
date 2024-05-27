@@ -24,7 +24,6 @@
     - make sure that all objects have a description, etc
 - revise windowsInterface askSelect to mirror prompt_toolkit behavior after selection is made
 - revise location description indefinite article logic
-- Figure out error that occasionally crashes some of the map tests
 
 # IDEAS
 - Refresh ht and hp completely at towns? For a price?
