@@ -1,4 +1,4 @@
-// Updated: 17 June 2022
+// Updated: 26 May 2024
 
 #include <string>
 #include <iostream>
@@ -78,9 +78,11 @@ std::string WindowsInterface::askSelect(const std::string& prompt, const std::ve
         switch((c = getch())) {
             case Keys::UP:
                 if (current > 0) --current;
+                else current = size - 1;
                 break;
             case Keys::DOWN:
                 if (current < size - 1) ++current;
+                else current = 0;
                 break;
             case Keys::ENTER:
                 selected = true;
