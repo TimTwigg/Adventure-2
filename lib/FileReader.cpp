@@ -160,7 +160,7 @@ std::vector<std::string> FileReader::readFileByLine(std::string filename) {
     while (in) {
         line.clear();
         std::getline(in, line);
-        out.push_back(line);
+        if (line.size() > 0) out.push_back(line);
     }
     in.close();
     

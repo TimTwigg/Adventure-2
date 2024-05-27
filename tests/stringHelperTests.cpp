@@ -93,6 +93,38 @@ TEST(stringHelperTests, reduce) {
     ASSERT_EQ(out[2], "river");
 }
 
+TEST(stringHelperTests, isNumber) {
+    ASSERT_TRUE(sh::isNumber("0"));
+    ASSERT_TRUE(sh::isNumber("1"));
+    ASSERT_TRUE(sh::isNumber("2"));
+    ASSERT_TRUE(sh::isNumber("3"));
+    ASSERT_TRUE(sh::isNumber("4"));
+    ASSERT_TRUE(sh::isNumber("5"));
+    ASSERT_TRUE(sh::isNumber("6"));
+    ASSERT_TRUE(sh::isNumber("7"));
+    ASSERT_TRUE(sh::isNumber("8"));
+    ASSERT_TRUE(sh::isNumber("9"));
+
+    ASSERT_FALSE(sh::isNumber("a"));
+    ASSERT_FALSE(sh::isNumber("b"));
+    ASSERT_FALSE(sh::isNumber("c"));
+    ASSERT_FALSE(sh::isNumber("d"));
+    ASSERT_FALSE(sh::isNumber("e"));
+    ASSERT_FALSE(sh::isNumber("f"));
+    ASSERT_FALSE(sh::isNumber("g"));
+    ASSERT_FALSE(sh::isNumber("A"));
+    ASSERT_FALSE(sh::isNumber("B"));
+    ASSERT_FALSE(sh::isNumber("C"));
+    ASSERT_FALSE(sh::isNumber("D"));
+    ASSERT_FALSE(sh::isNumber("E"));
+    ASSERT_FALSE(sh::isNumber("F"));
+    ASSERT_FALSE(sh::isNumber("G"));
+    ASSERT_FALSE(sh::isNumber(" "));
+    ASSERT_FALSE(sh::isNumber("."));
+    ASSERT_FALSE(sh::isNumber(""));
+    ASSERT_FALSE(sh::isNumber("_"));
+}
+
 TEST(stringHelperTests, join) {
     std::vector<std::string> v{{"this", "is", "a", "list"}};
     std::vector<std::string> empty;

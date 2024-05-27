@@ -40,7 +40,10 @@ std::vector<std::string> strHelp::reduce(const std::vector<std::string>& v, cons
 
 // adapted from https://stackoverflow.com/questions/4654636/how-to-determine-if-a-string-is-a-number-with-c
 bool strHelp::isNumber(const std::string& s) {
-    return !s.empty() && std::find_if(s.begin(), s.end(), [](unsigned char c){return !std::isdigit(c) && c != '.';}) == s.end();
+    return !s.empty() 
+        && std::find_if(s.begin(), s.end(), [](unsigned char c){return !std::isdigit(c) && c != '.';}) == s.end() 
+        && std::count(s.begin(), s.end(), '.') < 2
+        && s != ".";
 }
 
 std::string strHelp::join(std::vector<std::string> strings, std::string delim) {

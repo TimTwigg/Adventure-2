@@ -1,4 +1,4 @@
-// updated 4 August 2023
+// updated 26 May 2024
 
 #include <gtest/gtest.h>
 #include <vector>
@@ -11,9 +11,9 @@
 
 namespace {
     std::vector<std::string> names{"level", "xp", "skillset", "health", "max_health",
-        "base_damage", "fist_base_damage", "hunger", "max_hunger", "thirst", "max_thirst", "carry_weight",
-        "speed", "consumption_ratio", "chopping_ratio", "mining_ratio",
-       "carry_ratio", "wealth", "ratios", "diff_ratio", "time", "days"};
+        "base_damage", "fist_base_damage", "hunger", "max_hunger", "thirst", "max_thirst",
+        "carry_weight", "speed", "consumption_ratio", "chopping_ratio", "mining_ratio",
+        "wealth", "ratios", "diff_ratio", "time", "days"};
 }
 
 TEST(PlayerTests, Constructor) {

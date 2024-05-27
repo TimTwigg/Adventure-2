@@ -20,6 +20,10 @@
 - how does a player heal?
 - only able to put stuff into static storages? or backpack as well?
 - review Civ loot selection
+- Actually use mining/chopping/etc ratios
+- Write tests
+    - formulaTests
+    - factoryTests
 
 # IDEAS
 - Refresh ht and hp completely at towns? For a price?

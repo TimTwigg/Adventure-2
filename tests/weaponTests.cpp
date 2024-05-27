@@ -1,4 +1,4 @@
-// updated 16 June 2022
+// updated 26 May 2024
 
 #include <gtest/gtest.h>
 #include <string>
@@ -22,7 +22,7 @@ TEST(weaponTests, getters) {
     std::map<std::string, unsigned int> r = w.getRecipe();
     ASSERT_EQ(r.size(), 2);
     ASSERT_EQ(r["wood"], 1);
-    ASSERT_EQ(r["string"], 1);
+    ASSERT_EQ(r["cord"], 1);
 }
 
 TEST(weaponTests, operatorString) {
