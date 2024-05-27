@@ -375,20 +375,21 @@
         "Value: 20",
         "Weight: 40",
         "Acquire: craft from 4 stone",
-        "Requires fuel"
+        "Fuel: required"
     ],
     "smoker": [
         "Category: MACHINE",
         "Value: 20",
         "Weight: 28",
         "Acquire: craft from 4 wood",
-        "Requires fuel"
+        "Fuel: required"
     ],
     "crafting-bench": [
         "Category: MACHINE",
         "Value: 10",
         "Weight: 14",
-        "Acquire: craft from 2 wood"
+        "Acquire: craft from 2 wood",
+        "Fuel: not required"
     ],
     "milk": [
         "Category: LIQUID",
@@ -472,7 +473,8 @@
         "Category: TOOL",
         "Value: 17",
         "Weight: 4",
-        "Acquire: craft from 1 glass and 1 metal"
+        "Acquire: craft from 1 glass and 1 metal",
+        "Uses: No limit"
     ],
     "hammer": [
         "Category: TOOL",
@@ -509,7 +511,8 @@
         "Acquire: craft from 2 wood",
         "Uses: 10",
         "Melee damage ratio: 0.75",
-        "Ranged damage ratio: 0"
+        "Ranged damage ratio: 0",
+        "Ammo type: none"
     ],
     "stone-spear": [
         "Category: WEAPON",
@@ -518,7 +521,8 @@
         "Acquire: craft from 1 wood and 1 stone",
         "Uses: 15",
         "Melee damage ratio: 1",
-        "Ranged damage ratio: 0"
+        "Ranged damage ratio: 0",
+        "Ammo type: none"
     ],
     "metal-spear": [
         "Category: WEAPON",
@@ -527,7 +531,8 @@
         "Acquire: craft from 1 wood and 1 metal",
         "Uses: 20",
         "Melee damage ratio: 1.5",
-        "Ranged damage ratio: 0"
+        "Ranged damage ratio: 0",
+        "Ammo type: none"
     ],
     "wood-sword": [
         "Category: WEAPON",
@@ -536,7 +541,8 @@
         "Acquire: craft from 3 wood",
         "Uses: 15",
         "Melee damage ratio: 0.75",
-        "Ranged damage ratio: 0"
+        "Ranged damage ratio: 0",
+        "Ammo type: none"
     ],
     "stone-sword": [
         "Category: WEAPON",
@@ -545,7 +551,8 @@
         "Acquire: craft from 1 wood and 2 stone",
         "Uses: 20",
         "Melee damage ratio: 1",
-        "Ranged damage ratio: 0"
+        "Ranged damage ratio: 0",
+        "Ammo type: none"
     ],
     "metal-sword": [
         "Category: WEAPON",
@@ -554,7 +561,8 @@
         "Acquire: craft from 1 wood and 2 metal",
         "Uses: 35",
         "Melee damage ratio: 2",
-        "Ranged damage ratio: 0"
+        "Ranged damage ratio: 0",
+        "Ammo type: none"
     ],
     "bow": [
         "Category: WEAPON",
@@ -575,5 +583,28 @@
         "Melee damage ratio: 0",
         "Ranged damage ratio: 1",
         "Ammo type: dart"
+    ],
+    "backpack": [
+        "Category: STORAGE",
+        "Value: 15",
+        "Weight: 5",
+        "Acquire: craft from 2 leather and 1 cord",
+        "Carryable: Yes",
+        "Capacity: 30"
+    ],
+    "chest": [
+        "Category: STORAGE",
+        "Value: 25",
+        "Weight: 44",
+        "Acquire: craft from 6 wood and 1 metal",
+        "Carryable: No",
+        "Capacity: 100"
+    ],
+    "flute": [
+        "Category: TOOL",
+        "Value: 4",
+        "Weight: 1",
+        "Acquire: craft from 1 wood",
+        "Uses: No limit"
     ]
 }

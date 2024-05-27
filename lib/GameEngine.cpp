@@ -1,4 +1,4 @@
-// updated 26 May 2024
+// updated 27 May 2024
 
 #include <string>
 #include <memory>
@@ -1349,7 +1349,7 @@ void GameEngine::smoke() {
     // validate that target is smokable
     std::string output;
     try {
-        output = FileReader::getFromFile("smoker.json", target).get<std::string>();
+        output = FileReader::getFromFile("smoker.json", target, "outputs").get<std::string>();
     }
     catch (AdventureException e) {
         i->output("You can't smoke a " + target, configs["colors"]["error"].get<Color>());
@@ -1422,7 +1422,7 @@ void GameEngine::smelt() {
     // validate that target is smeltable
     std::string output;
     try {
-        output = FileReader::getFromFile("furnace.json", target).get<std::string>();
+        output = FileReader::getFromFile("furnace.json", target, "outputs").get<std::string>();
     }
     catch (AdventureException e) {
         i->output("You can't smelt a " + target, configs["colors"]["error"].get<Color>());

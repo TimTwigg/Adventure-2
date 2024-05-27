@@ -6,7 +6,8 @@
         "recipe": {
             "leather": 2,
             "metal": 1
-        }
+        },
+        "output": 1
     },
     "arrow": {
         "category": "AMMO",
@@ -16,7 +17,8 @@
             "wood": 1,
             "metal": 1,
             "feather": 2
-        }
+        },
+        "output": 5
     },
     "dart": {
         "category": "AMMO",
@@ -25,7 +27,8 @@
         "recipe": {
             "wood": 1,
             "feather": 1
-        }
+        },
+        "output": 5
     },
     "blanket": {
         "category": "OBJECT",
@@ -33,6 +36,7 @@
         "weight": 3,
         "recipe": {
             "wool": 3
-        }
+        },
+        "output": 1
     }
 }

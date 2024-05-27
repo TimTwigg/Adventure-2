@@ -100,7 +100,7 @@
             "jaguar"
         ],
         "river": 0.75,
-        "people": 0,
+        "people": 0.0,
         "civ-types": [
             "town",
             "temple"
@@ -119,7 +119,7 @@
             "bird"
         ],
         "river": 0.75,
-        "people": 0,
+        "people": 0.0,
         "civ-types": [
             "shipwreck"
         ],
@@ -135,8 +135,8 @@
             "fish",
             "bird"
         ],
-        "river": 0,
-        "people": 0,
+        "river": 0.0,
+        "people": 0.0,
         "civ-types": [
             "shipwreck"
         ],
@@ -152,8 +152,8 @@
         "animals": [
             "fish"
         ],
-        "river": 0,
-        "people": 0,
+        "river": 0.0,
+        "people": 0.0,
         "civ-types": [],
         "enemies": [
             "bandit",

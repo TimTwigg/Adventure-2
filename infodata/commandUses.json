@@ -41,8 +41,8 @@
     ],
     "take": [
         "take *object-name*",
-        "There is no limit on what you can pick up, but moving requires your load to be within your limit",
-        "Description: Take an object lying in an area."
+        "Description: Take an object lying in an area.",
+        "There is no limit on what you can pick up, but moving requires your load to be within your limit"
     ],
     "drop": [
         "drop *object-name*",
@@ -138,12 +138,12 @@
     ],
     "smoke": [
         "smoke *item*",
-        "Smoking requires both a smoker and a fuel source",
-        "Description: Smoke raw food or an item."
+        "Description: Smoke raw food or an item.",
+        "Smoking requires both a smoker and a fuel source"
     ],
     "smelt": [
         "smelt *item*",
-        "Smelting requires both a furnace and a fuel source",
-        "Description: Smelt ore or materials."
+        "Description: Smelt ore or materials.",
+        "Smelting requires both a furnace and a fuel source"
     ]
 }

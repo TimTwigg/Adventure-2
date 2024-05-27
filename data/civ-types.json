@@ -30,20 +30,20 @@
         "counter-attack" : 500
     },
     "city" : {
-        "buying" : ["resources", "tools", "weapons", "animals", "potions", "containers", "machines"],
-        "selling" : ["resources", "tools", "weapons", "potions", "containers", "machines"],
+        "buying" : ["resources", "tools", "weapons", "animals", "liquids", "containers", "machines"],
+        "selling" : ["resources", "tools", "weapons", "liquids", "containers", "machines"],
         "count" : 15,
-        "items" : ["resources", "tools", "weapons", "potions"],
+        "items" : ["resources", "tools", "weapons", "liquids"],
         "loot" : 250,
         "xp" : 750,
         "defense" : 4000,
         "counter-attack" : 750
     },
     "temple" : {
-        "buying" : ["potions", "containers", "resources"],
-        "selling" : ["potions", "containers"],
+        "buying" : ["liquids", "containers", "resources"],
+        "selling" : ["liquids", "containers"],
         "count" : 5,
-        "items" : ["potions", "containers"],
+        "items" : ["liquids", "containers"],
         "loot" : 50,
         "xp" : 350,
         "defense" : 2000,
