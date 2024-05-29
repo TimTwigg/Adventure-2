@@ -1,4 +1,4 @@
-# updated 27 May 2024
+# updated 28 May 2024
 # validate data and infodata files
 
 from pathlib import Path
@@ -7,6 +7,48 @@ import unittest
 
 DATASOURCE = Path("data/")
 INFODATASOURCE = Path("infodata/")
+
+def parseAcquireString(acquire: str) -> list[str]:
+    if (acquire.find("craft") == -1 and acquire.find("cook") == -1):
+        return False
+    if (acquire.find(":") != -1):
+        acquire = acquire.split(":")[1]
+    acquire = acquire.strip()
+    
+    items = [s for s in acquire.replace(",", "").split() if s not in ["from", "and", "or", "a", "an", "the", "collect", "craft", "get"]]
+    
+    if acquire.find("craft") != -1:
+        pairs = ["craft"]
+        for a,b in zip(items[0::2], items[1::2]):
+            if int(a) > 1 and b.endswith("s"):
+                b = b[:-1]
+            pairs += [b for _ in range(int(a))]
+        return pairs
+    
+    elif acquire.find("cook") != -1:
+        return items
+
+class ObjectInfo:
+    def __init__(self, objectInfo: list[str]) -> None:
+        pairs: dict[str, str] = {k.strip():v.strip() for k,v in [pair.split(":") for pair in objectInfo]}
+        self.category: str = pairs.get("Category", "")
+        self.value: int = int(pairs.get("Value", 0))
+        self.weight: int = int(pairs.get("Weight", 0))
+        self.acquire: str = parseAcquireString(pairs.get("Acquire", ""))
+        if not self.acquire:
+            self.acquire = pairs.get("Acquire", "")
+        self.uses: int = -1 if pairs.get("Uses", 0) == "No limit" else int(pairs.get("Uses", 0))
+        self.melee_damage_ratio: float = float(pairs.get("Melee damage ratio", 0))
+        self.ranged_damage_ratio: float = float(pairs.get("Ranged damage ratio", 0))
+        self.ammo_type: str = pairs.get("Ammo type", "")
+        self.liquid_count: int = int(pairs.get("Liquid Count", 0))
+        self.nutritional_value: int = int(pairs.get("Nutritional Value", 0))
+        self.fuel: str = pairs.get("Fuel", "")
+        self.hunger: int = int(pairs.get("Hunger", 0))
+        self.thirst: int = int(pairs.get("Thirst", 0))
+        self.hp: int = int(pairs.get("HP", 0))
+        self.carryable: bool = pairs.get("Carryable", "").lower() == "true"
+        self.capacity: int = int(pairs.get("Capacity", 0))
 
 class ValidateData(unittest.TestCase):
     def __init__(self, methodName: str = "runTest") -> None:
@@ -343,6 +385,21 @@ class ValidateData(unittest.TestCase):
                 self.assertTrue(info[3].startswith("Acquire:"), obj)
                 self.assertTrue(info[4].startswith("Carryable:"), obj)
                 self.assertTrue(info[5].startswith("Capacity:"), obj)
+            
+            craftables = self.craftableResources | self.tools | self.weapons | self.machines | self.containers | self.storages
+            
+            objectInfo = ObjectInfo(info)
+            if type(objectInfo.acquire) == list:
+                if (objectInfo.acquire[0] == "craft"):
+                    for item in objectInfo.acquire[1:]:
+                        self.assertIn(item, self.resources.keys(), obj)
+                        self.assertIn(obj, craftables)
+                        data = craftables[obj]
+                        for k,v in data["recipe"].items():
+                            self.assertEqual(objectInfo.acquire.count(k), v, obj)
+                elif (objectInfo.acquire[0] == "cook"):
+                    self.assertIn(objectInfo.acquire[1], self.smokerOutput.keys())
+                    self.assertEqual(obj, self.smokerOutput[objectInfo.acquire[1]])
 
 if __name__ == "__main__":
     unittest.main()

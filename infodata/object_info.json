@@ -131,7 +131,7 @@
         "Value: 4",
         "Weight: 4",
         "Nutritional Value: 15",
-        "Acquire: cook a shark"
+        "Acquire: cook a raw-shark"
     ],
     "shark-tooth": [
         "Category: OBJECT",
@@ -413,7 +413,7 @@
         "Category: LIQUID",
         "Value: 15",
         "Weight: 2",
-        "Acquire: @@@",
+        "Acquire: trade",
         "Hunger: 0",
         "Thirst: 0",
         "HP: 500"
@@ -422,7 +422,7 @@
         "Category: LIQUID",
         "Value: 15",
         "Weight: 3",
-        "Acquire: @@@",
+        "Acquire: trade",
         "Hunger: 20",
         "Thirst: 5",
         "HP: 50"

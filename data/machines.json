@@ -1,20 +1,30 @@
 {
-    "furnace" : {
-        "requires" : ["wood"],
-        "value" : 20,
+    "furnace": {
+        "requires": [
+            "wood"
+        ],
+        "value": 20,
         "weight": 40,
-        "recipe" : {"stone" : 4}
+        "recipe": {
+            "stone": 4
+        }
     },
-    "smoker" : {
-        "requires" : ["wood"],
-        "value" : 20,
+    "smoker": {
+        "requires": [
+            "wood"
+        ],
+        "value": 20,
         "weight": 28,
-        "recipe" : {"wood" : 4}
+        "recipe": {
+            "wood": 4
+        }
     },
-    "crafting-bench" : {
-        "requires" : [],
-        "value" : 10,
+    "crafting-bench": {
+        "requires": [],
+        "value": 10,
         "weight": 14,
-        "recipe" : {"wood" : 2}
+        "recipe": {
+            "wood": 2
+        }
     }
 }

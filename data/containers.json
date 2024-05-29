@@ -1,20 +1,26 @@
 {
-    "bucket" : {
-        "amount" : 3,
-        "value" : 12,
-        "recipe" : {"metal" : 1},
-        "weight" : 6
+    "bucket": {
+        "amount": 3,
+        "value": 12,
+        "recipe": {
+            "metal": 1
+        },
+        "weight": 6
     },
-    "bottle" : {
-        "amount" : 2,
-        "value" : 6,
-        "recipe" : {"glass" : 1},
-        "weight" : 4
+    "bottle": {
+        "amount": 2,
+        "value": 6,
+        "recipe": {
+            "glass": 1
+        },
+        "weight": 4
     },
-    "vial" : {
-        "amount" : 1,
-        "value" : 6,
-        "recipe" : {"glass" : 1},
-        "weight" : 1
+    "vial": {
+        "amount": 1,
+        "value": 6,
+        "recipe": {
+            "glass": 1
+        },
+        "weight": 1
     }
 }

@@ -1,72 +1,136 @@
 {
-    "hut" : {
-        "buying" : ["resources"],
-        "selling" : ["resources"],
-        "count" : 2,
-        "items" : [],
-        "loot" : 5,
-        "xp" : 100,
-        "defense" : 400,
-        "counter-attack" : 100
+    "hut": {
+        "buying": [
+            "resources"
+        ],
+        "selling": [
+            "resources"
+        ],
+        "count": 2,
+        "items": [],
+        "loot": 5,
+        "xp": 100,
+        "defense": 400,
+        "counter-attack": 100
     },
-    "village" : {
-        "buying" : ["resources", "tools"],
-        "selling" : ["resources"],
-        "count" : 4,
-        "items" : ["resources"],
-        "loot" : 25,
-        "xp" : 250,
-        "defense" : 1000,
-        "counter-attack" : 300
+    "village": {
+        "buying": [
+            "resources",
+            "tools"
+        ],
+        "selling": [
+            "resources"
+        ],
+        "count": 4,
+        "items": [
+            "resources"
+        ],
+        "loot": 25,
+        "xp": 250,
+        "defense": 1000,
+        "counter-attack": 300
     },
-    "town" : {
-        "buying" : ["resources", "tools", "weapons", "containers"],
-        "selling" : ["resources", "tools", "containers"],
-        "count" : 6,
-        "items" : ["resources", "tools"],
-        "loot" : 75,
-        "xp" : 400,
-        "defense" : 2000,
-        "counter-attack" : 500
+    "town": {
+        "buying": [
+            "resources",
+            "tools",
+            "weapons",
+            "containers"
+        ],
+        "selling": [
+            "resources",
+            "tools",
+            "containers"
+        ],
+        "count": 6,
+        "items": [
+            "resources",
+            "tools"
+        ],
+        "loot": 75,
+        "xp": 400,
+        "defense": 2000,
+        "counter-attack": 500
     },
-    "city" : {
-        "buying" : ["resources", "tools", "weapons", "animals", "liquids", "containers", "machines"],
-        "selling" : ["resources", "tools", "weapons", "liquids", "containers", "machines"],
-        "count" : 15,
-        "items" : ["resources", "tools", "weapons", "liquids"],
-        "loot" : 250,
-        "xp" : 750,
-        "defense" : 4000,
-        "counter-attack" : 750
+    "city": {
+        "buying": [
+            "resources",
+            "tools",
+            "weapons",
+            "animals",
+            "liquids",
+            "containers",
+            "machines"
+        ],
+        "selling": [
+            "resources",
+            "tools",
+            "weapons",
+            "liquids",
+            "containers",
+            "machines"
+        ],
+        "count": 15,
+        "items": [
+            "resources",
+            "tools",
+            "weapons",
+            "liquids"
+        ],
+        "loot": 250,
+        "xp": 750,
+        "defense": 4000,
+        "counter-attack": 750
     },
-    "temple" : {
-        "buying" : ["liquids", "containers", "resources"],
-        "selling" : ["liquids", "containers"],
-        "count" : 5,
-        "items" : ["liquids", "containers"],
-        "loot" : 50,
-        "xp" : 350,
-        "defense" : 2000,
-        "counter-attack" : 400
+    "temple": {
+        "buying": [
+            "liquids",
+            "containers",
+            "resources"
+        ],
+        "selling": [
+            "liquids",
+            "containers"
+        ],
+        "count": 5,
+        "items": [
+            "liquids",
+            "containers"
+        ],
+        "loot": 50,
+        "xp": 350,
+        "defense": 2000,
+        "counter-attack": 400
     },
-    "shipwreck" : {
-        "buying" : [],
-        "selling" : [],
-        "count" : 2,
-        "items" : ["wealth", "containers"],
-        "loot" : 15,
-        "xp" : 15,
-        "defense" : 25,
-        "counter-attack" : 0
+    "shipwreck": {
+        "buying": [],
+        "selling": [],
+        "count": 2,
+        "items": [
+            "wealth",
+            "containers"
+        ],
+        "loot": 15,
+        "xp": 15,
+        "defense": 25,
+        "counter-attack": 0
     },
-    "fort" : {
-        "buying" : ["resources", "weapons"],
-        "selling" : ["weapons"],
-        "count" : 4,
-        "items" : ["weapons", "wealth"],
-        "loot" : 200,
-        "xp" : 1000,
-        "defense" : 4000,
-        "counter-attack" : 1000
+    "fort": {
+        "buying": [
+            "resources",
+            "weapons"
+        ],
+        "selling": [
+            "weapons"
+        ],
+        "count": 4,
+        "items": [
+            "weapons",
+            "wealth"
+        ],
+        "loot": 200,
+        "xp": 1000,
+        "defense": 4000,
+        "counter-attack": 1000
     }
 }
