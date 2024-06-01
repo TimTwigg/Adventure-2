@@ -1,6 +1,6 @@
 {
     "furnace": {
-        "requires": [
+        "fuel": [
             "wood"
         ],
         "value": 20,
@@ -10,7 +10,7 @@
         }
     },
     "smoker": {
-        "requires": [
+        "fuel": [
             "wood"
         ],
         "value": 20,
@@ -20,7 +20,7 @@
         }
     },
     "crafting-bench": {
-        "requires": [],
+        "fuel": [],
         "value": 10,
         "weight": 14,
         "recipe": {

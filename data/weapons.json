@@ -4,7 +4,7 @@
         "ammo": "none",
         "m-damage": 1.0,
         "r-damage": 0.0,
-        "hitpoints": 10,
+        "durability": 10,
         "value": 3,
         "recipe": {
             "wood": 2
@@ -16,7 +16,7 @@
         "ammo": "none",
         "m-damage": 1.25,
         "r-damage": 0.0,
-        "hitpoints": 15,
+        "durability": 15,
         "value": 6,
         "recipe": {
             "wood": 1,
@@ -29,7 +29,7 @@
         "ammo": "none",
         "m-damage": 1.5,
         "r-damage": 0.0,
-        "hitpoints": 20,
+        "durability": 20,
         "value": 13,
         "recipe": {
             "wood": 1,
@@ -42,7 +42,7 @@
         "ammo": "none",
         "m-damage": 1.25,
         "r-damage": 0.0,
-        "hitpoints": 15,
+        "durability": 15,
         "value": 7,
         "recipe": {
             "wood": 3
@@ -54,7 +54,7 @@
         "ammo": "none",
         "m-damage": 1.5,
         "r-damage": 0.0,
-        "hitpoints": 20,
+        "durability": 20,
         "value": 9,
         "recipe": {
             "wood": 1,
@@ -67,7 +67,7 @@
         "ammo": "none",
         "m-damage": 2.0,
         "r-damage": 0.0,
-        "hitpoints": 35,
+        "durability": 35,
         "value": 25,
         "recipe": {
             "wood": 1,
@@ -80,7 +80,7 @@
         "ammo": "arrow",
         "m-damage": 0.0,
         "r-damage": 2.0,
-        "hitpoints": 20,
+        "durability": 20,
         "value": 10,
         "recipe": {
             "wood": 1,
@@ -93,7 +93,7 @@
         "ammo": "dart",
         "m-damage": 0.0,
         "r-damage": 1.0,
-        "hitpoints": 50,
+        "durability": 50,
         "value": 7,
         "recipe": {
             "wood": 1

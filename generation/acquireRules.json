@@ -1,0 +1,68 @@
+{
+    "help": {
+        "Placeholder Syntax": {
+            "@A": "article based on object name",
+            "@N": "object name"
+        },
+        "Priority Order": {
+            "1": "Unqiue",
+            "2": "Category",
+            "3": "Starts With",
+            "4": "Ends With",
+            "5": "Contains"
+        }
+    },
+    "resources": {
+        "unqiue": {
+            "feather": "Kill a chicken or bird",
+            "wool": "Kill or shear a sheep",
+            "horn": "Kill a goat or deer",
+            "metal": "Melt metal-ore",
+            "gold": "Melt gold-ore",
+            "glass": "Melt sand",
+            "sand": "Dig",
+            "dirt": "Dig",
+            "stone": "Mine it",
+            "sinew": "Kill a deer",
+            "cord": "Dry sinew",
+            "wet-leather": "Kill a cow or horse",
+            "leather": "Dry wet-leather",
+            "pig-bladder": "Kill a pig",
+            "raw-mutton": "Kill a sheep",
+            "raw-beef": "Kill a cow",
+            "raw-pork": "Kill a pig",
+            "raw-venison": "Kill a deer"
+        },
+        "rules": {
+            "category": {},
+            "startswith": {
+                "cooked": "Cook a raw-@N",
+                "raw": "Kill @A @N"
+            },
+            "endswith": {
+                "tooth": "Kill a @N",
+                "fur": "Kill a @N",
+                "bone": "Kill a @N",
+                "horn": "Kill a @N",
+                "skin": "Kill a @N",
+                "ore": "Mine it",
+                "wood": "Chop trees"
+            },
+            "contains": {}
+        }
+    },
+    "liquids": {
+        "unqiue": {
+            "water": "Get from a river",
+            "milk": "Milk a cow",
+            "medicine": "Trade",
+            "protein-shake": "Trade"
+        },
+        "rules": {
+            "category": {},
+            "startswith": {},
+            "endswith": {},
+            "contains": {}
+        }
+    }
+}

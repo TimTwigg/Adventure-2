@@ -1,4 +1,4 @@
-// updated 4 August 2023
+// updated 1 June 2024
 
 #include <map>
 #include <string>
@@ -20,7 +20,7 @@ Weapon::Weapon(std::string name) {
     this->weight = data["weight"].get<int>();
     this->type = OBJCLASS::WEAPON;
     recipe = data["recipe"].get<std::map<std::string, unsigned int>>();
-    uses = data["hitpoints"].get<int>();
+    uses = data["durability"].get<int>();
     category = data["type"].get<std::string>();
     dmg = (category == "melee") ? data["m-damage"].get<double>() : data["r-damage"].get<double>();
     ammo = (category == "ranged") ? data["ammo"].get<std::string>() : "None";

@@ -1,610 +1,610 @@
 {
-    "raw-chicken": [
-        "Category: RAW-FOOD",
+    "arrow": [
+        "Category: AMMO",
         "Value: 3",
-        "Weight: 5",
-        "Acquire: kill a chicken"
+        "Weight: 1",
+        "Acquire: Craft from 1 wood, 1 metal and 2 feathers"
     ],
-    "cooked-chicken": [
-        "Category: FOOD",
-        "Value: 6",
+    "backpack": [
+        "Category: STORAGE",
+        "Value: 15",
         "Weight: 5",
-        "Nutritional Value: 25",
-        "Acquire: cook a raw-chicken"
+        "Acquire: Craft from 2 leathers and 1 cord",
+        "Carryable: Yes",
+        "Capacity: 30"
     ],
-    "feather": [
+    "binoculars": [
+        "Category: TOOL",
+        "Value: 17",
+        "Weight: 4",
+        "Acquire: Craft from 1 glass and 1 metal",
+        "Durability: No limit"
+    ],
+    "blanket": [
         "Category: OBJECT",
-        "Value: 2",
-        "Weight: 0",
-        "Acquire: kill a chicken or bird"
+        "Value: 10",
+        "Weight: 3",
+        "Acquire: Craft from 3 wool"
     ],
-    "raw-egg": [
-        "Category: RAW-FOOD",
-        "Value: 1",
-        "Weight: 1",
-        "Acquire: collect from chicken"
+    "bottle": [
+        "Category: CONTAINER",
+        "Capacity: 2",
+        "Value: 6",
+        "Weight: 4",
+        "Acquire: Craft from 1 glass"
     ],
-    "cooked-egg": [
-        "Category: FOOD",
-        "Value: 2",
-        "Weight: 1",
-        "Nutritional Value: 9",
-        "Acquire: cook a raw-egg"
+    "bow": [
+        "Category: WEAPON",
+        "Value: 10",
+        "Weight: 8",
+        "Acquire: Craft from 1 wood and 1 cord",
+        "Durability: 20",
+        "Melee Damage Ratio: 0.0",
+        "Ranged Damage Ratio: 2.0",
+        "Ammo Type: Arrow"
     ],
-    "raw-beef": [
-        "Category: RAW-FOOD",
-        "Value: 4",
-        "Weight: 5",
-        "Acquire: kill a cow"
+    "bucket": [
+        "Category: CONTAINER",
+        "Capacity: 3",
+        "Value: 12",
+        "Weight: 6",
+        "Acquire: Craft from 1 metal"
+    ],
+    "chest": [
+        "Category: STORAGE",
+        "Value: 25",
+        "Weight: 44",
+        "Acquire: Craft from 6 woods and 1 metal",
+        "Carryable: No",
+        "Capacity: 100"
     ],
     "cooked-beef": [
         "Category: FOOD",
         "Value: 8",
         "Weight: 5",
         "Nutritional Value: 25",
-        "Acquire: cook a raw-beef"
-    ],
-    "wet-leather": [
-        "Category: OBJECT",
-        "Value: 2",
-        "Weight: 7",
-        "Acquire: kill a cow or horse"
-    ],
-    "leather": [
-        "Category: OBJECT",
-        "Value: 4",
-        "Weight: 5",
-        "Acquire: dry wet-leather"
-    ],
-    "raw-pork": [
-        "Category: RAW-FOOD",
-        "Value: 2",
-        "Weight: 5",
-        "Acquire: kill a pig"
-    ],
-    "cooked-pork": [
-        "Category: FOOD",
-        "Value: 8",
-        "Weight: 5",
-        "Nutritional Value: 25",
-        "Acquire: cook a raw-pork"
-    ],
-    "pig-bladder": [
-        "Category: OBJECT",
-        "Value: 3",
-        "Weight: 3",
-        "Acquire: kill a pig"
-    ],
-    "raw-horse": [
-        "Category: RAW-FOOD",
-        "Value: 4",
-        "Weight: 6",
-        "Acquire: kill a horse"
-    ],
-    "cooked-horse": [
-        "Category: FOOD",
-        "Value: 8",
-        "Weight: 6",
-        "Nutritional Value: 25",
-        "Acquire: cook a raw-horse"
-    ],
-    "raw-fish": [
-        "Category: RAW-FOOD",
-        "Value: 3",
-        "Weight: 3",
-        "Acquire: kill a fish"
-    ],
-    "cooked-fish": [
-        "Category: FOOD",
-        "Value: 6",
-        "Weight: 3",
-        "Nutritional Value: 15",
-        "Acquire: cook a raw-fish"
-    ],
-    "fish-bone": [
-        "Category: OBJECT",
-        "Value: 2",
-        "Weight: 1",
-        "Acquire: kill a fish"
-    ],
-    "raw-bird": [
-        "Category: RAW-FOOD",
-        "Value: 2",
-        "Weight: 2",
-        "Acquire: kill a bird"
+        "Acquire: Cook a raw-beef"
     ],
     "cooked-bird": [
         "Category: FOOD",
         "Value: 4",
         "Weight: 2",
         "Nutritional Value: 8",
-        "Acquire: cook a raw-bird"
+        "Acquire: Cook a raw-bird"
     ],
-    "raw-shark": [
-        "Category: RAW-FOOD",
-        "Value: 2",
-        "Weight: 4",
-        "Acquire: kill a shark"
-    ],
-    "cooked-shark": [
+    "cooked-chicken": [
         "Category: FOOD",
-        "Value: 4",
-        "Weight: 4",
-        "Nutritional Value: 15",
-        "Acquire: cook a raw-shark"
+        "Value: 6",
+        "Weight: 5",
+        "Nutritional Value: 25",
+        "Acquire: Cook a raw-chicken"
     ],
-    "shark-tooth": [
-        "Category: OBJECT",
-        "Value: 20",
+    "cooked-egg": [
+        "Category: FOOD",
+        "Value: 2",
         "Weight: 1",
-        "Acquire: kill a shark"
+        "Nutritional Value: 9",
+        "Acquire: Cook a raw-egg"
     ],
-    "raw-snake": [
-        "Category: RAW-FOOD",
-        "Value: 3",
-        "Weight: 3",
-        "Acquire: kill a snake"
-    ],
-    "cooked-snake": [
+    "cooked-fish": [
         "Category: FOOD",
         "Value: 6",
         "Weight: 3",
-        "Nutritional Value: 20",
-        "Acquire: cook a raw-snake"
-    ],
-    "snake-tooth": [
-        "Category: OBJECT",
-        "Value: 10",
-        "Weight: 1",
-        "Acquire: kill a snake"
-    ],
-    "raw-mutton": [
-        "Category: RAW-FOOD",
-        "Value: 4",
-        "Weight: 5",
-        "Acquire: kill a sheep"
-    ],
-    "cooked-mutton": [
-        "Category: FOOD",
-        "Value: 8",
-        "Weight: 5",
-        "Nutritional Value: 25",
-        "Acquire: cook a raw-mutton"
-    ],
-    "wool": [
-        "Category: OBJECT",
-        "Value: 3",
-        "Weight: 2",
-        "Acquire: kill or shear a sheep"
-    ],
-    "raw-venison": [
-        "Category: RAW-FOOD",
-        "Value: 4",
-        "Weight: 5",
-        "Acquire: kill a deer"
-    ],
-    "cooked-venison": [
-        "Category: FOOD",
-        "Value: 8",
-        "Weight: 5",
-        "Nutritional Value: 25",
-        "Acquire: cook a raw-venison"
-    ],
-    "horn": [
-        "Category: OBJECT",
-        "Value: 5",
-        "Weight: 2",
-        "Acquire: kill a deer or goat"
-    ],
-    "raw-goat": [
-        "Category: RAW-FOOD",
-        "Value: 4",
-        "Weight: 5",
-        "Acquire: kill a goat"
+        "Nutritional Value: 15",
+        "Acquire: Cook a raw-fish"
     ],
     "cooked-goat": [
         "Category: FOOD",
         "Value: 8",
         "Weight: 5",
         "Nutritional Value: 25",
-        "Acquire: cook a raw-goat"
+        "Acquire: Cook a raw-goat"
     ],
-    "raw-lion": [
-        "Category: RAW-FOOD",
-        "Value: 3",
-        "Weight: 6",
-        "Acquire: kill a lion"
-    ],
-    "cooked-lion": [
+    "cooked-horse": [
         "Category: FOOD",
-        "Value: 6",
+        "Value: 8",
         "Weight: 6",
-        "Nutritional Value: 10",
-        "Acquire: cook a raw-lion"
-    ],
-    "raw-jaguar": [
-        "Category: RAW-FOOD",
-        "Value: 3",
-        "Weight: 6",
-        "Acquire: kill a jaguar"
+        "Nutritional Value: 25",
+        "Acquire: Cook a raw-horse"
     ],
     "cooked-jaguar": [
         "Category: FOOD",
         "Value: 6",
         "Weight: 6",
         "Nutritional Value: 10",
-        "Acquire: cook a raw-jaguar"
+        "Acquire: Cook a raw-jaguar"
     ],
-    "lion-tooth": [
-        "Category: OBJECT",
-        "Value: 15",
-        "Weight: 2",
-        "Acquire: kill a lion"
+    "cooked-lion": [
+        "Category: FOOD",
+        "Value: 6",
+        "Weight: 6",
+        "Nutritional Value: 10",
+        "Acquire: Cook a raw-lion"
     ],
-    "lion-fur": [
-        "Category: OBJECT",
-        "Value: 20",
-        "Weight: 9",
-        "Acquire: kill a lion"
-    ],
-    "jaguar-tooth": [
-        "Category: OBJECT",
-        "Value: 15",
-        "Weight: 2",
-        "Acquire: kill a jaguar"
-    ],
-    "jaguar-skin": [
-        "Category: OBJECT",
-        "Value: 20",
-        "Weight: 8",
-        "Acquire: kill a jaguar"
-    ],
-    "metal-ore": [
-        "Category: OBJECT",
+    "cooked-mutton": [
+        "Category: FOOD",
         "Value: 8",
-        "Weight: 10",
-        "Acquire: mine"
+        "Weight: 5",
+        "Nutritional Value: 25",
+        "Acquire: Cook a raw-mutton"
     ],
-    "metal": [
-        "Category: OBJECT",
-        "Value: 10",
-        "Weight: 8",
-        "Acquire: melt metal-ore"
+    "cooked-pork": [
+        "Category: FOOD",
+        "Value: 8",
+        "Weight: 5",
+        "Nutritional Value: 25",
+        "Acquire: Cook a raw-pork"
     ],
-    "gold-ore": [
-        "Category: OBJECT",
-        "Value: 15",
-        "Weight: 11",
-        "Acquire: mine"
-    ],
-    "gold": [
-        "Category: OBJECT",
-        "Value: 25",
-        "Weight: 9",
-        "Acquire: melt gold-ore"
-    ],
-    "glass": [
-        "Category: OBJECT",
+    "cooked-shark": [
+        "Category: FOOD",
         "Value: 4",
-        "Weight: 6",
-        "Acquire: melt sand"
+        "Weight: 4",
+        "Nutritional Value: 15",
+        "Acquire: Cook a raw-shark"
     ],
-    "sand": [
-        "Category: MATERIAL",
-        "Value: 1",
-        "Weight: 7",
-        "Acquire: collect from biomes"
+    "cooked-snake": [
+        "Category: FOOD",
+        "Value: 6",
+        "Weight: 3",
+        "Nutritional Value: 20",
+        "Acquire: Cook a raw-snake"
     ],
-    "wood": [
-        "Category: MATERIAL",
-        "Value: 2",
-        "Weight: 6",
-        "Acquire: chop trees, collect from biomes"
-    ],
-    "stone": [
-        "Category: MATERIAL",
-        "Value: 2",
-        "Weight: 10",
-        "Acquire: mine, collect from biomes"
-    ],
-    "sinew": [
-        "Category: OBJECT",
-        "Value: 4",
-        "Weight: 2",
-        "Acquire: kill a deer"
+    "cooked-venison": [
+        "Category: FOOD",
+        "Value: 8",
+        "Weight: 5",
+        "Nutritional Value: 25",
+        "Acquire: Cook a raw-venison"
     ],
     "cord": [
         "Category: OBJECT",
         "Value: 6",
         "Weight: 3",
-        "Acquire: dry sinew"
-    ],
-    "dirt": [
-        "Category: OBJECT",
-        "Value: 1",
-        "Weight: 5",
-        "Acquire: dig in dirt biomes"
-    ],
-    "saddle": [
-        "Category: OBJECT",
-        "Value: 10",
-        "Weight: 18",
-        "Acquire: craft from 2 leather and 1 metal"
-    ],
-    "arrow": [
-        "Category: AMMO",
-        "Value: 3",
-        "Weight: 1",
-        "Acquire: craft from 1 wood, 1 metal, and 2 feathers"
-    ],
-    "dart": [
-        "Category: AMMO",
-        "Value: 2",
-        "Weight: 1",
-        "Acquire: craft from 1 wood and 1 feather"
-    ],
-    "blanket": [
-        "Category: OBJECT",
-        "Value: 10",
-        "Weight: 3",
-        "Acquire: craft from 3 wool"
-    ],
-    "bucket": [
-        "Category: CONTAINER",
-        "Liquid Count: 3",
-        "Value: 12",
-        "Weight: 6",
-        "Acquire: craft from 1 metal"
-    ],
-    "bottle": [
-        "Category: CONTAINER",
-        "Liquid Count: 2",
-        "Value: 6",
-        "Weight: 4",
-        "Acquire: craft from 1 glass"
-    ],
-    "vial": [
-        "Category: CONTAINER",
-        "Liquid Count: 1",
-        "Value: 6",
-        "Weight: 1",
-        "Acquire: craft from 1 glass"
-    ],
-    "furnace": [
-        "Category: MACHINE",
-        "Value: 20",
-        "Weight: 40",
-        "Acquire: craft from 4 stone",
-        "Fuel: required"
-    ],
-    "smoker": [
-        "Category: MACHINE",
-        "Value: 20",
-        "Weight: 28",
-        "Acquire: craft from 4 wood",
-        "Fuel: required"
+        "Acquire: Dry sinew"
     ],
     "crafting-bench": [
         "Category: MACHINE",
         "Value: 10",
         "Weight: 14",
-        "Acquire: craft from 2 wood",
-        "Fuel: not required"
+        "Acquire: Craft from 2 wood",
+        "Fuel: Not required"
     ],
-    "milk": [
-        "Category: LIQUID",
-        "Value: 3",
-        "Weight: 3",
-        "Acquire: milk a cow",
-        "Hunger: 3",
-        "Thirst: 3",
-        "HP: 25"
-    ],
-    "water": [
-        "Category: LIQUID",
-        "Value: 0",
-        "Weight: 3",
-        "Acquire: get from a river",
-        "Hunger: 0",
-        "Thirst: 4",
-        "HP: 25"
-    ],
-    "medicine": [
-        "Category: LIQUID",
-        "Value: 15",
-        "Weight: 2",
-        "Acquire: trade",
-        "Hunger: 0",
-        "Thirst: 0",
-        "HP: 500"
-    ],
-    "protein-shake": [
-        "Category: LIQUID",
-        "Value: 15",
-        "Weight: 3",
-        "Acquire: trade",
-        "Hunger: 20",
-        "Thirst: 5",
-        "HP: 50"
-    ],
-    "shears": [
-        "Category: TOOL",
-        "Value: 12",
-        "Weight: 6",
-        "Acquire: craft from 1 metal",
-        "Uses: 10"
-    ],
-    "stone-pick": [
-        "Category: TOOL",
-        "Value: 10",
-        "Weight: 20",
-        "Acquire: craft from 1 wood and 2 stone",
-        "Uses: 20"
-    ],
-    "metal-pick": [
-        "Category: TOOL",
-        "Value: 25",
-        "Weight: 20",
-        "Acquire: craft from 1 wood and 2 metal",
-        "Uses: 40"
-    ],
-    "stone-axe": [
-        "Category: TOOL",
-        "Value: 8",
-        "Weight: 20",
-        "Acquire: craft from 1 wood and 1 stone",
-        "Uses: 10"
-    ],
-    "metal-axe": [
-        "Category: TOOL",
-        "Value: 15",
-        "Weight: 20",
-        "Acquire: craft from 1 wood and 1 metal",
-        "Uses: 20"
-    ],
-    "wood-axe": [
-        "Category: TOOL",
-        "Value: 5",
-        "Weight: 15",
-        "Acquire: craft from 2 wood",
-        "Uses: 5"
-    ],
-    "binoculars": [
-        "Category: TOOL",
-        "Value: 17",
-        "Weight: 4",
-        "Acquire: craft from 1 glass and 1 metal",
-        "Uses: No limit"
-    ],
-    "hammer": [
-        "Category: TOOL",
-        "Value: 4",
-        "Weight: 6",
-        "Acquire: craft from 1 stone",
-        "Uses: 10"
-    ],
-    "wood-shovel": [
-        "Category: TOOL",
-        "Value: 5",
-        "Weight: 15",
-        "Acquire: craft from 2 wood",
-        "Uses: 5"
-    ],
-    "stone-shovel": [
-        "Category: TOOL",
-        "Value: 8",
-        "Weight: 20",
-        "Acquire: craft from 1 wood and 1 stone",
-        "Uses: 10"
-    ],
-    "metal-shovel": [
-        "Category: TOOL",
-        "Value: 15",
-        "Weight: 20",
-        "Acquire: craft from 1 wood and 1 metal",
-        "Uses: 20"
-    ],
-    "wood-spear": [
-        "Category: WEAPON",
-        "Value: 3",
-        "Weight: 10",
-        "Acquire: craft from 2 wood",
-        "Uses: 10",
-        "Melee damage ratio: 0.75",
-        "Ranged damage ratio: 0",
-        "Ammo type: none"
-    ],
-    "stone-spear": [
-        "Category: WEAPON",
-        "Value: 6",
-        "Weight: 12",
-        "Acquire: craft from 1 wood and 1 stone",
-        "Uses: 15",
-        "Melee damage ratio: 1",
-        "Ranged damage ratio: 0",
-        "Ammo type: none"
-    ],
-    "metal-spear": [
-        "Category: WEAPON",
-        "Value: 13",
-        "Weight: 15",
-        "Acquire: craft from 1 wood and 1 metal",
-        "Uses: 20",
-        "Melee damage ratio: 1.5",
-        "Ranged damage ratio: 0",
-        "Ammo type: none"
-    ],
-    "wood-sword": [
-        "Category: WEAPON",
-        "Value: 7",
-        "Weight: 12",
-        "Acquire: craft from 3 wood",
-        "Uses: 15",
-        "Melee damage ratio: 0.75",
-        "Ranged damage ratio: 0",
-        "Ammo type: none"
-    ],
-    "stone-sword": [
-        "Category: WEAPON",
-        "Value: 20",
-        "Weight: 15",
-        "Acquire: craft from 1 wood and 2 stone",
-        "Uses: 20",
-        "Melee damage ratio: 1",
-        "Ranged damage ratio: 0",
-        "Ammo type: none"
-    ],
-    "metal-sword": [
-        "Category: WEAPON",
-        "Value: 25",
-        "Weight: 18",
-        "Acquire: craft from 1 wood and 2 metal",
-        "Uses: 35",
-        "Melee damage ratio: 2",
-        "Ranged damage ratio: 0",
-        "Ammo type: none"
-    ],
-    "bow": [
-        "Category: WEAPON",
-        "Value: 10",
-        "Weight: 8",
-        "Acquire: craft from 1 wood and 1 cord",
-        "Uses: 20",
-        "Melee damage ratio: 0",
-        "Ranged damage ratio: 2",
-        "Ammo type: arrow"
+    "dart": [
+        "Category: AMMO",
+        "Value: 2",
+        "Weight: 1",
+        "Acquire: Craft from 1 wood and 1 feather"
     ],
     "dart-gun": [
         "Category: WEAPON",
         "Value: 7",
         "Weight: 6",
-        "Acquire: craft from 1 wood",
-        "Uses: 50",
-        "Melee damage ratio: 0",
-        "Ranged damage ratio: 1",
-        "Ammo type: dart"
+        "Acquire: Craft from 1 wood",
+        "Durability: 50",
+        "Melee Damage Ratio: 0.0",
+        "Ranged Damage Ratio: 1.0",
+        "Ammo Type: Dart"
     ],
-    "backpack": [
-        "Category: STORAGE",
-        "Value: 15",
+    "dirt": [
+        "Category: OBJECT",
+        "Value: 1",
         "Weight: 5",
-        "Acquire: craft from 2 leather and 1 cord",
-        "Carryable: Yes",
-        "Capacity: 30"
+        "Acquire: Dig"
     ],
-    "chest": [
-        "Category: STORAGE",
-        "Value: 25",
-        "Weight: 44",
-        "Acquire: craft from 6 wood and 1 metal",
-        "Carryable: No",
-        "Capacity: 100"
+    "feather": [
+        "Category: OBJECT",
+        "Value: 2",
+        "Weight: 0",
+        "Acquire: Kill a chicken or bird"
+    ],
+    "fish-bone": [
+        "Category: OBJECT",
+        "Value: 2",
+        "Weight: 1",
+        "Acquire: Kill a fish"
     ],
     "flute": [
         "Category: TOOL",
         "Value: 4",
         "Weight: 1",
-        "Acquire: craft from 1 wood",
-        "Uses: No limit"
+        "Acquire: Craft from 1 wood",
+        "Durability: No limit"
+    ],
+    "furnace": [
+        "Category: MACHINE",
+        "Value: 20",
+        "Weight: 40",
+        "Acquire: Craft from 4 stone",
+        "Fuel: wood required"
+    ],
+    "glass": [
+        "Category: OBJECT",
+        "Value: 4",
+        "Weight: 6",
+        "Acquire: Melt sand"
+    ],
+    "gold": [
+        "Category: OBJECT",
+        "Value: 25",
+        "Weight: 9",
+        "Acquire: Melt gold-ore"
+    ],
+    "gold-ore": [
+        "Category: OBJECT",
+        "Value: 15",
+        "Weight: 11",
+        "Acquire: Mine it"
+    ],
+    "hammer": [
+        "Category: TOOL",
+        "Value: 4",
+        "Weight: 6",
+        "Acquire: Craft from 1 stone",
+        "Durability: 10"
+    ],
+    "horn": [
+        "Category: OBJECT",
+        "Value: 5",
+        "Weight: 2",
+        "Acquire: Kill a goat or deer"
+    ],
+    "jaguar-skin": [
+        "Category: OBJECT",
+        "Value: 20",
+        "Weight: 8",
+        "Acquire: Kill a jaguar"
+    ],
+    "jaguar-tooth": [
+        "Category: OBJECT",
+        "Value: 15",
+        "Weight: 2",
+        "Acquire: Kill a jaguar"
+    ],
+    "leather": [
+        "Category: OBJECT",
+        "Value: 4",
+        "Weight: 5",
+        "Acquire: Dry wet-leather"
+    ],
+    "lion-fur": [
+        "Category: OBJECT",
+        "Value: 20",
+        "Weight: 9",
+        "Acquire: Kill a lion"
+    ],
+    "lion-tooth": [
+        "Category: OBJECT",
+        "Value: 15",
+        "Weight: 2",
+        "Acquire: Kill a lion"
+    ],
+    "medicine": [
+        "Category: LIQUID",
+        "Value: 15",
+        "Weight: 2",
+        "Acquire: Trade",
+        "Hunger: 0",
+        "Thirst: 0",
+        "Health: 500"
+    ],
+    "metal": [
+        "Category: OBJECT",
+        "Value: 10",
+        "Weight: 8",
+        "Acquire: Melt metal-ore"
+    ],
+    "metal-axe": [
+        "Category: TOOL",
+        "Value: 15",
+        "Weight: 20",
+        "Acquire: Craft from 1 wood and 1 metal",
+        "Durability: 20"
+    ],
+    "metal-ore": [
+        "Category: OBJECT",
+        "Value: 8",
+        "Weight: 10",
+        "Acquire: Mine it"
+    ],
+    "metal-pick": [
+        "Category: TOOL",
+        "Value: 25",
+        "Weight: 20",
+        "Acquire: Craft from 1 wood and 2 metals",
+        "Durability: 40"
+    ],
+    "metal-shovel": [
+        "Category: TOOL",
+        "Value: 15",
+        "Weight: 20",
+        "Acquire: Craft from 1 wood and 1 metal",
+        "Durability: 20"
+    ],
+    "metal-spear": [
+        "Category: WEAPON",
+        "Value: 13",
+        "Weight: 15",
+        "Acquire: Craft from 1 wood and 1 metal",
+        "Durability: 20",
+        "Melee Damage Ratio: 1.5",
+        "Ranged Damage Ratio: 0.0",
+        "Ammo Type: None"
+    ],
+    "metal-sword": [
+        "Category: WEAPON",
+        "Value: 25",
+        "Weight: 18",
+        "Acquire: Craft from 1 wood and 2 metals",
+        "Durability: 35",
+        "Melee Damage Ratio: 2.0",
+        "Ranged Damage Ratio: 0.0",
+        "Ammo Type: None"
+    ],
+    "milk": [
+        "Category: LIQUID",
+        "Value: 3",
+        "Weight: 3",
+        "Acquire: Milk a cow",
+        "Hunger: 3",
+        "Thirst: 3",
+        "Health: 25"
+    ],
+    "pig-bladder": [
+        "Category: OBJECT",
+        "Value: 3",
+        "Weight: 3",
+        "Acquire: Kill a pig"
+    ],
+    "protein-shake": [
+        "Category: LIQUID",
+        "Value: 15",
+        "Weight: 3",
+        "Acquire: Trade",
+        "Hunger: 10",
+        "Thirst: 3",
+        "Health: 50"
+    ],
+    "raw-beef": [
+        "Category: RAW-FOOD",
+        "Value: 4",
+        "Weight: 5",
+        "Acquire: Kill a cow"
+    ],
+    "raw-bird": [
+        "Category: RAW-FOOD",
+        "Value: 2",
+        "Weight: 2",
+        "Acquire: Kill a bird"
+    ],
+    "raw-chicken": [
+        "Category: RAW-FOOD",
+        "Value: 3",
+        "Weight: 5",
+        "Acquire: Kill a chicken"
+    ],
+    "raw-egg": [
+        "Category: RAW-FOOD",
+        "Value: 1",
+        "Weight: 1",
+        "Acquire: Kill a egg"
+    ],
+    "raw-fish": [
+        "Category: RAW-FOOD",
+        "Value: 3",
+        "Weight: 3",
+        "Acquire: Kill a fish"
+    ],
+    "raw-goat": [
+        "Category: RAW-FOOD",
+        "Value: 4",
+        "Weight: 5",
+        "Acquire: Kill a goat"
+    ],
+    "raw-horse": [
+        "Category: RAW-FOOD",
+        "Value: 4",
+        "Weight: 6",
+        "Acquire: Kill a horse"
+    ],
+    "raw-jaguar": [
+        "Category: RAW-FOOD",
+        "Value: 3",
+        "Weight: 6",
+        "Acquire: Kill a jaguar"
+    ],
+    "raw-lion": [
+        "Category: RAW-FOOD",
+        "Value: 3",
+        "Weight: 6",
+        "Acquire: Kill a lion"
+    ],
+    "raw-mutton": [
+        "Category: RAW-FOOD",
+        "Value: 4",
+        "Weight: 5",
+        "Acquire: Kill a sheep"
+    ],
+    "raw-pork": [
+        "Category: RAW-FOOD",
+        "Value: 2",
+        "Weight: 5",
+        "Acquire: Kill a pig"
+    ],
+    "raw-shark": [
+        "Category: RAW-FOOD",
+        "Value: 2",
+        "Weight: 4",
+        "Acquire: Kill a shark"
+    ],
+    "raw-snake": [
+        "Category: RAW-FOOD",
+        "Value: 3",
+        "Weight: 3",
+        "Acquire: Kill a snake"
+    ],
+    "raw-venison": [
+        "Category: RAW-FOOD",
+        "Value: 4",
+        "Weight: 5",
+        "Acquire: Kill a deer"
+    ],
+    "saddle": [
+        "Category: OBJECT",
+        "Value: 10",
+        "Weight: 18",
+        "Acquire: Craft from 2 leathers and 1 metal"
+    ],
+    "sand": [
+        "Category: MATERIAL",
+        "Value: 1",
+        "Weight: 7",
+        "Acquire: Dig"
+    ],
+    "shark-tooth": [
+        "Category: OBJECT",
+        "Value: 20",
+        "Weight: 1",
+        "Acquire: Kill a shark"
+    ],
+    "shears": [
+        "Category: TOOL",
+        "Value: 12",
+        "Weight: 6",
+        "Acquire: Craft from 1 metal",
+        "Durability: 10"
+    ],
+    "sinew": [
+        "Category: OBJECT",
+        "Value: 4",
+        "Weight: 2",
+        "Acquire: Kill a deer"
+    ],
+    "smoker": [
+        "Category: MACHINE",
+        "Value: 20",
+        "Weight: 28",
+        "Acquire: Craft from 4 wood",
+        "Fuel: wood required"
+    ],
+    "snake-tooth": [
+        "Category: OBJECT",
+        "Value: 10",
+        "Weight: 1",
+        "Acquire: Kill a snake"
+    ],
+    "stone": [
+        "Category: MATERIAL",
+        "Value: 2",
+        "Weight: 10",
+        "Acquire: Mine it"
+    ],
+    "stone-axe": [
+        "Category: TOOL",
+        "Value: 8",
+        "Weight: 14",
+        "Acquire: Craft from 1 wood and 1 stone",
+        "Durability: 10"
+    ],
+    "stone-pick": [
+        "Category: TOOL",
+        "Value: 10",
+        "Weight: 20",
+        "Acquire: Craft from 1 wood and 2 stones",
+        "Durability: 20"
+    ],
+    "stone-shovel": [
+        "Category: TOOL",
+        "Value: 8",
+        "Weight: 20",
+        "Acquire: Craft from 1 wood and 1 stone",
+        "Durability: 10"
+    ],
+    "stone-spear": [
+        "Category: WEAPON",
+        "Value: 6",
+        "Weight: 12",
+        "Acquire: Craft from 1 wood and 1 stone",
+        "Durability: 15",
+        "Melee Damage Ratio: 1.25",
+        "Ranged Damage Ratio: 0.0",
+        "Ammo Type: None"
+    ],
+    "stone-sword": [
+        "Category: WEAPON",
+        "Value: 9",
+        "Weight: 15",
+        "Acquire: Craft from 1 wood and 2 stones",
+        "Durability: 20",
+        "Melee Damage Ratio: 1.5",
+        "Ranged Damage Ratio: 0.0",
+        "Ammo Type: None"
+    ],
+    "vial": [
+        "Category: CONTAINER",
+        "Capacity: 1",
+        "Value: 6",
+        "Weight: 1",
+        "Acquire: Craft from 1 glass"
+    ],
+    "water": [
+        "Category: LIQUID",
+        "Value: 0",
+        "Weight: 3",
+        "Acquire: Get from a river",
+        "Hunger: 0",
+        "Thirst: 4",
+        "Health: 25"
+    ],
+    "wet-leather": [
+        "Category: OBJECT",
+        "Value: 2",
+        "Weight: 7",
+        "Acquire: Kill a cow or horse"
+    ],
+    "wood": [
+        "Category: MATERIAL",
+        "Value: 2",
+        "Weight: 6",
+        "Acquire: Chop trees"
+    ],
+    "wood-axe": [
+        "Category: TOOL",
+        "Value: 5",
+        "Weight: 15",
+        "Acquire: Craft from 2 wood",
+        "Durability: 5"
+    ],
+    "wood-shovel": [
+        "Category: TOOL",
+        "Value: 5",
+        "Weight: 15",
+        "Acquire: Craft from 2 wood",
+        "Durability: 5"
+    ],
+    "wood-spear": [
+        "Category: WEAPON",
+        "Value: 3",
+        "Weight: 10",
+        "Acquire: Craft from 2 wood",
+        "Durability: 10",
+        "Melee Damage Ratio: 1.0",
+        "Ranged Damage Ratio: 0.0",
+        "Ammo Type: None"
+    ],
+    "wood-sword": [
+        "Category: WEAPON",
+        "Value: 7",
+        "Weight: 12",
+        "Acquire: Craft from 3 wood",
+        "Durability: 15",
+        "Melee Damage Ratio: 1.25",
+        "Ranged Damage Ratio: 0.0",
+        "Ammo Type: None"
+    ],
+    "wool": [
+        "Category: OBJECT",
+        "Value: 3",
+        "Weight: 2",
+        "Acquire: Kill or shear a sheep"
     ]
 }

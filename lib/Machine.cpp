@@ -1,4 +1,4 @@
-// updated 14 September 2022
+// updated 1 June 2024
 
 #include <string>
 #include <map>
@@ -19,7 +19,7 @@ Machine::Machine(std::string name) {
     this->name = name;
     this->weight = data["weight"].get<int>();
     this->type = OBJCLASS::MACHINE;
-    requiresFuel = (data["requires"].get<std::vector<std::string>>().size() > 0);
+    requiresFuel = (data["fuel"].get<std::vector<std::string>>().size() > 0);
 }
 
 Machine::operator std::string() const noexcept {

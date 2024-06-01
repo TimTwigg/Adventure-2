@@ -1,4 +1,4 @@
-# updated 28 May 2024
+# updated 1 June 2024
 # validate data and infodata files
 
 from pathlib import Path
@@ -194,17 +194,17 @@ class ValidateData(unittest.TestCase):
             self.assertIsInstance(liquid["weight"], int)
             
     def test_machines(self):
-        keys = ["requires", "value", "weight", "recipe"]
+        keys = ["fuel", "value", "weight", "recipe"]
         for machine in self.machines.values():
             self.assertEqual(len(machine), len(keys))
             self.assertEqual(list(machine.keys()), keys)
             
-            self.assertIsInstance(machine["requires"], list)
+            self.assertIsInstance(machine["fuel"], list)
             self.assertIsInstance(machine["value"], int)
             self.assertIsInstance(machine["weight"], int)
             self.assertIsInstance(machine["recipe"], dict)
             
-            for item in machine["requires"]:
+            for item in machine["fuel"]:
                 self.assertIn(item, self.resources.keys())
             
             for item,val in machine["recipe"].items():
@@ -257,12 +257,12 @@ class ValidateData(unittest.TestCase):
                 self.assertIsInstance(val, int)
                 
     def test_tools(self):
-        keys = ["hitpoints", "value", "recipe", "weight"]
+        keys = ["durability", "value", "recipe", "weight"]
         for tool in self.tools.values():
             self.assertEqual(len(tool), len(keys))
             self.assertEqual(list(tool.keys()), keys)
             
-            self.assertIsInstance(tool["hitpoints"], int)
+            self.assertIsInstance(tool["durability"], int)
             self.assertIsInstance(tool["value"], int)
             self.assertIsInstance(tool["recipe"], dict)
             self.assertIsInstance(tool["weight"], int)
@@ -272,7 +272,7 @@ class ValidateData(unittest.TestCase):
                 self.assertIsInstance(val, int)
                 
     def test_weapons(self):
-        keys = ["type", "ammo", "m-damage", "r-damage", "hitpoints", "value", "recipe", "weight"]
+        keys = ["type", "ammo", "m-damage", "r-damage", "durability", "value", "recipe", "weight"]
         for weapon in self.weapons.values():
             self.assertEqual(len(weapon), len(keys))
             self.assertEqual(list(weapon.keys()), keys)
@@ -281,7 +281,7 @@ class ValidateData(unittest.TestCase):
             self.assertIsInstance(weapon["ammo"], str)
             self.assertIsInstance(weapon["m-damage"], float)
             self.assertIsInstance(weapon["r-damage"], float)
-            self.assertIsInstance(weapon["hitpoints"], int)
+            self.assertIsInstance(weapon["durability"], int)
             self.assertIsInstance(weapon["value"], int)
             self.assertIsInstance(weapon["recipe"], dict)
             self.assertIsInstance(weapon["weight"], int)
@@ -340,7 +340,7 @@ class ValidateData(unittest.TestCase):
                 
             elif category == "CONTAINER":
                 self.assertEqual(len(info), 5, obj)
-                self.assertTrue(info[1].startswith("Liquid Count:"), obj)
+                self.assertTrue(info[1].startswith("Capacity:"), obj)
                 self.assertTrue(info[2].startswith("Value:"), obj)
                 self.assertTrue(info[3].startswith("Weight:"), obj)
                 self.assertTrue(info[4].startswith("Acquire:"), obj)
@@ -359,24 +359,24 @@ class ValidateData(unittest.TestCase):
                 self.assertTrue(info[3].startswith("Acquire:"), obj)
                 self.assertTrue(info[4].startswith("Hunger:"), obj)
                 self.assertTrue(info[5].startswith("Thirst:"), obj)
-                self.assertTrue(info[6].startswith("HP:"), obj)
+                self.assertTrue(info[6].startswith("Health:"), obj)
             
             elif category == "TOOL":
                 self.assertEqual(len(info), 5, obj)
                 self.assertTrue(info[1].startswith("Value:"), obj)
                 self.assertTrue(info[2].startswith("Weight:"), obj)
                 self.assertTrue(info[3].startswith("Acquire:"), obj)
-                self.assertTrue(info[4].startswith("Uses:"), obj)
+                self.assertTrue(info[4].startswith("Durability:"), obj)
                 
             elif category == "WEAPON":
                 self.assertEqual(len(info), 8, obj)
                 self.assertTrue(info[1].startswith("Value:"), obj)
                 self.assertTrue(info[2].startswith("Weight:"), obj)
                 self.assertTrue(info[3].startswith("Acquire:"), obj)
-                self.assertTrue(info[4].startswith("Uses:"), obj)
-                self.assertTrue(info[5].startswith("Melee damage ratio:"), obj)
-                self.assertTrue(info[6].startswith("Ranged damage ratio:"), obj)
-                self.assertTrue(info[7].startswith("Ammo type:"), obj)
+                self.assertTrue(info[4].startswith("Durability:"), obj)
+                self.assertTrue(info[5].startswith("Melee Damage Ratio:"), obj)
+                self.assertTrue(info[6].startswith("Ranged Damage Ratio:"), obj)
+                self.assertTrue(info[7].startswith("Ammo Type:"), obj)
             
             elif category == "STORAGE":
                 self.assertEqual(len(info), 6, obj)

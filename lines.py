@@ -1,4 +1,4 @@
-# updated 27 May 2024
+# updated 1 June 2024
 # Counts the number of lines in code files
 
 from pathlib import Path
@@ -53,8 +53,8 @@ config_files = [i for i in Path().rglob("CMakeLists.txt") if len(i.parts) == 0 o
 count4 = countlines(config_files, True)
 print(f"Configuration Files: {count4} lines ({len(config_files)} files)")
 
-breakdown.append("\nPython Files:")
-py_files = [i for i in Path().rglob("*.py") if len(i.parts) == 0 or i.parts[0] not in ["build"]]
+breakdown.append("\nPython and PyNotebook Files:")
+py_files = [i for i in Path().rglob("*.py") if len(i.parts) == 0 or i.parts[0] not in ["build"]] + [i for i in Path().rglob("*.ipynb") if len(i.parts) == 0 or i.parts[0] not in ["build"]]
 count5 = countlines(py_files, True)
 print(f"Python Files: {count5} lines ({len(py_files)} files)")
 

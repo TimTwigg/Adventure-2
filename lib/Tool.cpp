@@ -1,4 +1,4 @@
-// updated 17 June 2022
+// updated 1 June 2024
 
 #include <string>
 #include <map>
@@ -17,7 +17,7 @@ Tool::Tool(std::string name) {
     json data = FileReader::getFromFile("tools.json", name);
     this->value = data["value"].get<int>();
     recipe = data["recipe"].get<std::map<std::string, unsigned int>>();
-    uses = data["hitpoints"].get<int>();
+    uses = data["durability"].get<int>();
     this->name = name;
     this->weight = data["weight"].get<int>();
     this->type = OBJCLASS::TOOL;
