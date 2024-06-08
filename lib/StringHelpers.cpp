@@ -1,4 +1,4 @@
-// Updated 25 August 2023
+// Updated 7 June 2024
 
 #include <string>
 #include <algorithm>
@@ -7,7 +7,7 @@
 #include "StringHelpers.hpp"
 
 void strHelp::strip(std::string& s) {
-    s.erase(remove_if(s.begin(), s.end(), isspace), s.end());
+    s.erase(std::remove_if(s.begin(), s.end(), isspace), s.end());
 }
 
 void strHelp::format(std::string& s) {

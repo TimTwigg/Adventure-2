@@ -1,8 +1,4 @@
 # TODO
-- Replace Liquid class with enum class in Container.hpp?
-- Debug civ setTrades - testing shows selling trades sometimes gets 5 instead of 6 on a town
-    - problem is trades are set by randomly choosing a name in the category, trying 10 times to find one which has not been already selected. Might need to change the category as well
-- finish Civilization::setTrades() - add animals, potions, machines etc
 - Add player-built buildings/stuff
 - chopping trees removes them if not in forest?
 - crafting things like ammo crafts more than 1
@@ -17,10 +13,11 @@
 - review Civ loot selection
 - Actually use mining/chopping/etc ratios
 - Write tests
-    - formulaTests
+    - formulaTests?
     - configTests
-- revise location description indefinite article logic
 - potion recipes?
+- GameEngine::build()
+- GameEngine::train()
 
 # IDEAS
 - Refresh ht and hp completely at towns? For a price?

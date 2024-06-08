@@ -1,12 +1,13 @@
-// updated 26 May 2024
+// updated 7 June 2024
 
 #include <gtest/gtest.h>
 #include <map>
-#include <iostream>
 #include "Factory.hpp"
 #include "AdventureException.hpp"
 #include "Object.hpp"
 #include "Entity.hpp"
+#include "Container.hpp"
+#include "Liquid.hpp"
 
 TEST(factoryTests, constructor) {
     Factory f = Factory();
@@ -73,4 +74,14 @@ TEST(factoryTests, makeFromCode) {
     ASSERT_EQ(t->getType(), OBJCLASS::TOOL);
     ASSERT_EQ(t->getName(), "stone-axe");
     delete t;
+}
+
+TEST(factoryTests, filledContainer) {
+    Factory f = Factory();
+    ASSERT_TRUE(f.inIndex("bucket of water"));
+    ASSERT_EQ(f.getTypeOf("bucket of water"), FactoryType::Container);
+    Container* c = static_cast<Container*>(f.make("bucket of water"));
+    ASSERT_EQ(c->getType(), OBJCLASS::CONTAINER);
+    ASSERT_FALSE(c->isEmpty());
+    delete c;
 }

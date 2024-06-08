@@ -1,4 +1,4 @@
-// updated 27 May 2024
+// updated 7 June 2024
 
 #include <string>
 #include <memory>
@@ -251,7 +251,7 @@ void GameEngine::printLocation(Location l, bool farOff) {
         });
         const std::string& thing = here[here.size()-1];
         if (thing[thing.size()-1] == 's') list = list + ", and " + thing;
-        else list = list + ", and a " + thing;
+        else list = list + ", and " + chooseArticle(thing) + " " + thing;
         i->output(partA + "There " + article + " " + list + partB, configs["colors"]["output"].get<Color>());
     }
 }

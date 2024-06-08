@@ -1,4 +1,4 @@
-// Updated 25 May 2024
+// Updated 7 June 2024
 
 #include <string>
 #include <map>
@@ -27,6 +27,13 @@ Factory::Factory() : index{std::map<std::string, FactoryType>()} {
         FactoryType ftype = FactoryTypeMapping.at(s);
         for (std::string item : data) {
             index[item] = ftype;
+        }
+    }
+    std::vector<std::string> liquidData = FileReader::getTitlesFromFile("liquids.json");
+    std::vector<std::string> containerData = FileReader::getTitlesFromFile("containers.json");
+    for (std::string liquid : liquidData) {
+        for (std::string container : containerData) {
+            index[container + " of " + liquid] = FactoryType::Container;
         }
     }
 }

@@ -1,4 +1,4 @@
-// updated 26 September 2023
+// updated 7 June 2024
 
 #include <string>
 #include <map>
@@ -64,49 +64,60 @@ void Civilization::setTrades(json data) {
         json cresources = FileReader::readFile("craftableResources.json");
         databank["cresources"] = getKeyValues(cresources);
         keybank["cresources"] = getKeys(cresources);
-        
-        // TODO: ADD THESE
-        //json animals = FileReader::readFile("animals.json");
-        //json potions = FileReader::readFile("potions.json");
-        //json machines = FileReader::readFile("machines.json");
+        json animals = FileReader::readFile("animals.json");
+        databank["animals"] = getKeyValues(animals);
+        keybank["animals"] = getKeys(animals);
+        json machines = FileReader::readFile("machines.json");
+        databank["machines"] = getKeyValues(machines);
+        keybank["machines"] = getKeys(machines);
+
+        json liquids = FileReader::readFile("liquids.json");
+        std::map<std::string, int> bankA = getKeyValues(liquids);
+        std::map<std::string, int> bankB;
+        std::for_each(bankA.begin(), bankA.end(), [&bankB](const std::pair<std::string, int>& p) { bankB["vial of " + p.first] = p.second; });
+        databank["liquids"] = bankB;
+        std::vector<std::string> liquidKeys = getKeys(liquids);
+        std::remove(liquidKeys.begin(), liquidKeys.end(), "empty");
+        std::for_each(liquidKeys.begin(), liquidKeys.end(), [](std::string& s) { s = "vial of " + s; });
+        keybank["liquids"] = liquidKeys;
         
         for (int i = 0; i < count; ++i) {
             // buying
             int trades = buying_categories.size();
             if (trades > 0) {
                 std::string category = buying_categories[gen.getRandInt(0, trades-1)];
-                // TODO: REMOVE THIS IF STATEMENT ONCE ANIMALS, POTIONS, ETC HAVE BEEN ADDED ABOVE
-                if (keybank.find(category) != keybank.end()) {
-                    std::map<std::string, int> bank = databank[category];
-                    std::vector<std::string> keys = keybank[category];
-                    std::string name = keys[gen.getRandInt(0, bank.size()-1)];
-                    for (int j = 0; j < 10; ++j) {
-                        if (buying.find(std::make_pair(category, name)) == buying.end()) break;
-                        name = keys[gen.getRandInt(0, keys.size()-1)];
-                    }
-                    int price = bank[name] * (gen.getRandInt(6, 15) / 10.0);
-                    if (price < 1) price = 1;
-                    buying[std::make_pair(category, name)] = std::make_pair(gen.getRandInt(1, 10), price);
+                std::map<std::string, int> bank = databank[category];
+                std::vector<std::string> keys = keybank[category];
+                std::string name = keys[gen.getRandInt(0, bank.size()-1)];
+                for (int j = 0; j < 10; ++j) {
+                    if (buying.find(std::make_pair(category, name)) == buying.end()) break;
+                    category = buying_categories[gen.getRandInt(0, trades-1)];
+                    bank = databank[category];
+                    keybank[category];
+                    name = keys[gen.getRandInt(0, keys.size()-1)];
                 }
+                int price = bank[name] * (gen.getRandInt(6, 15) / 10.0);
+                if (price < 1) price = 1;
+                buying[std::make_pair(category, name)] = std::make_pair(gen.getRandInt(1, 10), price);
             }
 
             // selling
             trades = selling_categories.size();
             if (trades > 0) {
                 std::string category = selling_categories[gen.getRandInt(0, trades-1)];
-                // TODO: REMOVE THIS IF STATEMENT ONCE ANIMALS, POTIONS, ETC HAVE BEEN ADDED ABOVE
-                if (keybank.find(category) != keybank.end()) {
-                    std::map<std::string, int> bank = databank[category];
-                    std::vector<std::string> keys = keybank[category];
-                    std::string name = keys[gen.getRandInt(0, keys.size()-1)];
-                    for (int j = 0; j < 10; ++j) {
-                        if (selling.find(std::make_pair(category, name)) == selling.end()) break;
-                        name = keys[gen.getRandInt(0, keys.size()-1)];
-                    }
-                    int price = bank[name] * (gen.getRandInt(7, 22) / 10.0);
-                    if (price < 1) price = 1;
-                    selling[std::make_pair(category, name)] = std::make_pair(gen.getRandInt(1, 10), price);
+                std::map<std::string, int> bank = databank[category];
+                std::vector<std::string> keys = keybank[category];
+                std::string name = keys[gen.getRandInt(0, keys.size()-1)];
+                for (int j = 0; j < 10; ++j) {
+                    if (selling.find(std::make_pair(category, name)) == selling.end()) break;
+                    category = selling_categories[gen.getRandInt(0, trades-1)];
+                    bank = databank[category];
+                    keys = keybank[category];
+                    name = keys[gen.getRandInt(0, keys.size()-1)];
                 }
+                int price = bank[name] * (gen.getRandInt(7, 22) / 10.0);
+                if (price < 1) price = 1;
+                selling[std::make_pair(category, name)] = std::make_pair(gen.getRandInt(1, 10), price);
             }
 
             // loot items
@@ -117,17 +128,16 @@ void Civilization::setTrades(json data) {
                     loot[std::make_pair(category, category)] = gen.getRandInt(1, 6) * value;
                 }
                 else {
-                    // TODO: REMOVE THIS IF STATEMENT ONCE ANIMALS, POTIONS, ETC HAVE BEEN ADDED ABOVE
-                    if (keybank.find(category) != keybank.end()) {
-                        std::vector<std::string> keys = keybank[category];
-                        std::string name = keys[gen.getRandInt(0, keys.size()-1)];
-                        for (int j = 0; j < 10; ++j) {
-                            if (loot.find(std::make_pair(category, name)) == loot.end()) break;
-                            name = keys[gen.getRandInt(0, keys.size()-1)];
-                        }
-                        int num = gen.getRandInt(0, count);
-                        if (num > 0 && gen.getRandBool()) loot[std::make_pair(category, name)] = num;
+                    std::vector<std::string> keys = keybank[category];
+                    std::string name = keys[gen.getRandInt(0, keys.size()-1)];
+                    for (int j = 0; j < 10; ++j) {
+                        if (loot.find(std::make_pair(category, name)) == loot.end()) break;
+                        category = loots[gen.getRandInt(0, trades-1)];
+                        keys = keybank[category];
+                        name = keys[gen.getRandInt(0, keys.size()-1)];
                     }
+                    int num = gen.getRandInt(0, count);
+                    if (num > 0 && gen.getRandBool()) loot[std::make_pair(category, name)] = num;
                 }
             }
         }   

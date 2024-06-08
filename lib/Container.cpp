@@ -1,4 +1,4 @@
-// updated 21 August 2023
+// updated 7 June 2024
 
 #include <string>
 #include <sstream>
@@ -13,7 +13,15 @@
 using json = nlohmann::json;
 
 Container::Container(std::string name) {
+    std::string liq = "empty";
+    if (name.find("of") != std::string::npos) {
+        std::vector<std::string> parts = strHelp::split(name);
+        name = parts[0];
+        liq = parts[2];
+    }
     strHelp::format(name);
+    strHelp::format(liq);
+
     if (name.size() < 1) throw AdventureException("Container: container name required");
     json data = FileReader::getFromFile("containers.json", name);
     this->value = data["value"].get<int>();
@@ -22,7 +30,7 @@ Container::Container(std::string name) {
     this->type = OBJCLASS::CONTAINER;
     recipe = data["recipe"].get<std::map<std::string, unsigned int>>();
     capacity = data["amount"].get<unsigned int>();
-    content = Liquid();
+    content = Liquid(liq);
     amount = 0;
 }
 
