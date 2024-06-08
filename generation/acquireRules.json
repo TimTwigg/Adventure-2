@@ -20,8 +20,8 @@
             "metal": "Melt metal-ore",
             "gold": "Melt gold-ore",
             "glass": "Melt sand",
-            "sand": "Dig",
-            "dirt": "Dig",
+            "sand": "Dig it",
+            "dirt": "Dig it",
             "stone": "Mine it",
             "sinew": "Kill a deer",
             "cord": "Dry sinew",
@@ -31,7 +31,8 @@
             "raw-mutton": "Kill a sheep",
             "raw-beef": "Kill a cow",
             "raw-pork": "Kill a pig",
-            "raw-venison": "Kill a deer"
+            "raw-venison": "Kill a deer",
+            "raw-egg": "Find a chicken"
         },
         "rules": {
             "category": {},

@@ -6,7 +6,6 @@
 - Add player-built buildings/stuff
 - chopping trees removes them if not in forest?
 - crafting things like ammo crafts more than 1
-- finish object_info.json - fill in blanks marked by "@@@"
 - finish detailed descriptions in commandUses.json (marked by "Not Implemented")
 - get attacked (bottom of GameEngine mainloop)
 - raiding a civ makes it hostile?

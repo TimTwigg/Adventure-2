@@ -189,7 +189,7 @@
         "Category: OBJECT",
         "Value: 1",
         "Weight: 5",
-        "Acquire: Dig"
+        "Acquire: Dig it"
     ],
     "feather": [
         "Category: OBJECT",
@@ -386,7 +386,7 @@
         "Category: RAW-FOOD",
         "Value: 1",
         "Weight: 1",
-        "Acquire: Kill a egg"
+        "Acquire: Find a chicken"
     ],
     "raw-fish": [
         "Category: RAW-FOOD",
@@ -458,7 +458,7 @@
         "Category: MATERIAL",
         "Value: 1",
         "Weight: 7",
-        "Acquire: Dig"
+        "Acquire: Dig it"
     ],
     "shark-tooth": [
         "Category: OBJECT",
